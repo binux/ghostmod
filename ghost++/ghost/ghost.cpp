@@ -516,6 +516,11 @@ CGHost :: CGHost( CConfig *CFG )
 	m_LANWar3Version = CFG->GetInt( "lan_war3version", 24 );
 	m_ReplayWar3Version = CFG->GetInt( "replay_war3version", 24 );
 	m_ReplayBuildNumber = CFG->GetInt( "replay_buildnumber", 6059 );
+
+	// mod
+	m_HCLFromGameName = CFG->GetInt( "bot_hclfromgamename", 0 ) == 0 ? false : true;
+	m_AutoHostRandomName = CFG->GetInt( "autohost_randomname", 0 ) == 0 ? false : true;
+
 	SetConfigs( CFG );
 
 	// load the battle.net connections
@@ -1114,6 +1119,8 @@ bool CGHost :: Update( long usecBlock )
 			if( m_AutoHostMap->GetValid( ) )
 			{
 				string GameName = m_AutoHostGameName + " #" + UTIL_ToString( m_HostCounter );
+				if( m_AutoHostRandomName )
+					GameName = GameName + "-" + UTIL_ToString( rand( )%1000 );
 
 				if( GameName.size( ) <= 31 )
 				{

@@ -124,6 +124,9 @@ private:
 	uint32_t m_MapNumPlayers;
 	uint32_t m_MapNumTeams;
 	vector<CGameSlot> m_Slots;
+	// mod
+	string m_ValidModes;						// custom value: valid mode set in hcl
+	bool m_AllowNewPlayer;						// custom value: if allow new palyer to join match game
 
 public:
 	CMap( CGHost *nGHost );
@@ -158,6 +161,9 @@ public:
 	uint32_t GetMapNumPlayers( )			{ return m_MapNumPlayers; }
 	uint32_t GetMapNumTeams( )				{ return m_MapNumTeams; }
 	vector<CGameSlot> GetSlots( )			{ return m_Slots; }
+	// mod
+	string GetValidModes( )					{ return m_ValidModes; }
+	bool GetAllowNewPlayer( )				{ return m_AllowNewPlayer; }
 
 	void Load( CConfig *CFG, string nCFGFile );
 	void CheckValid( );

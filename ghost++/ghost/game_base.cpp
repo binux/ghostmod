@@ -133,6 +133,34 @@ CBaseGame :: CBaseGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16
 	m_AutoSave = m_GHost->m_AutoSave;
 	m_MatchMaking = false;
 	m_LocalAdminMessages = m_GHost->m_LocalAdminMessages;
+	// mod
+	m_AllowNewPlayer = m_Map->GetAllowNewPlayer( );
+	m_HCLFromGameName = m_GHost->m_HCLFromGameName;
+	if( m_HCLCommandString.empty( ) )
+		m_HCLOverride = false;
+	else
+		m_HCLOverride = true;
+
+	// try to get hcl command from game name
+	
+	if( m_HCLFromGameName && !m_HCLOverride )
+	{
+		vector<string> ValidModes = UTIL_Tokenize( m_Map->GetValidModes( ), ' ' );
+		string::size_type loc;
+
+		if( !ValidModes.empty( ) )
+		{
+			for( vector<string> :: iterator i = ValidModes.begin( ); i != ValidModes.end( ); i++ )
+			{
+				loc = m_GameName.find( (*i) );
+				if ( loc != string::npos )
+				{
+						CONSOLE_Print( "[GAME: " + m_GameName + "] Found Game Mode [" + (*i).c_str() + "] HCL Command [" + (*i).substr(1) + "]" );
+						m_HCLCommandString = (*i).substr(1);
+				}
+			}
+		}
+	}
 
 	if( m_SaveGame )
 	{
@@ -2184,6 +2212,13 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 	if( score > -99999.0 && ( score < m_MinimumScore || score > m_MaximumScore ) )
 	{
 		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game but has a rating [" + UTIL_ToString( score, 2 ) + "] outside the limits [" + UTIL_ToString( m_MinimumScore, 2 ) + "] to [" + UTIL_ToString( m_MaximumScore, 2 ) + "]" );
+		potential->Send( m_Protocol->SEND_W3GS_REJECTJOIN( REJECTJOIN_FULL ) );
+		potential->SetDeleteMe( true );
+		return;
+	}
+	else if( score == -99999.0 && !m_AllowNewPlayer )
+	{
+		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game but has a rating [" + UTIL_ToString( score, 2 ) + "] while new player is not allowed" );
 		potential->Send( m_Protocol->SEND_W3GS_REJECTJOIN( REJECTJOIN_FULL ) );
 		potential->SetDeleteMe( true );
 		return;

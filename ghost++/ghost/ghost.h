@@ -133,6 +133,9 @@ public:
 	uint32_t m_ReplayBuildNumber;			// config value: replay build number (for saving replays)
 	bool m_TCPNoDelay;						// config value: use Nagle's algorithm or not
 	uint32_t m_MatchMakingMethod;			// config value: the matchmaking method
+	// mod
+	bool m_HCLFromGameName;					// custom value: try to fetch hcl command from game name
+	bool m_AutoHostRandomName;				// custom value: add a random num to the end of autohost games
 
 	CGHost( CConfig *CFG );
 	~CGHost( );

@@ -69,6 +69,7 @@ public:
 CGame :: CGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16_t nHostPort, unsigned char nGameState, string nGameName, string nOwnerName, string nCreatorName, string nCreatorServer ) : CBaseGame( nGHost, nMap, nSaveGame, nHostPort, nGameState, nGameName, nOwnerName, nCreatorName, nCreatorServer )
 {
 	m_DBBanLast = NULL;
+	m_DBBanFirst = NULL;
 	m_DBGame = new CDBGame( 0, string( ), m_Map->GetMapPath( ), string( ), string( ), string( ), 0 );
 
 	if( m_Map->GetMapType( ) == "w3mmd" )
@@ -317,12 +318,16 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 
 		m_DBGamePlayers.push_back( new CDBGamePlayer( 0, 0, player->GetName( ), player->GetExternalIPString( ), player->GetSpoofed( ) ? 1 : 0, player->GetSpoofedRealm( ), player->GetReserved( ) ? 1 : 0, player->GetFinishedLoading( ) ? player->GetFinishedLoadingTicks( ) - m_StartedLoadingTicks : 0, m_GameTicks / 1000, player->GetLeftReason( ), Team, Colour ) );
 
-		// also keep track of the last player to leave for the !banlast command
+		// also keep track of the last and first player to leave for the !banlast and !banfirst command
 
 		for( vector<CDBBan *> :: iterator i = m_DBBans.begin( ); i != m_DBBans.end( ); i++ )
 		{
 			if( (*i)->GetName( ) == player->GetName( ) )
+			{
 				m_DBBanLast = *i;
+				if( m_DBBanFirst == NULL )
+					m_DBBanFirst = *i;
+			}
 		}
 	}
 }
@@ -562,6 +567,13 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 
 			if( Command == "banlast" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanLast )
 				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanLast->GetServer( ), m_DBBanLast->GetName( ), m_DBBanLast->GetIP( ), m_GameName, User, Payload ) ) );
+
+			// 
+			// !BANFIRST
+			//
+
+			if( Command == "banfirst" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanFirst )
+				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, User, Payload ) ) );
 
 			//
 			// !CHECK
@@ -1028,9 +1040,10 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					{
 						string HCLChars = "abcdefghijklmnopqrstuvwxyz0123456789 -=,.";
 
-						if( Payload.find_first_not_of( HCLChars ) == string :: npos )
+						if( Payload.find_first_not_of( HCLChars ) == string :: npos && m_Map->GetValidModes( ).find( Payload) != string :: npos )
 						{
 							m_HCLCommandString = Payload;
+							m_HCLOverride = true;
 							SendAllChat( m_GHost->m_Language->SettingHCL( m_HCLCommandString ) );
 						}
 						else

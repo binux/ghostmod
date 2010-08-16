@@ -1533,3 +1533,12 @@ string CLanguage :: PlayerReconnectedWithGProxy( string name )
 	UTIL_Replace( Out, "$NAME$", name );
 	return Out;
 }
+
+string CLanguage :: DotAGameShowScore( string sentinel, string scourge )
+{
+	string Out = m_CFG->GetString( "lang_1000", "lang_1000" );
+	UTIL_Replace( Out, "$SENTINEL$", sentinel );
+	UTIL_Replace( Out, "$SCOURGE$", scourge );
+	return Out;
+}
+

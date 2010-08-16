@@ -125,6 +125,11 @@ protected:
 	bool m_AutoSave;								// if we should auto save the game before someone disconnects
 	bool m_MatchMaking;								// if matchmaking mode is enabled
 	bool m_LocalAdminMessages;						// if local admin messages should be relayed or not
+	// mod
+	bool m_HCLFromGameName;							// custom value: allow fetch hcl command from game name ( "map_validmodes" needed )
+	bool m_HCLOverride;								// custom value: if the !hcl command is issued, override hcl from gamename
+	bool m_AllowNewPlayer;							// custom value: if allow new players to join the match games
+
 
 public:
 	CBaseGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16_t nHostPort, unsigned char nGameState, string nGameName, string nOwnerName, string nCreatorName, string nCreatorServer );
@@ -150,6 +155,8 @@ public:
 	virtual bool GetGameLoading( )					{ return m_GameLoading; }
 	virtual bool GetGameLoaded( )					{ return m_GameLoaded; }
 	virtual bool GetLagging( )						{ return m_Lagging; }
+	// mod
+	virtual bool GetHCLFromGameName( )				{ return m_HCLFromGameName; }
 
 	virtual void SetEnforceSlots( vector<CGameSlot> nEnforceSlots )		{ m_EnforceSlots = nEnforceSlots; }
 	virtual void SetEnforcePlayers( vector<PIDPlayer> nEnforcePlayers )	{ m_EnforcePlayers = nEnforcePlayers; }

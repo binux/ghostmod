@@ -876,6 +876,10 @@ void CMap :: Load( CConfig *CFG, string nCFGFile )
 			m_Slots.push_back( CGameSlot( 0, 255, SLOTSTATUS_OPEN, 0, 12, 12, SLOTRACE_RANDOM ) );
 	}
 
+	// mod
+	m_ValidModes = CFG->GetString( "map_validmodes", "" );
+	m_AllowNewPlayer =  CFG->GetInt( "map_allow_newplayers", 1 ) == 0 ? false : true;
+
 	CheckValid( );
 }
 

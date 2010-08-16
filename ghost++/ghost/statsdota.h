@@ -35,12 +35,20 @@ private:
 	uint32_t m_Min;
 	uint32_t m_Sec;
 
+	uint32_t m_ScoreSentinel;
+	uint32_t m_ScoreScourge;
+	uint32_t m_LeaverKills;
+	bool m_Finish;
+
 public:
 	CStatsDOTA( CBaseGame *nGame );
 	virtual ~CStatsDOTA( );
 
 	virtual bool ProcessAction( CIncomingAction *Action );
 	virtual void Save( CGHost *GHost, CGHostDB *DB, uint32_t GameID );
+
+	uint32_t GetSentinelScore( )	{ return m_ScoreSentinel; }
+	uint32_t GetScourgeScore( )		{ return m_ScoreScourge; }
 };
 
 #endif

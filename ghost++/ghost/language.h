@@ -254,6 +254,8 @@ public:
 	string WaitForReconnectSecondsRemain( string seconds );
 	string WasUnrecoverablyDroppedFromGProxy( );
 	string PlayerReconnectedWithGProxy( string name );
+	// MOD
+	string DotAGameShowScore( string sentinel, string scourge );
 };
 
 #endif

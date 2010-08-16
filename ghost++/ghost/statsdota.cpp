@@ -26,6 +26,7 @@
 #include "game_base.h"
 #include "stats.h"
 #include "statsdota.h"
+#include "language.h"
 
 //
 // CStatsDOTA
@@ -41,6 +42,12 @@ CStatsDOTA :: CStatsDOTA( CBaseGame *nGame ) : CStats( nGame )
 	m_Winner = 0;
 	m_Min = 0;
 	m_Sec = 0;
+
+	m_ScoreScourge = 0;
+	m_ScoreSentinel = 0;
+
+	m_Finish = false;
+	m_LeaverKills = 0;
 }
 
 CStatsDOTA :: ~CStatsDOTA( )
@@ -111,6 +118,14 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 								CGamePlayer *Killer = m_Game->GetPlayerFromColour( ValueInt );
 								CGamePlayer *Victim = m_Game->GetPlayerFromColour( VictimColour );
 
+								if( VictimColour >= 0 && VictimColour < 12 && m_Players[VictimColour] )
+								{
+									if( m_Players[VictimColour]->GetNewColour( ) < 6 )
+										m_ScoreScourge++;
+									else
+										m_ScoreSentinel++;
+								}
+
 								if( Killer && Victim )
 									CONSOLE_Print( "[STATSDOTA: " + m_Game->GetGameName( ) + "] player [" + Killer->GetName( ) + "] killed player [" + Victim->GetName( ) + "]" );
 								else if( Victim )
@@ -119,6 +134,14 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 										CONSOLE_Print( "[STATSDOTA: " + m_Game->GetGameName( ) + "] the Sentinel killed player [" + Victim->GetName( ) + "]" );
 									else if( ValueInt == 6 )
 										CONSOLE_Print( "[STATSDOTA: " + m_Game->GetGameName( ) + "] the Scourge killed player [" + Victim->GetName( ) + "]" );
+								}
+								else
+								{
+									// player whom has been killed has left the game
+									m_LeaverKills++;
+									CONSOLE_Print( "[STATSDOTA: " + m_Game->GetGameName( ) + "] a leaved player has been killed ! " + UTIL_ToString( 10-m_LeaverKills ) + " more before game ends. " );
+									if( m_LeaverKills >= 10 )
+										m_Finish = true;
 								}
 							}
 							else if( KeyString.size( ) >= 8 && KeyString.substr( 0, 7 ) == "Courier" )
@@ -168,9 +191,15 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 								string SideString;
 
 								if( Alliance == "0" )
+								{
 									AllianceString = "Sentinel";
+									m_ScoreScourge += UTIL_ToInt32( Level ) * 2 - 1;
+								}
 								else if( Alliance == "1" )
+								{
 									AllianceString = "Scourge";
+									m_ScoreSentinel += UTIL_ToInt32( Level ) * 2 - 1;
+								}
 								else
 									AllianceString = "unknown";
 
@@ -214,9 +243,15 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 								string TypeString;
 
 								if( Alliance == "0" )
+								{
 									AllianceString = "Sentinel";
+									m_ScoreScourge += 5;
+								}
 								else if( Alliance == "1" )
+								{
 									AllianceString = "Scourge";
+									m_ScoreSentinel += 5;
+								}
 								else
 									AllianceString = "unknown";
 
@@ -261,6 +296,7 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 							else if( KeyString.size( ) >= 2 && KeyString.substr( 0, 2 ) == "CK" )
 							{
 								// a player disconnected
+								m_Game->SendAllChat( m_Game->m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_ScoreSentinel ), UTIL_ToString( m_ScoreScourge ) ) );
 							}
 						}
 						else if( DataString == "Global" )
@@ -273,6 +309,7 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 								// Value 2 -> scourge
 
 								m_Winner = ValueInt;
+								m_Finish = true;
 
 								if( m_Winner == 1 )
 									CONSOLE_Print( "[STATSDOTA: " + m_Game->GetGameName( ) + "] detected winner: Sentinel" );
@@ -371,7 +408,7 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 			i++;
 	}
 
-	return m_Winner != 0;
+	return m_Finish;
 }
 
 void CStatsDOTA :: Save( CGHost *GHost, CGHostDB *DB, uint32_t GameID )
@@ -386,6 +423,15 @@ void CStatsDOTA :: Save( CGHost *GHost, CGHostDB *DB, uint32_t GameID )
 		unsigned int Players = 0;
 
 		// save the dotagame
+		
+		// try to get a winner with the scores
+		if( m_Winner == 0 )
+		{
+			if( m_ScoreSentinel >= 15+m_ScoreScourge )
+				m_Winner = 1;
+			else if( m_ScoreScourge >= 15+m_ScoreSentinel )
+				m_Winner = 2;
+		}
 
 		GHost->m_Callables.push_back( DB->ThreadedDotAGameAdd( GameID, m_Winner, m_Min, m_Sec ) );
 
