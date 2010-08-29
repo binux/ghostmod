@@ -127,6 +127,7 @@ private:
 	// mod
 	string m_ValidModes;						// custom value: valid mode set in hcl
 	bool m_AllowNewPlayer;						// custom value: if allow new palyer to join match game
+	string m_GameNameWithMode;
 
 public:
 	CMap( CGHost *nGHost );
@@ -164,6 +165,7 @@ public:
 	// mod
 	string GetValidModes( )					{ return m_ValidModes; }
 	bool GetAllowNewPlayer( )				{ return m_AllowNewPlayer; }
+	string GetGameNameWithMode( )			{ return m_GameNameWithMode; }
 
 	void Load( CConfig *CFG, string nCFGFile );
 	void CheckValid( );

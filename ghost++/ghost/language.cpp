@@ -1542,3 +1542,11 @@ string CLanguage :: DotAGameShowScore( string sentinel, string scourge )
 	return Out;
 }
 
+string CLanguage :: DotAAutoBan( string leaver, string reason, string needVotes )
+{
+	string Out = m_CFG->GetString( "lang_1001", "lang_1001" );
+	UTIL_Replace( Out, "$LEAVER$", leaver );
+	UTIL_Replace( Out, "$REASON$", reason );
+	UTIL_Replace( Out, "$NEEDVOTES$", needVotes );
+	return Out;
+}

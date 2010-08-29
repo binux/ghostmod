@@ -879,6 +879,7 @@ void CMap :: Load( CConfig *CFG, string nCFGFile )
 	// mod
 	m_ValidModes = CFG->GetString( "map_validmodes", "" );
 	m_AllowNewPlayer =  CFG->GetInt( "map_allow_newplayers", 1 ) == 0 ? false : true;
+	m_GameNameWithMode = CFG->GetString( "map_gamenamewithmode", "" );
 
 	CheckValid( );
 }

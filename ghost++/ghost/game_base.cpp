@@ -1509,7 +1509,7 @@ void CBaseGame :: EventPlayerDeleted( CGamePlayer *player )
 		return;
 
 	if( m_GameLoaded )
-		SendAllChat( player->GetName( ) + " " + player->GetLeftReason( ) + "." );
+		//SendAllChat( player->GetName( ) + " " + player->GetLeftReason( ) + "." );
 
 	if( player->GetLagging( ) )
 		SendAll( m_Protocol->SEND_W3GS_STOP_LAG( player ) );
@@ -2172,7 +2172,7 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 
 	// auto lock the game
 
-	if( m_GHost->m_AutoLock && !m_Locked && IsOwner( joinPlayer->GetName( ) ) )
+	if( m_GHost->m_AutoLock && !m_Locked && ( IsOwner( joinPlayer->GetName( ) ) || m_AutoStartPlayers ))
 	{
 		SendAllChat( m_GHost->m_Language->GameLocked( ) );
 		m_Locked = true;

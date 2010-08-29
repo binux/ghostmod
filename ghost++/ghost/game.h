@@ -29,6 +29,7 @@ class CDBBan;
 class CDBGame;
 class CDBGamePlayer;
 class CStats;
+class CStatsDOTA;
 class CCallableBanCheck;
 class CCallableBanAdd;
 class CCallableGameAdd;
@@ -49,11 +50,15 @@ protected:
 	CDBGame *m_DBGame;							// potential game data for the database
 	vector<CDBGamePlayer *> m_DBGamePlayers;	// vector of potential gameplayer data for the database
 	CStats *m_Stats;							// class to keep track of game stats such as kills/deaths/assists in dota
+	CStatsDOTA *m_DotaStats;					// class to keep dota game
 	CCallableGameAdd *m_CallableGameAdd;		// threaded database game addition in progress
 	vector<PairedBanCheck> m_PairedBanChecks;	// vector of paired threaded database ban checks in progress
 	vector<PairedBanAdd> m_PairedBanAdds;		// vector of paired threaded database ban adds in progress
 	vector<PairedGPSCheck> m_PairedGPSChecks;	// vector of paired threaded database game player summary checks in progress
 	vector<PairedDPSCheck> m_PairedDPSChecks;	// vector of paired threaded database DotA player summary checks in progress
+	//Mod
+	uint32_t m_StartedBanVoteTime;				// time of ban vote started
+	uint32_t m_BanVotePlayersNeeds;				// players ban vote needs
 
 public:
 	CGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16_t nHostPort, unsigned char nGameState, string nGameName, string nOwnerName, string nCreatorName, string nCreatorServer );

@@ -70,16 +70,24 @@ CGame :: CGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16_t nHost
 {
 	m_DBBanLast = NULL;
 	m_DBBanFirst = NULL;
+	m_DotaStats = NULL;
 	m_DBGame = new CDBGame( 0, string( ), m_Map->GetMapPath( ), string( ), string( ), string( ), 0 );
 
 	if( m_Map->GetMapType( ) == "w3mmd" )
+	{
 		m_Stats = new CStatsW3MMD( this, m_Map->GetMapStatsW3MMDCategory( ) );
+	}
 	else if( m_Map->GetMapType( ) == "dota" )
-		m_Stats = new CStatsDOTA( this );
+	{
+		m_DotaStats = new CStatsDOTA( this );
+		m_Stats = m_DotaStats;
+	}
 	else
 		m_Stats = NULL;
 
 	m_CallableGameAdd = NULL;
+	m_StartedBanVoteTime = 0;
+	m_BanVotePlayersNeeds = 0;
 }
 
 CGame :: ~CGame( )
@@ -325,8 +333,43 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 			if( (*i)->GetName( ) == player->GetName( ) )
 			{
 				m_DBBanLast = *i;
+			}
+
+			// check if autoban allowed in a dota game
+			
+			if( m_DotaStats )
+			{
+				SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
+
 				if( m_DBBanFirst == NULL )
+				{
 					m_DBBanFirst = *i;
+					if( m_GameTicks/1000 < 2*60 )
+					{
+						m_DBBanFirst->SetAdmin("AUTOBAN");
+						m_DBBanFirst->SetReason("Left in 2min");
+						m_BanVotePlayersNeeds = 2;
+						m_StartedBanVoteTime = GetTime( );
+						SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+					}
+					else if( m_GameTicks/1000 > 5*60 )
+					{
+						int scoreDiff = abs(int( m_DotaStats->GetSentinelScore( ) - m_DotaStats->GetScourgeScore( ) ));
+						if( scoreDiff < 15 )
+						{
+							m_DBBanFirst->SetAdmin("AUTOBAN");
+							m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
+							m_StartedBanVoteTime = GetTime( );
+							if( scoreDiff < 5 )
+								m_BanVotePlayersNeeds = 2;
+							else if( scoreDiff < 10 )
+								m_BanVotePlayersNeeds = 3;
+							else
+								m_BanVotePlayersNeeds = 4;
+							SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+						}
+					}
+				}
 			}
 		}
 	}
@@ -353,6 +396,7 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 	// todotodo: don't be lazy
 
 	string User = player->GetName( );
+    unsigned char SID = GetSIDFromPID( player->GetPID( ) );
 	string Command = command;
 	string Payload = payload;
 
@@ -376,6 +420,85 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			RootAdminCheck = true;
 			break;
 		}
+	}
+
+	if( m_AutoStartPlayers && SID == 0 )
+	{
+		/***********************
+		 * FIRST SLOT COMMANDS *
+		 **********************/
+
+		//
+		// !OPEN (open slot)
+		//
+
+		if( Command == "open" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+		{
+			// open as many slots as specified, e.g. "5 10" opens slots 5 and 10
+
+			stringstream SS;
+			SS << Payload;
+
+			while( !SS.eof( ) )
+			{
+				uint32_t SID;
+				SS >> SID;
+
+				if( SS.fail( ) )
+				{
+					CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to open command" );
+					break;
+				}
+				else
+					OpenSlot( (unsigned char)( SID - 1 ), true );
+			}
+
+			Command.clear( );
+		}
+
+		//
+		// !SP
+		//
+
+		if( Command == "sp" && !m_CountDownStarted )
+		{
+			SendAllChat( m_GHost->m_Language->ShufflingPlayers( ) );
+			ShuffleSlots( );
+
+			Command.clear( );
+		}
+
+		//
+		// !SWAP (swap slots)
+		//
+
+		if( Command == "swap" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+		{
+			uint32_t SID1;
+			uint32_t SID2;
+			stringstream SS;
+			SS << Payload;
+			SS >> SID1;
+
+			if( SS.fail( ) )
+				CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #1 to swap command" );
+			else
+			{
+				if( SS.eof( ) )
+					CONSOLE_Print( "[GAME: " + m_GameName + "] missing input #2 to swap command" );
+				else
+				{
+					SS >> SID2;
+
+					if( SS.fail( ) )
+						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #2 to swap command" );
+					else
+						SwapSlots( (unsigned char)( SID1 - 1 ), (unsigned char)( SID2 - 1 ) );
+				}
+			}
+		}
+
+			Command.clear( );
 	}
 
 	if( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) )
@@ -1828,6 +1951,31 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 		}
 		else
 			SendAllChat( m_GHost->m_Language->VoteKickAcceptedNeedMoreVotes( m_KickVotePlayer, User, UTIL_ToString( VotesNeeded - Votes ) ) );
+	}
+
+	//
+	// !AUTOBAN
+	//
+	
+	if( Command == "autoban" && m_DBBanFirst && m_BanVotePlayersNeeds && !player->GetBanVote( ) )
+	{
+		player->SetBanVote( true );
+		uint32_t Votes = 0;
+
+		for( vector<CGamePlayer *> :: iterator i = m_Players.begin( ); i != m_Players.end( ); i++ )
+		{
+			if( (*i)->GetBanVote( ) )
+				Votes++;
+		}
+
+		if( Votes >= m_BanVotePlayersNeeds )
+		{
+			SendAllChat( "AutoBan Passed. player [" + m_DBBanFirst->GetName( ) + "] has been banned!" );
+			m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanLast->GetServer( ) ) ) );
+
+			m_BanVotePlayersNeeds = 0;
+			m_StartedBanVoteTime = 0;
+		}
 	}
 
 	return HideCommand;

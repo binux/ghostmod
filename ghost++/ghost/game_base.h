@@ -105,6 +105,7 @@ protected:
 	uint32_t m_StartedLaggingTime;					// GetTime when the last lag screen started
 	uint32_t m_LastLagScreenTime;					// GetTime when the last lag screen was active (continuously updated)
 	uint32_t m_LastReservedSeen;					// GetTime when the last reserved player was seen in the lobby
+	uint32_t m_LastOwnerSeen;
 	uint32_t m_StartedKickVoteTime;					// GetTime when the kick vote was started
 	uint32_t m_GameOverTime;						// GetTime when the game was over
 	uint32_t m_LastPlayerLeaveTicks;				// GetTicks when the most recent player left the game

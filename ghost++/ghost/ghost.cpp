@@ -1118,9 +1118,19 @@ bool CGHost :: Update( long usecBlock )
 		{
 			if( m_AutoHostMap->GetValid( ) )
 			{
+				string t_HCL;
 				string GameName = m_AutoHostGameName + " #" + UTIL_ToString( m_HostCounter );
 				if( m_AutoHostRandomName )
 					GameName = GameName + "-" + UTIL_ToString( rand( )%1000 );
+				if( !m_Map->GetGameNameWithMode( ).empty( ) )
+				{
+					static int nMode = 0;
+					GameName = m_Map->GetGameNameWithMode( );
+					vector<string> ValidModes = UTIL_Tokenize( m_Map->GetValidModes( ), ' ' );
+					if( nMode < ValidModes.size( ) )
+						t_HCL = ValidModes[nMode].substr(1);
+					UTIL_Replace( GameName, "$MODE$", t_HCL );
+				}
 
 				if( GameName.size( ) <= 31 )
 				{

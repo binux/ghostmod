@@ -256,6 +256,7 @@ public:
 	string PlayerReconnectedWithGProxy( string name );
 	// MOD
 	string DotAGameShowScore( string sentinel, string scourge );
+	string DotAAutoBan( string leaver, string reason, string needVotes );
 };
 
 #endif

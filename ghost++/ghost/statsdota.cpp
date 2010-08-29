@@ -296,7 +296,6 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 							else if( KeyString.size( ) >= 2 && KeyString.substr( 0, 2 ) == "CK" )
 							{
 								// a player disconnected
-								m_Game->SendAllChat( m_Game->m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_ScoreSentinel ), UTIL_ToString( m_ScoreScourge ) ) );
 							}
 						}
 						else if( DataString == "Global" )

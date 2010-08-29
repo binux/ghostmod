@@ -580,6 +580,8 @@ public:
 	string GetGameName( )	{ return m_GameName; }
 	string GetAdmin( )		{ return m_Admin; }
 	string GetReason( )		{ return m_Reason; }
+	void SetReason( string reason )		{ m_Reason = reason; }
+	void SetAdmin( string admin )		{ m_Admin = admin; }
 };
 
 //

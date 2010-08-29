@@ -1,3 +1,30 @@
+===================
+ghost mod changelog
+===================
+
+r10 <2010.8.29>
+	- game
+		* player left message will not sended in game
+		+ autoban command
+		+ first slot command
+	- ghost
+		+ new config "map_gamenamewithmode" - allowed in autohost games use random mode
+r9 <2010.8.17>
+Base on GHost++ 17.1(rev 548)
+        - statsdota
+                + try to find a winner by score which calculate the kills ofsentinel and scourge
+                + take track of leaver kills and make game end with 10 leaverkills
+                + send everyone curent score when someone leaves
+        - game
+                + new command banfirst - try to ban the first leaver
+        - ghost
+                + new config "autohost_randomname" - add a random num at end ofgamename
+                + new config "bot_hclfromgamename" - try to get hcl from gamename ( need "map_validmodes" set in mapcfg )
+        - map
+                + new config "map_allow_newplayers" - allow new players ( withon score ) to join the match game
+                + new config "map_validmodes" - valid game mode to hcl
+
+
 ====================
 GHost++ Version 17.1
 ====================
