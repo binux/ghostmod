@@ -448,6 +448,20 @@ CCallableW3MMDVarAdd *CGHostDBMySQL :: ThreadedW3MMDVarAdd( uint32_t gameid, map
 	return Callable;
 }
 
+//mod
+CCallableLabelCheck *CGHostDBMySQL :: ThreadedLabelCheck( string name )
+{
+	void *Connection = GetIdleConnection( );
+
+	if( !Connection )
+		m_NumConnections++;
+
+	CCallableLabelCheck *Callable = new CMySQLCallableLabelCheck( name, Connection, m_BotID, m_Server, m_Database, m_User, m_Password, m_Port );
+	CreateThread( Callable );
+	m_OutstandingCallables++;
+	return Callable;
+}
+
 void *CGHostDBMySQL :: GetIdleConnection( )
 {
 	void *Connection = NULL;
@@ -1137,6 +1151,38 @@ bool MySQLW3MMDVarAdd( void *conn, string *error, uint32_t botid, uint32_t gamei
 	return Success;
 }
 
+//mod
+string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
+{
+	transform( name.begin( ), name.end( ), name.begin( ), (int(*)(int))tolower );
+	string EscName = MySQLEscapeString( conn, name );
+	string Label = "";
+	string Query = "SELECT label FROM labels WHERE name='" + EscName + "'";
+
+	if( mysql_real_query( (MYSQL *)conn, Query.c_str( ), Query.size( ) ) != 0 )
+		*error = mysql_error( (MYSQL *)conn );
+	else
+	{
+		MYSQL_RES *Result = mysql_store_result( (MYSQL *)conn );
+
+		if( Result )
+		{
+			vector<string> Row = MySQLFetchRow( Result );
+
+			if( Row.size( ) == 1 )
+				Label = Row[0];
+			/* else
+				*error = "error checking Label [" + category + " : " + name + " : " + server + "] - row doesn't have 1 column"; */
+
+			mysql_free_result( Result );
+		}
+		else
+			*error = mysql_error( (MYSQL *)conn );
+	}
+
+	return Label;
+}
+
 //
 // MySQL Callables
 //
@@ -1384,6 +1430,17 @@ void CMySQLCallableW3MMDVarAdd :: operator( )( )
 		else
 			m_Result = MySQLW3MMDVarAdd( m_Connection, &m_Error, m_SQLBotID, m_GameID, m_VarStrings );
 	}
+
+	Close( );
+}
+
+//mod
+void CMySQLCallableLabelCheck :: operator( )( )
+{
+	Init( );
+
+	if( m_Error.empty( ) )
+		m_Result = MySQLLabelCheck( m_Connection, &m_Error, m_SQLBotID, m_Name );
 
 	Close( );
 }

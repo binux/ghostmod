@@ -1,3 +1,4 @@
+
 /*
 
    Copyright [2008] [Trevor Hogan]
@@ -309,6 +310,9 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 	// see the destructor for where these CDBGamePlayers are stored in the database
 	// we could have inserted an incomplete record on creation and updated it later but this makes for a cleaner interface
 
+	if( m_GameLoading )
+		m_BanVotePlayersNeeds = 10;
+
 	if( m_GameLoading || m_GameLoaded )
 	{
 		// todotodo: since we store players that crash during loading it's possible that the stats classes could have no information on them
@@ -333,41 +337,52 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 			if( (*i)->GetName( ) == player->GetName( ) )
 			{
 				m_DBBanLast = *i;
-			}
-
-			// check if autoban allowed in a dota game
-			
-			if( m_DotaStats )
-			{
-				SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
-
 				if( m_DBBanFirst == NULL )
 				{
 					m_DBBanFirst = *i;
-					if( m_GameTicks/1000 < 2*60 )
+				}
+			}
+		}
+
+		// check if autoban allowed in a dota game
+		
+		if( m_DotaStats )
+		{
+			SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
+
+			if( m_DBBanFirst && m_BanVotePlayersNeeds == 0 )
+			{
+				if( m_GameTicks/1000 < 2*60 )
+				{
+					m_DBBanFirst->SetAdmin("AUTOBAN");
+					m_DBBanFirst->SetReason("Left in 2min");
+					m_BanVotePlayersNeeds = 2;
+					m_StartedBanVoteTime = GetTime( );
+					SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+				}
+				else if( m_GameTicks/1000 < 7*60 )
+				{
+					m_DBBanFirst->SetAdmin("AUTOBAN");
+					m_DBBanFirst->SetReason("Left in 7min");
+					m_BanVotePlayersNeeds = 4;
+					m_StartedBanVoteTime = GetTime( );
+					SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+				}
+				else
+				{
+					int scoreDiff = abs(int( m_DotaStats->GetSentinelScore( ) - m_DotaStats->GetScourgeScore( ) ));
+					if( scoreDiff < 15 )
 					{
 						m_DBBanFirst->SetAdmin("AUTOBAN");
-						m_DBBanFirst->SetReason("Left in 2min");
-						m_BanVotePlayersNeeds = 2;
+						m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
 						m_StartedBanVoteTime = GetTime( );
+						if( scoreDiff < 5 )
+							m_BanVotePlayersNeeds = 2;
+						else if( scoreDiff < 10 )
+							m_BanVotePlayersNeeds = 3;
+						else
+							m_BanVotePlayersNeeds = 4;
 						SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
-					}
-					else if( m_GameTicks/1000 > 5*60 )
-					{
-						int scoreDiff = abs(int( m_DotaStats->GetSentinelScore( ) - m_DotaStats->GetScourgeScore( ) ));
-						if( scoreDiff < 15 )
-						{
-							m_DBBanFirst->SetAdmin("AUTOBAN");
-							m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
-							m_StartedBanVoteTime = GetTime( );
-							if( scoreDiff < 5 )
-								m_BanVotePlayersNeeds = 2;
-							else if( scoreDiff < 10 )
-								m_BanVotePlayersNeeds = 3;
-							else
-								m_BanVotePlayersNeeds = 4;
-							SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
-						}
 					}
 				}
 			}
@@ -422,182 +437,225 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 		}
 	}
 
-	if( m_AutoStartPlayers && SID == 0 )
+	if( ( m_AutoStartPlayers && SID == 0 ) || ( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) ) )
 	{
-		/***********************
-		 * FIRST SLOT COMMANDS *
-		 **********************/
+		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + User + "] sent first command [" + Command + "] with payload [" + Payload + "]" );
 
-		//
-		// !OPEN (open slot)
-		//
-
-		if( Command == "open" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) || ( m_AutoStartPlayers && SID == 0 ) )
 		{
-			// open as many slots as specified, e.g. "5 10" opens slots 5 and 10
-
-			stringstream SS;
-			SS << Payload;
-
-			while( !SS.eof( ) )
-			{
-				uint32_t SID;
-				SS >> SID;
-
-				if( SS.fail( ) )
-				{
-					CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to open command" );
-					break;
-				}
-				else
-					OpenSlot( (unsigned char)( SID - 1 ), true );
-			}
-
-			Command.clear( );
-		}
-
-		//
-		// !SP
-		//
-
-		if( Command == "sp" && !m_CountDownStarted )
-		{
-			SendAllChat( m_GHost->m_Language->ShufflingPlayers( ) );
-			ShuffleSlots( );
-
-			Command.clear( );
-		}
-
-		//
-		// !SWAP (swap slots)
-		//
-
-		if( Command == "swap" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
-		{
-			uint32_t SID1;
-			uint32_t SID2;
-			stringstream SS;
-			SS << Payload;
-			SS >> SID1;
-
-			if( SS.fail( ) )
-				CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #1 to swap command" );
-			else
-			{
-				if( SS.eof( ) )
-					CONSOLE_Print( "[GAME: " + m_GameName + "] missing input #2 to swap command" );
-				else
-				{
-					SS >> SID2;
-
-					if( SS.fail( ) )
-						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #2 to swap command" );
-					else
-						SwapSlots( (unsigned char)( SID1 - 1 ), (unsigned char)( SID2 - 1 ) );
-				}
-			}
-		}
-
-			Command.clear( );
-	}
-
-	if( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) )
-	{
-		CONSOLE_Print( "[GAME: " + m_GameName + "] admin [" + User + "] sent command [" + Command + "] with payload [" + Payload + "]" );
-
-		if( !m_Locked || RootAdminCheck || IsOwner( User ) )
-		{
-			/*****************
-			* ADMIN COMMANDS *
-			******************/
+			/***********************
+			 * FIRST SLOT COMMANDS *
+			 **********************/
 
 			//
-			// !ABORT (abort countdown)
-			// !A
+			// !OPEN (open slot)
 			//
 
-			// we use "!a" as an alias for abort because you don't have much time to abort the countdown so it's useful for the abort command to be easy to type
-
-			if( ( Command == "abort" || Command == "a" ) && m_CountDownStarted && !m_GameLoading && !m_GameLoaded )
+			if( Command == "open" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
 			{
-				SendAllChat( m_GHost->m_Language->CountDownAborted( ) );
-				m_CountDownStarted = false;
-			}
+				// open as many slots as specified, e.g. "5 10" opens slots 5 and 10
 
-			//
-			// !ADDBAN
-			// !BAN
-			//
-
-			if( ( Command == "addban" || Command == "ban" ) && !Payload.empty( ) && !m_GHost->m_BNETs.empty( ) )
-			{
-				// extract the victim and the reason
-				// e.g. "Varlock leaver after dying" -> victim: "Varlock", reason: "leaver after dying"
-
-				string Victim;
-				string Reason;
 				stringstream SS;
 				SS << Payload;
-				SS >> Victim;
 
-				if( !SS.eof( ) )
+				while( !SS.eof( ) )
 				{
-					getline( SS, Reason );
-					string :: size_type Start = Reason.find_first_not_of( " " );
+					uint32_t SID;
+					SS >> SID;
 
-					if( Start != string :: npos )
-						Reason = Reason.substr( Start );
-				}
-
-				if( m_GameLoaded )
-				{
-					string VictimLower = Victim;
-					transform( VictimLower.begin( ), VictimLower.end( ), VictimLower.begin( ), (int(*)(int))tolower );
-					uint32_t Matches = 0;
-					CDBBan *LastMatch = NULL;
-
-					// try to match each player with the passed string (e.g. "Varlock" would be matched with "lock")
-					// we use the m_DBBans vector for this in case the player already left and thus isn't in the m_Players vector anymore
-
-					for( vector<CDBBan *> :: iterator i = m_DBBans.begin( ); i != m_DBBans.end( ); i++ )
+					if( SS.fail( ) )
 					{
-						string TestName = (*i)->GetName( );
-						transform( TestName.begin( ), TestName.end( ), TestName.begin( ), (int(*)(int))tolower );
-
-						if( TestName.find( VictimLower ) != string :: npos )
-						{
-							Matches++;
-							LastMatch = *i;
-
-							// if the name matches exactly stop any further matching
-
-							if( TestName == VictimLower )
-							{
-								Matches = 1;
-								break;
-							}
-						}
+						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to open command" );
+						break;
 					}
-
-					if( Matches == 0 )
-						SendAllChat( m_GHost->m_Language->UnableToBanNoMatchesFound( Victim ) );
-					else if( Matches == 1 )
-						m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( LastMatch->GetServer( ), LastMatch->GetName( ), LastMatch->GetIP( ), m_GameName, User, Reason ) ) );
 					else
-						SendAllChat( m_GHost->m_Language->UnableToBanFoundMoreThanOneMatch( Victim ) );
+						OpenSlot( (unsigned char)( SID - 1 ), true );
 				}
+			}
+
+			//
+			// !SP
+			//
+
+			if( Command == "sp" && !m_CountDownStarted )
+			{
+				SendAllChat( m_GHost->m_Language->ShufflingPlayers( ) );
+				ShuffleSlots( );
+
+				Command.clear( );
+			}
+
+			//
+			// !SWAP (swap slots)
+			//
+
+			if( Command == "swap" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+			{
+				uint32_t SID1;
+				uint32_t SID2;
+				stringstream SS;
+				SS << Payload;
+				SS >> SID1;
+
+				if( SS.fail( ) )
+					CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #1 to swap command" );
 				else
 				{
-					CGamePlayer *LastMatch = NULL;
-					uint32_t Matches = GetPlayerFromNamePartial( Victim, &LastMatch );
-
-					if( Matches == 0 )
-						SendAllChat( m_GHost->m_Language->UnableToBanNoMatchesFound( Victim ) );
-					else if( Matches == 1 )
-						m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( LastMatch->GetJoinedRealm( ), LastMatch->GetName( ), LastMatch->GetExternalIPString( ), m_GameName, User, Reason ) ) );
+					if( SS.eof( ) )
+						CONSOLE_Print( "[GAME: " + m_GameName + "] missing input #2 to swap command" );
 					else
-						SendAllChat( m_GHost->m_Language->UnableToBanFoundMoreThanOneMatch( Victim ) );
+					{
+						SS >> SID2;
+
+						if( SS.fail( ) )
+							CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #2 to swap command" );
+						else
+							SwapSlots( (unsigned char)( SID1 - 1 ), (unsigned char)( SID2 - 1 ) );
+					}
 				}
+			}
+		}
+		else if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
+		{
+			/***************************
+			* ADMIN AND OWNER COMMANDS *
+			****************************/
+
+			//
+			// !UNHOST
+			//
+
+			if( Command == "unhost" && !m_CountDownStarted )
+				m_Exiting = true;
+
+			//
+			// !UNLOCK
+			//
+
+			if( Command == "unlock" && ( RootAdminCheck || IsOwner( User ) ) )
+			{
+				SendAllChat( m_GHost->m_Language->GameUnlocked( ) );
+				m_Locked = false;
+			}
+
+			//
+			// !START
+			//
+
+			if( Command == "start" && !m_CountDownStarted )
+			{
+				// if the player sent "!start force" skip the checks and start the countdown
+				// otherwise check that the game is ready to start
+
+				if( Payload == "force" )
+					StartCountDown( true );
+				else
+				{
+					if( GetTicks( ) - m_LastPlayerLeaveTicks >= 2000 )
+						StartCountDown( false );
+					else
+						SendAllChat( m_GHost->m_Language->CountDownAbortedSomeoneLeftRecently( ) );
+				}
+			}
+
+			//
+			// !OWNER (set game owner)
+			//
+
+			if( Command == "owner" )
+			{
+				if( RootAdminCheck || IsOwner( User ) || !GetPlayerFromName( m_OwnerName, false ) )
+				{
+					if( !Payload.empty( ) )
+					{
+						SendAllChat( m_GHost->m_Language->SettingGameOwnerTo( Payload ) );
+						m_OwnerName = Payload;
+					}
+					else
+					{
+						SendAllChat( m_GHost->m_Language->SettingGameOwnerTo( User ) );
+						m_OwnerName = User;
+					}
+				}
+				else
+					SendAllChat( m_GHost->m_Language->UnableToSetGameOwner( m_OwnerName ) );
+			}
+
+			//
+			// !LOCK
+			//
+
+			if( Command == "lock" && ( RootAdminCheck || IsOwner( User ) ) )
+			{
+				SendAllChat( m_GHost->m_Language->GameLocked( ) );
+				m_Locked = true;
+			}
+
+			//
+			// !HCL
+			//
+
+			if( Command == "hcl" && !m_CountDownStarted )
+			{
+				if( !Payload.empty( ) )
+				{
+					if( Payload.size( ) <= m_Slots.size( ) )
+					{
+						string HCLChars = "abcdefghijklmnopqrstuvwxyz0123456789 -=,.";
+
+						if( Payload.find_first_not_of( HCLChars ) == string :: npos && m_Map->GetValidModes( ).find( Payload) != string :: npos )
+						{
+							m_HCLCommandString = Payload;
+							m_HCLOverride = true;
+							SendAllChat( m_GHost->m_Language->SettingHCL( m_HCLCommandString ) );
+						}
+						else
+							SendAllChat( m_GHost->m_Language->UnableToSetHCLInvalid( ) );
+					}
+					else
+						SendAllChat( m_GHost->m_Language->UnableToSetHCLTooLong( ) );
+				}
+				else
+					SendAllChat( m_GHost->m_Language->TheHCLIs( m_HCLCommandString ) );
+			}
+
+			//
+			// !HOLD (hold a slot for someone)
+			//
+
+			if( Command == "hold" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+			{
+				// hold as many players as specified, e.g. "Varlock Kilranin" holds players "Varlock" and "Kilranin"
+
+				stringstream SS;
+				SS << Payload;
+
+				while( !SS.eof( ) )
+				{
+					string HoldName;
+					SS >> HoldName;
+
+					if( SS.fail( ) )
+					{
+						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to hold command" );
+						break;
+					}
+					else
+					{
+						SendAllChat( m_GHost->m_Language->AddedPlayerToTheHoldList( HoldName ) );
+						AddToReserved( HoldName );
+					}
+				}
+			}
+
+			//
+			// !CLEARHCL
+			//
+
+			if( Command == "clearhcl" && !m_CountDownStarted )
+			{
+				m_HCLCommandString.clear( );
+				SendAllChat( m_GHost->m_Language->ClearingHCL( ) );
 			}
 
 			//
@@ -644,6 +702,25 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
+			// !ABORT (abort countdown)
+			// !A
+			//
+
+			// we use "!a" as an alias for abort because you don't have much time to abort the countdown so it's useful for the abort command to be easy to type
+
+			if( ( Command == "abort" || Command == "a" ) && m_CountDownStarted && !m_GameLoading && !m_GameLoaded )
+			{
+				SendAllChat( m_GHost->m_Language->CountDownAborted( ) );
+				m_CountDownStarted = false;
+			}
+		}
+		else if( RootAdminCheck || AdminCheck )
+		{
+			/****************
+			* ADMIN COMMAND *
+			****************/
+
+			//
 			// !AUTOSAVE
 			//
 
@@ -683,20 +760,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					}
 				}
 			}
-
-			//
-			// !BANLAST
-			//
-
-			if( Command == "banlast" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanLast )
-				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanLast->GetServer( ), m_DBBanLast->GetName( ), m_DBBanLast->GetIP( ), m_GameName, User, Payload ) ) );
-
-			// 
-			// !BANFIRST
-			//
-
-			if( Command == "banfirst" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanFirst )
-				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, User, Payload ) ) );
 
 			//
 			// !CHECK
@@ -742,26 +805,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 				}
 				else
 					SendAllChat( m_GHost->m_Language->CheckedPlayer( User, player->GetNumPings( ) > 0 ? UTIL_ToString( player->GetPing( m_GHost->m_LCPings ) ) + "ms" : "N/A", m_GHost->m_DBLocal->FromCheck( UTIL_ByteArrayToUInt32( player->GetExternalIP( ), true ) ), AdminCheck || RootAdminCheck ? "Yes" : "No", IsOwner( User ) ? "Yes" : "No", player->GetSpoofed( ) ? "Yes" : "No", player->GetSpoofedRealm( ).empty( ) ? "N/A" : player->GetSpoofedRealm( ), player->GetReserved( ) ? "Yes" : "No" ) );
-			}
-
-			//
-			// !CHECKBAN
-			//
-
-			if( Command == "checkban" && !Payload.empty( ) && !m_GHost->m_BNETs.empty( ) )
-			{
-				for( vector<CBNET *> :: iterator i = m_GHost->m_BNETs.begin( ); i != m_GHost->m_BNETs.end( ); i++ )
-					m_PairedBanChecks.push_back( PairedBanCheck( User, m_GHost->m_DB->ThreadedBanCheck( (*i)->GetServer( ), Payload, string( ) ) ) );
-			}
-
-			//
-			// !CLEARHCL
-			//
-
-			if( Command == "clearhcl" && !m_CountDownStarted )
-			{
-				m_HCLCommandString.clear( );
-				SendAllChat( m_GHost->m_Language->ClearingHCL( ) );
 			}
 
 			//
@@ -1025,13 +1068,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
-			// !DBSTATUS
-			//
-
-			if( Command == "dbstatus" )
-				SendAllChat( m_GHost->m_DB->GetStatus( ) );
-
-			//
 			// !DOWNLOAD
 			// !DL
 			//
@@ -1066,11 +1102,11 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
-			// !DROP
+			// !DBSTATUS
 			//
 
-			if( Command == "drop" && m_GameLoaded )
-				StopLaggers( "lagged out (dropped by admin)" );
+			if( Command == "dbstatus"  && !IsOwner( User ))
+				SendAllChat( m_GHost->m_DB->GetStatus( ) );
 
 			//
 			// !END
@@ -1152,91 +1188,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
-			// !HCL
-			//
-
-			if( Command == "hcl" && !m_CountDownStarted )
-			{
-				if( !Payload.empty( ) )
-				{
-					if( Payload.size( ) <= m_Slots.size( ) )
-					{
-						string HCLChars = "abcdefghijklmnopqrstuvwxyz0123456789 -=,.";
-
-						if( Payload.find_first_not_of( HCLChars ) == string :: npos && m_Map->GetValidModes( ).find( Payload) != string :: npos )
-						{
-							m_HCLCommandString = Payload;
-							m_HCLOverride = true;
-							SendAllChat( m_GHost->m_Language->SettingHCL( m_HCLCommandString ) );
-						}
-						else
-							SendAllChat( m_GHost->m_Language->UnableToSetHCLInvalid( ) );
-					}
-					else
-						SendAllChat( m_GHost->m_Language->UnableToSetHCLTooLong( ) );
-				}
-				else
-					SendAllChat( m_GHost->m_Language->TheHCLIs( m_HCLCommandString ) );
-			}
-
-			//
-			// !HOLD (hold a slot for someone)
-			//
-
-			if( Command == "hold" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
-			{
-				// hold as many players as specified, e.g. "Varlock Kilranin" holds players "Varlock" and "Kilranin"
-
-				stringstream SS;
-				SS << Payload;
-
-				while( !SS.eof( ) )
-				{
-					string HoldName;
-					SS >> HoldName;
-
-					if( SS.fail( ) )
-					{
-						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to hold command" );
-						break;
-					}
-					else
-					{
-						SendAllChat( m_GHost->m_Language->AddedPlayerToTheHoldList( HoldName ) );
-						AddToReserved( HoldName );
-					}
-				}
-			}
-
-			//
-			// !KICK (kick a player)
-			//
-
-			if( Command == "kick" && !Payload.empty( ) )
-			{
-				CGamePlayer *LastMatch = NULL;
-				uint32_t Matches = GetPlayerFromNamePartial( Payload, &LastMatch );
-
-				if( Matches == 0 )
-					SendAllChat( m_GHost->m_Language->UnableToKickNoMatchesFound( Payload ) );
-				else if( Matches == 1 )
-				{
-					LastMatch->SetDeleteMe( true );
-					LastMatch->SetLeftReason( m_GHost->m_Language->WasKickedByPlayer( User ) );
-
-					if( !m_GameLoading && !m_GameLoaded )
-						LastMatch->SetLeftCode( PLAYERLEAVE_LOBBY );
-					else
-						LastMatch->SetLeftCode( PLAYERLEAVE_LOST );
-
-					if( !m_GameLoading && !m_GameLoaded )
-						OpenSlot( GetSIDFromPID( LastMatch->GetPID( ) ), false );
-				}
-				else
-					SendAllChat( m_GHost->m_Language->UnableToKickFoundMoreThanOneMatch( Payload ) );
-			}
-
-			//
 			// !LATENCY (set game latency)
 			//
 
@@ -1261,16 +1212,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					else
 						SendAllChat( m_GHost->m_Language->SettingLatencyTo( UTIL_ToString( m_Latency ) ) );
 				}
-			}
-
-			//
-			// !LOCK
-			//
-
-			if( Command == "lock" && ( RootAdminCheck || IsOwner( User ) ) )
-			{
-				SendAllChat( m_GHost->m_Language->GameLocked( ) );
-				m_Locked = true;
 			}
 
 			//
@@ -1322,60 +1263,11 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
-			// !OPEN (open slot)
-			//
-
-			if( Command == "open" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
-			{
-				// open as many slots as specified, e.g. "5 10" opens slots 5 and 10
-
-				stringstream SS;
-				SS << Payload;
-
-				while( !SS.eof( ) )
-				{
-					uint32_t SID;
-					SS >> SID;
-
-					if( SS.fail( ) )
-					{
-						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to open command" );
-						break;
-					}
-					else
-						OpenSlot( (unsigned char)( SID - 1 ), true );
-				}
-			}
-
-			//
 			// !OPENALL
 			//
 
 			if( Command == "openall" && !m_GameLoading && !m_GameLoaded )
 				OpenAllSlots( );
-
-			//
-			// !OWNER (set game owner)
-			//
-
-			if( Command == "owner" )
-			{
-				if( RootAdminCheck || IsOwner( User ) || !GetPlayerFromName( m_OwnerName, false ) )
-				{
-					if( !Payload.empty( ) )
-					{
-						SendAllChat( m_GHost->m_Language->SettingGameOwnerTo( Payload ) );
-						m_OwnerName = Payload;
-					}
-					else
-					{
-						SendAllChat( m_GHost->m_Language->SettingGameOwnerTo( User ) );
-						m_OwnerName = User;
-					}
-				}
-				else
-					SendAllChat( m_GHost->m_Language->UnableToSetGameOwner( m_OwnerName ) );
-			}
 
 			//
 			// !PING
@@ -1438,48 +1330,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 
 				if( Kicked > 0 )
 					SendAllChat( m_GHost->m_Language->KickingPlayersWithPingsGreaterThan( UTIL_ToString( Kicked ), UTIL_ToString( KickPing ) ) );
-			}
-
-			//
-			// !PRIV (rehost as private game)
-			//
-
-			if( Command == "priv" && !Payload.empty( ) && !m_CountDownStarted && !m_SaveGame )
-			{
-				if( Payload.length() < 31 )
-				{
-					CONSOLE_Print( "[GAME: " + m_GameName + "] trying to rehost as private game [" + Payload + "]" );
-					SendAllChat( m_GHost->m_Language->TryingToRehostAsPrivateGame( Payload ) );
-					m_GameState = GAME_PRIVATE;
-					m_LastGameName = m_GameName;
-					m_GameName = Payload;
-					m_HostCounter = m_GHost->m_HostCounter++;
-					m_RefreshError = false;
-					m_RefreshRehosted = true;
-
-					for( vector<CBNET *> :: iterator i = m_GHost->m_BNETs.begin( ); i != m_GHost->m_BNETs.end( ); i++ )
-					{
-						// unqueue any existing game refreshes because we're going to assume the next successful game refresh indicates that the rehost worked
-						// this ignores the fact that it's possible a game refresh was just sent and no response has been received yet
-						// we assume this won't happen very often since the only downside is a potential false positive
-
-						(*i)->UnqueueGameRefreshes( );
-						(*i)->QueueGameUncreate( );
-						(*i)->QueueEnterChat( );
-
-						// we need to send the game creation message now because private games are not refreshed
-
-						(*i)->QueueGameCreate( m_GameState, m_GameName, string( ), m_Map, NULL, m_HostCounter );
-
-						if( (*i)->GetPasswordHashType( ) != "pvpgn" )
-							(*i)->QueueEnterChat( );
-					}
-
-					m_CreationTime = GetTime( );
-					m_LastRefreshTime = GetTime( );
-				}
-				else
-					SendAllChat( m_GHost->m_Language->UnableToCreateGameNameTooLong( Payload ) );
 			}
 
 			//
@@ -1613,66 +1463,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			}
 
 			//
-			// !SP
-			//
-
-			if( Command == "sp" && !m_CountDownStarted )
-			{
-				SendAllChat( m_GHost->m_Language->ShufflingPlayers( ) );
-				ShuffleSlots( );
-			}
-
-			//
-			// !START
-			//
-
-			if( Command == "start" && !m_CountDownStarted )
-			{
-				// if the player sent "!start force" skip the checks and start the countdown
-				// otherwise check that the game is ready to start
-
-				if( Payload == "force" )
-					StartCountDown( true );
-				else
-				{
-					if( GetTicks( ) - m_LastPlayerLeaveTicks >= 2000 )
-						StartCountDown( false );
-					else
-						SendAllChat( m_GHost->m_Language->CountDownAbortedSomeoneLeftRecently( ) );
-				}
-			}
-
-			//
-			// !SWAP (swap slots)
-			//
-
-			if( Command == "swap" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
-			{
-				uint32_t SID1;
-				uint32_t SID2;
-				stringstream SS;
-				SS << Payload;
-				SS >> SID1;
-
-				if( SS.fail( ) )
-					CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #1 to swap command" );
-				else
-				{
-					if( SS.eof( ) )
-						CONSOLE_Print( "[GAME: " + m_GameName + "] missing input #2 to swap command" );
-					else
-					{
-						SS >> SID2;
-
-						if( SS.fail( ) )
-							CONSOLE_Print( "[GAME: " + m_GameName + "] bad input #2 to swap command" );
-						else
-							SwapSlots( (unsigned char)( SID1 - 1 ), (unsigned char)( SID2 - 1 ) );
-					}
-				}
-			}
-
-			//
 			// !SYNCLIMIT
 			//
 
@@ -1697,23 +1487,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					else
 						SendAllChat( m_GHost->m_Language->SettingSyncLimitTo( UTIL_ToString( m_SyncLimit ) ) );
 				}
-			}
-
-			//
-			// !UNHOST
-			//
-
-			if( Command == "unhost" && !m_CountDownStarted )
-				m_Exiting = true;
-
-			//
-			// !UNLOCK
-			//
-
-			if( Command == "unlock" && ( RootAdminCheck || IsOwner( User ) ) )
-			{
-				SendAllChat( m_GHost->m_Language->GameUnlocked( ) );
-				m_Locked = false;
 			}
 
 			//
@@ -1791,8 +1564,178 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 
 				HideCommand = true;
 			}
+
+			//
+			// !ADDBAN
+			// !BAN
+			//
+
+			if( ( Command == "addban" || Command == "ban" ) && !Payload.empty( ) && !m_GHost->m_BNETs.empty( ) && !IsOwner( User ))
+			{
+				// extract the victim and the reason
+				// e.g. "Varlock leaver after dying" -> victim: "Varlock", reason: "leaver after dying"
+
+				string Victim;
+				string Reason;
+				stringstream SS;
+				SS << Payload;
+				SS >> Victim;
+
+				if( !SS.eof( ) )
+				{
+					getline( SS, Reason );
+					string :: size_type Start = Reason.find_first_not_of( " " );
+
+					if( Start != string :: npos )
+						Reason = Reason.substr( Start );
+				}
+
+				if( m_GameLoaded )
+				{
+					string VictimLower = Victim;
+					transform( VictimLower.begin( ), VictimLower.end( ), VictimLower.begin( ), (int(*)(int))tolower );
+					uint32_t Matches = 0;
+					CDBBan *LastMatch = NULL;
+
+					// try to match each player with the passed string (e.g. "Varlock" would be matched with "lock")
+					// we use the m_DBBans vector for this in case the player already left and thus isn't in the m_Players vector anymore
+
+					for( vector<CDBBan *> :: iterator i = m_DBBans.begin( ); i != m_DBBans.end( ); i++ )
+					{
+						string TestName = (*i)->GetName( );
+						transform( TestName.begin( ), TestName.end( ), TestName.begin( ), (int(*)(int))tolower );
+
+						if( TestName.find( VictimLower ) != string :: npos )
+						{
+							Matches++;
+							LastMatch = *i;
+
+							// if the name matches exactly stop any further matching
+
+							if( TestName == VictimLower )
+							{
+								Matches = 1;
+								break;
+							}
+						}
+					}
+
+					if( Matches == 0 )
+						SendAllChat( m_GHost->m_Language->UnableToBanNoMatchesFound( Victim ) );
+					else if( Matches == 1 )
+						m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( LastMatch->GetServer( ), LastMatch->GetName( ), LastMatch->GetIP( ), m_GameName, User, Reason ) ) );
+					else
+						SendAllChat( m_GHost->m_Language->UnableToBanFoundMoreThanOneMatch( Victim ) );
+				}
+				else
+				{
+					CGamePlayer *LastMatch = NULL;
+					uint32_t Matches = GetPlayerFromNamePartial( Victim, &LastMatch );
+
+					if( Matches == 0 )
+						SendAllChat( m_GHost->m_Language->UnableToBanNoMatchesFound( Victim ) );
+					else if( Matches == 1 )
+						m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( LastMatch->GetJoinedRealm( ), LastMatch->GetName( ), LastMatch->GetExternalIPString( ), m_GameName, User, Reason ) ) );
+					else
+						SendAllChat( m_GHost->m_Language->UnableToBanFoundMoreThanOneMatch( Victim ) );
+				}
+			}
+
+			//
+			// !BANLAST
+			//
+
+			if( Command == "banlast" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanLast  && !IsOwner( User ))
+				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanLast->GetServer( ), m_DBBanLast->GetName( ), m_DBBanLast->GetIP( ), m_GameName, User, Payload ) ) );
+
+			// 
+			// !BANFIRST
+			//
+
+			if( Command == "banfirst" && m_GameLoaded && !m_GHost->m_BNETs.empty( ) && m_DBBanFirst  && !IsOwner( User ))
+				m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, User, Payload ) ) );
+
+			//
+			// !CHECKBAN
+			//
+
+			if( Command == "checkban" && !Payload.empty( ) && !m_GHost->m_BNETs.empty( ) )
+			{
+				for( vector<CBNET *> :: iterator i = m_GHost->m_BNETs.begin( ); i != m_GHost->m_BNETs.end( ); i++ )
+					m_PairedBanChecks.push_back( PairedBanCheck( User, m_GHost->m_DB->ThreadedBanCheck( (*i)->GetServer( ), Payload, string( ) ) ) );
+			}
+
+			//
+			// !KICK (kick a player)
+			//
+
+			if( Command == "kick" && !Payload.empty( )  && !IsOwner( User ) )
+			{
+				CGamePlayer *LastMatch = NULL;
+				uint32_t Matches = GetPlayerFromNamePartial( Payload, &LastMatch );
+
+				if( Matches == 0 )
+					SendAllChat( m_GHost->m_Language->UnableToKickNoMatchesFound( Payload ) );
+				else if( Matches == 1 )
+				{
+					LastMatch->SetDeleteMe( true );
+					LastMatch->SetLeftReason( m_GHost->m_Language->WasKickedByPlayer( User ) );
+
+					if( !m_GameLoading && !m_GameLoaded )
+						LastMatch->SetLeftCode( PLAYERLEAVE_LOBBY );
+					else
+						LastMatch->SetLeftCode( PLAYERLEAVE_LOST );
+
+					if( !m_GameLoading && !m_GameLoaded )
+						OpenSlot( GetSIDFromPID( LastMatch->GetPID( ) ), false );
+				}
+				else
+					SendAllChat( m_GHost->m_Language->UnableToKickFoundMoreThanOneMatch( Payload ) );
+			}
+
+			//
+			// !PRIV (rehost as private game)
+			//
+
+			if( Command == "priv" && !Payload.empty( ) && !m_CountDownStarted && !m_SaveGame )
+			{
+				if( Payload.length() < 31 )
+				{
+					CONSOLE_Print( "[GAME: " + m_GameName + "] trying to rehost as private game [" + Payload + "]" );
+					SendAllChat( m_GHost->m_Language->TryingToRehostAsPrivateGame( Payload ) );
+					m_GameState = GAME_PRIVATE;
+					m_LastGameName = m_GameName;
+					m_GameName = Payload;
+					m_HostCounter = m_GHost->m_HostCounter++;
+					m_RefreshError = false;
+					m_RefreshRehosted = true;
+
+					for( vector<CBNET *> :: iterator i = m_GHost->m_BNETs.begin( ); i != m_GHost->m_BNETs.end( ); i++ )
+					{
+						// unqueue any existing game refreshes because we're going to assume the next successful game refresh indicates that the rehost worked
+						// this ignores the fact that it's possible a game refresh was just sent and no response has been received yet
+						// we assume this won't happen very often since the only downside is a potential false positive
+
+						(*i)->UnqueueGameRefreshes( );
+						(*i)->QueueGameUncreate( );
+						(*i)->QueueEnterChat( );
+
+						// we need to send the game creation message now because private games are not refreshed
+
+						(*i)->QueueGameCreate( m_GameState, m_GameName, string( ), m_Map, NULL, m_HostCounter );
+
+						if( (*i)->GetPasswordHashType( ) != "pvpgn" )
+							(*i)->QueueEnterChat( );
+					}
+
+					m_CreationTime = GetTime( );
+					m_LastRefreshTime = GetTime( );
+				}
+				else
+					SendAllChat( m_GHost->m_Language->UnableToCreateGameNameTooLong( Payload ) );
+			}
 		}
-		else
+		else if ( m_Locked && AdminCheck )
 		{
 			CONSOLE_Print( "[GAME: " + m_GameName + "] admin command ignored, the game is locked" );
 			SendChat( player, m_GHost->m_Language->TheGameIsLocked( ) );
@@ -1959,6 +1902,7 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 	
 	if( Command == "autoban" && m_DBBanFirst && m_BanVotePlayersNeeds && !player->GetBanVote( ) )
 	{
+		HideCommand = true;
 		player->SetBanVote( true );
 		uint32_t Votes = 0;
 
@@ -1971,11 +1915,22 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 		if( Votes >= m_BanVotePlayersNeeds )
 		{
 			SendAllChat( "AutoBan Passed. player [" + m_DBBanFirst->GetName( ) + "] has been banned!" );
-			m_PairedBanAdds.push_back( PairedBanAdd( User, m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanLast->GetServer( ) ) ) );
+			m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
 
 			m_BanVotePlayersNeeds = 0;
 			m_StartedBanVoteTime = 0;
 		}
+		else
+			SendAllChat( "AutoBan need " + UTIL_ToString( m_BanVotePlayersNeeds - Votes ) + " more votes. Type in !autoban to vote through!");
+	}
+
+	//
+	// !SCORE
+	//
+
+	if( Command =="score" && m_DotaStats && m_GameLoaded )
+	{
+		SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
 	}
 
 	return HideCommand;

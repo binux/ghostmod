@@ -464,7 +464,7 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 
 	// unlock the game
 
-	if( m_Locked && !GetPlayerFromName( m_OwnerName, false ) )
+	if( m_Locked && !GetPlayerFromName( m_OwnerName, false ) && !m_AutoStartPlayers )
 	{
 		SendAllChat( m_GHost->m_Language->GameUnlocked( ) );
 		m_Locked = false;
@@ -1404,15 +1404,12 @@ void CBaseGame :: SendWelcomeMessage( CGamePlayer *player )
 	{
 		// default welcome message
 
-		if( m_HCLCommandString.empty( ) )
-			SendChat( player, " " );
-
-		SendChat( player, " " );
-		SendChat( player, " " );
-		SendChat( player, " " );
-		SendChat( player, "GHost++                                         http://www.codelain.com/" );
-		SendChat( player, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" );
-		SendChat( player, "     Game Name:                 " + m_GameName );
+		SendChat( player, "GHost++              http://www.codelain.com/" );
+		SendChat( player, "         WelCome to BYR BN" );
+		SendChat( player, "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-" );
+		SendChat( player, "     Game Name:  " + m_GameName );
+		SendChat( player, "     Owner:      " + m_OwnerName );
+		SendChat( player, "     Game Mode:  " + m_HCLCommandString );
 
 		if( !m_HCLCommandString.empty( ) )
 			SendChat( player, "     HCL Command String:  " + m_HCLCommandString );

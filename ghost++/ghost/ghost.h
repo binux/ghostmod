@@ -136,6 +136,7 @@ public:
 	// mod
 	bool m_HCLFromGameName;					// custom value: try to fetch hcl command from game name
 	bool m_AutoHostRandomName;				// custom value: add a random num to the end of autohost games
+	bool m_UserCreateGame;					// custom value: allow user create a game or not
 
 	CGHost( CConfig *CFG );
 	~CGHost( );

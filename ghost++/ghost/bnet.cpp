@@ -2114,7 +2114,16 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 				}
 			}
 			else
+			{
 				CONSOLE_Print( "[BNET: " + m_ServerAlias + "] non-admin [" + User + "] sent command [" + Message + "]" );
+
+				//
+				// !PUB (host public game)
+				//
+
+				if( Command == "pub" && !Payload.empty( ) )
+					m_GHost->CreateGame( m_GHost->m_Map, GAME_PUBLIC, false, Payload, User, User, m_Server, Whisper );
+			}
 
 			/*********************
 			* NON ADMIN COMMANDS *

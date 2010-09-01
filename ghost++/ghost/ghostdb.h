@@ -52,6 +52,9 @@ class CDBGamePlayer;
 class CDBGamePlayerSummary;
 class CDBDotAPlayerSummary;
 
+//mod
+class CCallableLabelCheck;
+
 typedef pair<uint32_t,string> VarP;
 
 class CGHostDB
@@ -127,6 +130,9 @@ public:
 	virtual CCallableW3MMDVarAdd *ThreadedW3MMDVarAdd( uint32_t gameid, map<VarP,int32_t> var_ints );
 	virtual CCallableW3MMDVarAdd *ThreadedW3MMDVarAdd( uint32_t gameid, map<VarP,double> var_reals );
 	virtual CCallableW3MMDVarAdd *ThreadedW3MMDVarAdd( uint32_t gameid, map<VarP,string> var_strings );
+
+	//mod
+	virtual CCallableLabelCheck *ThreadedLabelCheck( string name );
 };
 
 //
@@ -552,6 +558,22 @@ public:
 
 	virtual bool GetResult( )				{ return m_Result; }
 	virtual void SetResult( bool nResult )	{ m_Result = nResult; }
+};
+
+// mod
+class CCallableLabelCheck : virtual public CBaseCallable
+{
+protected:
+	string m_Name;
+	string m_Result;
+
+public:
+	CCallableLabelCheck( string nName ) : CBaseCallable( ), m_Name( nName ), m_Result( "" ) { }
+	virtual ~CCallableLabelCheck( );
+
+	virtual string GetName( )					{ return m_Name; }
+	virtual string GetResult( )					{ return m_Result; }
+	virtual void SetResult( string nResult )	{ m_Result = nResult; }
 };
 
 //
