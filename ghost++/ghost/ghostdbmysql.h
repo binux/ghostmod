@@ -214,6 +214,7 @@ public:
 
 	//mod
 	virtual CCallableLabelCheck *ThreadedLabelCheck( string name );
+	virtual CCallableLabelList *ThreadedLabelList( );
 
 	// other database functions
 
@@ -504,6 +505,17 @@ class CMySQLCallableLabelCheck : public CCallableLabelCheck, public CMySQLCallab
 public:
 	CMySQLCallableLabelCheck( string nName, void *nConnection, uint32_t nSQLBotID, string nSQLServer, string nSQLDatabase, string nSQLUser, string nSQLPassword, uint16_t nSQLPort ) : CBaseCallable( ), CCallableLabelCheck( nName ), CMySQLCallable( nConnection, nSQLBotID, nSQLServer, nSQLDatabase, nSQLUser, nSQLPassword, nSQLPort ) { }
 	virtual ~CMySQLCallableLabelCheck( ) { }
+
+	virtual void operator( )( );
+	virtual void Init( ) { CMySQLCallable :: Init( ); }
+	virtual void Close( ) { CMySQLCallable :: Close( ); }
+};
+
+class CMySQLCallableLabelList : public CCallableLabelList, public CMySQLCallable
+{
+public:
+	CMySQLCallableLabelList( void *nConnection, uint32_t nSQLBotID, string nSQLServer, string nSQLDatabase, string nSQLUser, string nSQLPassword, uint16_t nSQLPort ) : CBaseCallable( ), CCallableLabelList( ), CMySQLCallable( nConnection, nSQLBotID, nSQLServer, nSQLDatabase, nSQLUser, nSQLPassword, nSQLPort ) { }
+	virtual ~CMySQLCallableLabelList( ) { }
 
 	virtual void operator( )( );
 	virtual void Init( ) { CMySQLCallable :: Init( ); }

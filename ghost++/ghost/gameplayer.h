@@ -127,6 +127,8 @@ private:
 	queue<BYTEARRAY> m_GProxyBuffer;
 	uint32_t m_GProxyReconnectKey;
 	uint32_t m_LastGProxyAckTime;
+	// mod
+	string m_Label;								// the label add to the head of player name
 
 public:
 	CGamePlayer( CGameProtocol *nProtocol, CBaseGame *nGame, CTCPSocket *nSocket, unsigned char nPID, string nJoinedRealm, string nName, BYTEARRAY nInternalIP, bool nReserved );
@@ -175,6 +177,9 @@ public:
 	bool GetGProxy( )							{ return m_GProxy; }
 	bool GetGProxyDisconnectNoticeSent( )		{ return m_GProxyDisconnectNoticeSent; }
 	uint32_t GetGProxyReconnectKey( )			{ return m_GProxyReconnectKey; }
+	//mod
+	string GetLabel( )							{ return m_Label; }
+	string GetNameWithLabel( )					{ return ((m_Label+m_Name).size( ) > 15 )?m_Name:m_Label+m_Name; }
 
 	void SetLeftReason( string nLeftReason )										{ m_LeftReason = nLeftReason; }
 	void SetSpoofedRealm( string nSpoofedRealm )									{ m_SpoofedRealm = nSpoofedRealm; }
@@ -204,6 +209,8 @@ public:
 	void SetMuted( bool nMuted )													{ m_Muted = nMuted; }
 	void SetLeftMessageSent( bool nLeftMessageSent )								{ m_LeftMessageSent = nLeftMessageSent; }
 	void SetGProxyDisconnectNoticeSent( bool nGProxyDisconnectNoticeSent )			{ m_GProxyDisconnectNoticeSent = nGProxyDisconnectNoticeSent; }
+	// mod
+	void SetLabel( string nLabel )													{ m_Label = nLabel; }
 
 	string GetNameTerminated( );
 	uint32_t GetPing( bool LCPing );

@@ -55,6 +55,7 @@ CBNET :: CBNET( CGHost *nGHost, string nServer, string nServerAlias, string nBNL
 	m_BNCSUtil = new CBNCSUtilInterface( nUserName, nUserPassword );
 	m_CallableAdminList = m_GHost->m_DB->ThreadedAdminList( nServer );
 	m_CallableBanList = m_GHost->m_DB->ThreadedBanList( nServer );
+	m_CallableLabelList = m_GHost->m_DB->ThreadedLabelList( );
 	m_Exiting = false;
 	m_Server = nServer;
 	string LowerServer = m_Server;
@@ -125,6 +126,7 @@ CBNET :: CBNET( CGHost *nGHost, string nServer, string nServerAlias, string nBNL
 	m_LastOutPacketSize = 0;
 	m_LastAdminRefreshTime = GetTime( );
 	m_LastBanRefreshTime = GetTime( );
+	m_LastLabelRefreshTime = GetTime( );
 	m_FirstConnect = true;
 	m_WaitingToConnect = true;
 	m_LoggedIn = false;
@@ -184,7 +186,13 @@ CBNET :: ~CBNET( )
 	if( m_CallableBanList )
 		m_GHost->m_Callables.push_back( m_CallableBanList );
 
+	if( m_CallableLabelList )
+		m_GHost->m_Callables.push_back( m_CallableLabelList );
+
 	for( vector<CDBBan *> :: iterator i = m_Bans.begin( ); i != m_Bans.end( ); i++ )
+		delete *i;
+
+	for( vector<CDBLabel *> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
 		delete *i;
 }
 
@@ -432,6 +440,25 @@ bool CBNET :: Update( void *fd, void *send_fd )
 		delete m_CallableBanList;
 		m_CallableBanList = NULL;
 		m_LastBanRefreshTime = GetTime( );
+	}
+
+	// refresh the Label list every 60 minutes
+
+	if( !m_CallableLabelList && GetTime( ) - m_LastLabelRefreshTime >= 3600 )
+		m_CallableLabelList = m_GHost->m_DB->ThreadedLabelList( );
+
+	if( m_CallableLabelList && m_CallableLabelList->GetReady( ) )
+	{
+		// CONSOLE_Print( "[BNET: " + m_ServerAlias + "] refreshed Label list (" + UTIL_ToString( m_Labels.size( ) ) + " -> " + UTIL_ToString( m_CallableLabelList->GetResult( ).size( ) ) + " Labels)" );
+
+		for( vector<CDBLabel *> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
+			delete *i;
+
+		m_Labels = m_CallableLabelList->GetResult( );
+		m_GHost->m_DB->RecoverCallable( m_CallableLabelList );
+		delete m_CallableLabelList;
+		m_CallableLabelList = NULL;
+		m_LastLabelRefreshTime = GetTime( );
 	}
 
 	// we return at the end of each if statement so we don't have to deal with errors related to the order of the if statements
@@ -2574,3 +2601,17 @@ void CBNET :: HoldClan( CBaseGame *game )
 			game->AddToReserved( (*i)->GetName( ) );
 	}
 }
+
+string CBNET :: GetLabel( string name )
+{
+	transform( name.begin( ), name.end( ), name.begin( ), (int(*)(int))tolower );
+
+	for( vector<CDBLabel *> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
+	{
+		if( (*i)->GetName( ) == name )
+			return (*i)->GetLabel( );
+	}
+
+	return "";
+}
+	

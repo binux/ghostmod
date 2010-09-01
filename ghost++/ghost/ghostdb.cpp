@@ -302,6 +302,16 @@ CCallableW3MMDVarAdd *CGHostDB :: ThreadedW3MMDVarAdd( uint32_t gameid, map<VarP
 	return NULL;
 }
 
+CCallableLabelCheck *CGHostDB :: ThreadedLabelCheck( string name )
+{
+	return NULL;
+}
+
+CCallableLabelList *CGHostDB :: ThreadedLabelList( )
+{
+	return NULL;
+}
+
 //
 // Callables
 //
@@ -417,6 +427,17 @@ CCallableW3MMDVarAdd :: ~CCallableW3MMDVarAdd( )
 
 }
 
+// mod
+CCallableLabelCheck :: ~CCallableLabelCheck( )
+{
+
+}
+
+CCallableLabelList :: ~CCallableLabelList( )
+{
+
+}
+
 //
 // CDBBan
 //
@@ -433,6 +454,21 @@ CDBBan :: CDBBan( string nServer, string nName, string nIP, string nDate, string
 }
 
 CDBBan :: ~CDBBan( )
+{
+
+}
+
+// 
+// CDBLabel
+//
+
+CDBLabel :: CDBLabel( string nName, string nLabel )
+{
+	m_Name = nName;
+	m_Label = nLabel;
+}
+
+CDBLabel :: ~CDBLabel( )
 {
 
 }

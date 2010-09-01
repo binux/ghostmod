@@ -462,6 +462,19 @@ CCallableLabelCheck *CGHostDBMySQL :: ThreadedLabelCheck( string name )
 	return Callable;
 }
 
+CCallableLabelList *CGHostDBMySQL :: ThreadedLabelList( )
+{
+	void *Connection = GetIdleConnection( );
+
+	if( !Connection )
+		m_NumConnections++;
+
+	CCallableLabelList *Callable = new CMySQLCallableLabelList( Connection, m_BotID, m_Server, m_Database, m_User, m_Password, m_Port );
+	CreateThread( Callable );
+	m_OutstandingCallables++;
+	return Callable;
+}
+
 void *CGHostDBMySQL :: GetIdleConnection( )
 {
 	void *Connection = NULL;
@@ -1183,6 +1196,36 @@ string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
 	return Label;
 }
 
+vector<CDBLabel *> MySQLLabelList( void *conn, string *error, uint32_t botid )
+{
+	vector<CDBLabel *> LabelList;
+	string Query = "SELECT name, label FROM labels";
+
+	if( mysql_real_query( (MYSQL *)conn, Query.c_str( ), Query.size( ) ) != 0 )
+		*error = mysql_error( (MYSQL *)conn );
+	else
+	{
+		MYSQL_RES *Result = mysql_store_result( (MYSQL *)conn );
+
+		if( Result )
+		{
+			vector<string> Row = MySQLFetchRow( Result );
+
+			while( Row.size( ) == 2 )
+			{
+				LabelList.push_back( new CDBLabel( Row[0], Row[1] ) );
+				Row = MySQLFetchRow( Result );
+			}
+
+			mysql_free_result( Result );
+		}
+		else
+			*error = mysql_error( (MYSQL *)conn );
+	}
+
+	return LabelList;
+}
+
 //
 // MySQL Callables
 //
@@ -1441,6 +1484,16 @@ void CMySQLCallableLabelCheck :: operator( )( )
 
 	if( m_Error.empty( ) )
 		m_Result = MySQLLabelCheck( m_Connection, &m_Error, m_SQLBotID, m_Name );
+
+	Close( );
+}
+
+void CMySQLCallableLabelList :: operator( )( )
+{
+	Init( );
+
+	if( m_Error.empty( ) )
+		m_Result = MySQLLabelList( m_Connection, &m_Error, m_SQLBotID );
 
 	Close( );
 }

@@ -54,6 +54,8 @@ class CDBDotAPlayerSummary;
 
 //mod
 class CCallableLabelCheck;
+class CCallableLabelList;
+class CDBLabel;
 
 typedef pair<uint32_t,string> VarP;
 
@@ -133,6 +135,7 @@ public:
 
 	//mod
 	virtual CCallableLabelCheck *ThreadedLabelCheck( string name );
+	virtual CCallableLabelList *ThreadedLabelList( );
 };
 
 //
@@ -576,6 +579,19 @@ public:
 	virtual void SetResult( string nResult )	{ m_Result = nResult; }
 };
 
+class CCallableLabelList : virtual public CBaseCallable
+{
+protected:
+	vector<CDBLabel *> m_Result;
+
+public:
+	CCallableLabelList( ) : CBaseCallable( ) { }
+	virtual ~CCallableLabelList( );
+
+	virtual vector<CDBLabel *> GetResult( )					{ return m_Result; }
+	virtual void SetResult( vector<CDBLabel *> nResult )	{ m_Result = nResult; }
+};
+
 //
 // CDBBan
 //
@@ -604,6 +620,24 @@ public:
 	string GetReason( )		{ return m_Reason; }
 	void SetReason( string reason )		{ m_Reason = reason; }
 	void SetAdmin( string admin )		{ m_Admin = admin; }
+};
+
+// 
+// CDBLabel
+// 
+
+class CDBLabel
+{
+private:
+	string m_Name;
+	string m_Label;
+
+public:
+	CDBLabel( string nName, string nLabel );
+	~CDBLabel( );
+
+	string GetName( )		{ return m_Name; }
+	string GetLabel( )		{ return m_Label; }
 };
 
 //
