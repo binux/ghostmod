@@ -1165,12 +1165,12 @@ bool MySQLW3MMDVarAdd( void *conn, string *error, uint32_t botid, uint32_t gamei
 }
 
 //mod
-string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
+CDBLabel* MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
 {
 	transform( name.begin( ), name.end( ), name.begin( ), (int(*)(int))tolower );
 	string EscName = MySQLEscapeString( conn, name );
-	string Label = "";
-	string Query = "SELECT label FROM labels WHERE name='" + EscName + "'";
+	CDBLabel* Label=NULL;
+	string Query = "SELECT label, achievement FROM labels WHERE name='" + EscName + "'";
 
 	if( mysql_real_query( (MYSQL *)conn, Query.c_str( ), Query.size( ) ) != 0 )
 		*error = mysql_error( (MYSQL *)conn );
@@ -1182,8 +1182,10 @@ string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
 		{
 			vector<string> Row = MySQLFetchRow( Result );
 
-			if( Row.size( ) == 1 )
-				Label = Row[0];
+			if( Row.size( ) == 2 )
+			{
+				Label = new CDBLabel( name, Row[0], Row[1] );
+			}
 			/* else
 				*error = "error checking Label [" + category + " : " + name + " : " + server + "] - row doesn't have 1 column"; */
 
@@ -1199,7 +1201,7 @@ string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name )
 vector<CDBLabel *> MySQLLabelList( void *conn, string *error, uint32_t botid )
 {
 	vector<CDBLabel *> LabelList;
-	string Query = "SELECT name, label FROM labels";
+	string Query = "SELECT name, label, achievement FROM labels";
 
 	if( mysql_real_query( (MYSQL *)conn, Query.c_str( ), Query.size( ) ) != 0 )
 		*error = mysql_error( (MYSQL *)conn );
@@ -1211,9 +1213,9 @@ vector<CDBLabel *> MySQLLabelList( void *conn, string *error, uint32_t botid )
 		{
 			vector<string> Row = MySQLFetchRow( Result );
 
-			while( Row.size( ) == 2 )
+			while( Row.size( ) == 3 )
 			{
-				LabelList.push_back( new CDBLabel( Row[0], Row[1] ) );
+				LabelList.push_back( new CDBLabel( Row[0], Row[1], Row[2] ) );
 				Row = MySQLFetchRow( Result );
 			}
 

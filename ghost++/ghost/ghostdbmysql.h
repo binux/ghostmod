@@ -250,7 +250,7 @@ bool MySQLW3MMDVarAdd( void *conn, string *error, uint32_t botid, uint32_t gamei
 bool MySQLW3MMDVarAdd( void *conn, string *error, uint32_t botid, uint32_t gameid, map<VarP,string> var_strings );
 
 //mod
-string MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name );
+CDBLabel* MySQLLabelCheck( void *conn, string *error, uint32_t botid, string name );
 
 //
 // MySQL Callables

@@ -39,6 +39,7 @@ class CIncomingAction;
 class CIncomingChatPlayer;
 class CIncomingMapSize;
 class CCallableScoreCheck;
+class CCallableLabelCheck;
 
 class CBaseGame
 {
@@ -130,6 +131,7 @@ protected:
 	bool m_HCLFromGameName;							// custom value: allow fetch hcl command from game name ( "map_validmodes" needed )
 	bool m_HCLOverride;								// custom value: if the !hcl command is issued, override hcl from gamename
 	bool m_AllowNewPlayer;							// custom value: if allow new players to join the match games
+	vector<CCallableLabelCheck *> m_LabelChecks;
 
 
 public:

@@ -439,7 +439,7 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 
 	if( ( m_AutoStartPlayers && SID == 0 ) || ( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) ) )
 	{
-		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + User + "] sent first command [" + Command + "] with payload [" + Payload + "]" );
+		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + User + "] sent command [" + Command + "] with payload [" + Payload + "]" );
 
 		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) || ( m_AutoStartPlayers && SID == 0 ) )
 		{
@@ -515,7 +515,13 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 				}
 			}
 		}
-		else if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
+		else if ( m_Locked && AdminCheck )
+		{
+			CONSOLE_Print( "[GAME: " + m_GameName + "] admin command ignored, the game is locked" );
+			SendChat( player, m_GHost->m_Language->TheGameIsLocked( ) );
+		}
+
+		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
 		{
 			/***************************
 			* ADMIN AND OWNER COMMANDS *
@@ -714,7 +720,8 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 				m_CountDownStarted = false;
 			}
 		}
-		else if( RootAdminCheck || AdminCheck )
+
+		if( RootAdminCheck || AdminCheck )
 		{
 			/****************
 			* ADMIN COMMAND *
@@ -1735,11 +1742,7 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					SendAllChat( m_GHost->m_Language->UnableToCreateGameNameTooLong( Payload ) );
 			}
 		}
-		else if ( m_Locked && AdminCheck )
-		{
-			CONSOLE_Print( "[GAME: " + m_GameName + "] admin command ignored, the game is locked" );
-			SendChat( player, m_GHost->m_Language->TheGameIsLocked( ) );
-		}
+
 	}
 	else
 	{

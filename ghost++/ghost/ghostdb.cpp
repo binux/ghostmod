@@ -462,10 +462,11 @@ CDBBan :: ~CDBBan( )
 // CDBLabel
 //
 
-CDBLabel :: CDBLabel( string nName, string nLabel )
+CDBLabel :: CDBLabel( string nName, string nLabel, string nAch )
 {
 	m_Name = nName;
 	m_Label = nLabel;
+	m_Achievement = nAch;
 }
 
 CDBLabel :: ~CDBLabel( )

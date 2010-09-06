@@ -521,6 +521,7 @@ CGHost :: CGHost( CConfig *CFG )
 	m_HCLFromGameName = CFG->GetInt( "bot_hclfromgamename", 0 ) == 0 ? false : true;
 	m_AutoHostRandomName = CFG->GetInt( "autohost_randomname", 0 ) == 0 ? false : true;
 	m_UserCreateGame = CFG->GetInt( "bot_usercreategame", 0 ) == 0 ? false : true;
+	m_LastLabelUpdate = GetTime( );
 
 	SetConfigs( CFG );
 
@@ -1196,6 +1197,15 @@ bool CGHost :: Update( long usecBlock )
 
 		m_LastAutoHostTime = GetTime( );
 	}
+
+	// label
+	if( GetTime( ) - m_LastLabelUpdate > 1800 )
+	{
+		for( vector<CDBLabel *> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
+			delete *i;
+		m_LastLabelUpdate = GetTime( );
+	}
+
 
 	return m_Exiting || AdminExit || BNETExit;
 }

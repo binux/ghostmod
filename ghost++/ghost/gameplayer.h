@@ -129,6 +129,7 @@ private:
 	uint32_t m_LastGProxyAckTime;
 	// mod
 	string m_Label;								// the label add to the head of player name
+	string m_Achievement;						// the achievement of player
 
 public:
 	CGamePlayer( CGameProtocol *nProtocol, CBaseGame *nGame, CTCPSocket *nSocket, unsigned char nPID, string nJoinedRealm, string nName, BYTEARRAY nInternalIP, bool nReserved );
@@ -179,7 +180,8 @@ public:
 	uint32_t GetGProxyReconnectKey( )			{ return m_GProxyReconnectKey; }
 	//mod
 	string GetLabel( )							{ return m_Label; }
-	string GetNameWithLabel( )					{ return ((m_Label+m_Name).size( ) > 15 )?m_Name:m_Label+m_Name; }
+	string GetNameWithLabel( )					{ return ((m_Label+m_Name).size( ) > 15 )?m_Label:m_Label+m_Name; }
+	string GetAch( )							{ return m_Achievement; }
 
 	void SetLeftReason( string nLeftReason )										{ m_LeftReason = nLeftReason; }
 	void SetSpoofedRealm( string nSpoofedRealm )									{ m_SpoofedRealm = nSpoofedRealm; }
@@ -211,6 +213,7 @@ public:
 	void SetGProxyDisconnectNoticeSent( bool nGProxyDisconnectNoticeSent )			{ m_GProxyDisconnectNoticeSent = nGProxyDisconnectNoticeSent; }
 	// mod
 	void SetLabel( string nLabel )													{ m_Label = nLabel; }
+	void SetAch( string nAch )														{ m_Achievement = nAch; }
 
 	string GetNameTerminated( );
 	uint32_t GetPing( bool LCPing );

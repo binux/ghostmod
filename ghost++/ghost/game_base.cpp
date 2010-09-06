@@ -279,6 +279,9 @@ CBaseGame :: ~CBaseGame( )
 	for( vector<CCallableScoreCheck *> :: iterator i = m_ScoreChecks.begin( ); i != m_ScoreChecks.end( ); i++ )
 		m_GHost->m_Callables.push_back( *i );
 
+	for( vector<CCallableLabelCheck *> :: iterator i = m_LabelChecks.begin( ); i != m_LabelChecks.end( ); i++ )
+		m_GHost->m_Callables.push_back( *i );
+
 	while( !m_Actions.empty( ) )
 	{
 		delete m_Actions.front( );
@@ -422,6 +425,30 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 			m_GHost->m_DB->RecoverCallable( *i );
 			delete *i;
 			i = m_ScoreChecks.erase( i );
+		}
+		else
+			i++;
+	}
+
+	for( vector<CCallableLabelCheck *> :: iterator i = m_LabelChecks.begin( ); i != m_LabelChecks.end( ); )
+	{
+		if( (*i)->GetReady( ) )
+		{
+			CDBLabel* Label = (*i)->GetResult( );
+
+			m_GHost->m_Labels.push_back( Label );
+			for( vector<CGamePlayer *> :: iterator j = m_Players.begin( ); j != m_Players.end( ); j++ )
+			{
+				if( (*j)->GetName( ) == (*i)->GetName( ) )
+				{
+					(*j)->SetLabel( Label->GetLabel( ) );
+					(*j)->SetAch( Label->GetAch( ) );
+				}
+			}
+
+			m_GHost->m_DB->RecoverCallable( *i );
+			delete *i;
+			i = m_LabelChecks.erase( i );
 		}
 		else
 			i++;
@@ -2025,15 +2052,22 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 	// mod
 	// try to get label for player
 
-	for( vector<CBNET *> :: iterator i = m_GHost->m_BNETs.begin( ); i != m_GHost->m_BNETs.end( ); i++ )
+	bool tFound = false;
+	for( vector<CDBLabel *> :: iterator i = m_GHost->m_Labels.begin( ); i != m_GHost->m_Labels.end( ); i++ )
 	{
-		if( (*i)->GetServer( ) == JoinedRealm )
+		if( (*i)->GetName( ) == joinPlayer->GetName( ) )
 		{
-			string Label = (*i)->GetLabel( joinPlayer->GetName( ) );
-			Player->SetLabel( Label );
+			Player->SetLabel( (*i)->GetLabel( ) );
+			tFound = true;
 			break;
 		}
 	}
+	
+	if(!tFound)
+	{
+		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
+	}
+
 
 	// consider LAN players to have already spoof checked since they can't
 	// since so many people have trouble with this feature we now use the JoinedRealm to determine LAN status
@@ -2938,7 +2972,7 @@ void CBaseGame :: EventPlayerChatToHost( CGamePlayer *player, CIncomingChatPlaye
 			}
 
 			if( Relay )
-				Send( chatPlayer->GetToPIDs( ), m_Protocol->SEND_W3GS_CHAT_FROM_HOST( chatPlayer->GetFromPID( ), chatPlayer->GetToPIDs( ), chatPlayer->GetFlag( ), chatPlayer->GetExtraFlags( ), chatPlayer->GetMessage( ) ) );
+				Send( chatPlayer->GetToPIDs( ), m_Protocol->SEND_W3GS_CHAT_FROM_HOST( chatPlayer->GetFromPID( ), chatPlayer->GetToPIDs( ), chatPlayer->GetFlag( ), chatPlayer->GetExtraFlags( ), "|cff0099ff"+player->GetAch( )+"|r"+chatPlayer->GetMessage( ) ) );
 		}
 		else if( chatPlayer->GetType( ) == CIncomingChatPlayer :: CTH_TEAMCHANGE && !m_CountDownStarted )
 			EventPlayerChangeTeam( player, chatPlayer->GetByte( ) );

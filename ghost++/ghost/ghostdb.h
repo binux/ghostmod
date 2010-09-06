@@ -568,15 +568,15 @@ class CCallableLabelCheck : virtual public CBaseCallable
 {
 protected:
 	string m_Name;
-	string m_Result;
+	CDBLabel* m_Result;
 
 public:
-	CCallableLabelCheck( string nName ) : CBaseCallable( ), m_Name( nName ), m_Result( "" ) { }
+	CCallableLabelCheck( string nName ) : CBaseCallable( ), m_Name( nName ), m_Result( NULL ) { }
 	virtual ~CCallableLabelCheck( );
 
 	virtual string GetName( )					{ return m_Name; }
-	virtual string GetResult( )					{ return m_Result; }
-	virtual void SetResult( string nResult )	{ m_Result = nResult; }
+	virtual CDBLabel* GetResult( )					{ return m_Result; }
+	virtual void SetResult( CDBLabel* nResult )	{ m_Result = nResult; }
 };
 
 class CCallableLabelList : virtual public CBaseCallable
@@ -631,13 +631,15 @@ class CDBLabel
 private:
 	string m_Name;
 	string m_Label;
+	string m_Achievement;
 
 public:
-	CDBLabel( string nName, string nLabel );
+	CDBLabel( string nName, string nLabel, string nAch );
 	~CDBLabel( );
 
 	string GetName( )		{ return m_Name; }
 	string GetLabel( )		{ return m_Label; }
+	string GetAch( )		{ return m_Achievement; }
 };
 
 //
