@@ -434,13 +434,8 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 	{
 		if( (*i)->GetReady( ) )
 		{
-			DEBUG_Print( "update CCallableLabelCheck" );
 			CDBLabel* Label = (*i)->GetResult( );
-			if( Label == NULL )
-			{
-				DEBUG_Print( "Label is null");
-				Label = new CDBLabel( (*i)->GetName( ), "", "" );
-			}
+
 			m_GHost->m_Labels.push_back( PairedLabelDB( GetTime( ), Label ) );
 			for( vector<CGamePlayer *> :: iterator j = m_Players.begin( ); j != m_Players.end( ); j++ )
 			{
