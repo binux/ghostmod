@@ -432,16 +432,19 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 
 	for( vector<CCallableLabelCheck *> :: iterator i = m_LabelChecks.begin( ); i != m_LabelChecks.end( ); )
 	{
-		DEBUG_Print(" update CCallavleLabelCheck ");
 		if( (*i)->GetReady( ) )
 		{
+			DEBUG_Print( "update CCallableLabelCheck" );
 			CDBLabel* Label = (*i)->GetResult( );
 
 			m_GHost->m_Labels.push_back( PairedLabelDB( GetTime( ), Label ) );
-			for( vector<CPotentialPlayer *> :: iterator j = m_Potentials.begin( ); j != m_Potentials.end( ); j++ )
+			for( vector<CGamePlayer *> :: iterator j = m_Players.begin( ); j != m_Players.end( ); j++ )
 			{
-				if( (*j)->GetJoinPlayer( ) && (*j)->GetJoinPlayer( )->GetName( ) == (*i)->GetName( ) )
-					EventPlayerJoined( *j, (*j)->GetJoinPlayer( ) );
+				if( (*j)->GetName( ) == (*i)->GetName( ) )
+				{
+					(*j)->SetLabel( Label->GetLabel( ) );
+					(*j)->SetAch( Label->GetAch( ) );
+				}
 			}
 
 			m_GHost->m_DB->RecoverCallable( *i );
@@ -1781,7 +1784,6 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 	if(!tFound)
 	{
 		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
-		return ;
 	}
 
 	// identify their joined realm
@@ -1896,29 +1898,6 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 		m_ScoreChecks.push_back( m_GHost->m_DB->ThreadedScoreCheck( m_Map->GetMapMatchMakingCategory( ), joinPlayer->GetName( ), JoinedRealm ) );
 		return;
 	}
-
-	// mod
-	// try to get label for player
-
-	bool tFound = false;
-	string tLabel, tAch;
-	for( vector<PairedLabelDB> :: iterator i = m_GHost->m_Labels.begin( ); i != m_GHost->m_Labels.end( ); i++ )
-	{
-		if( i->second->GetName( ) == joinPlayer->GetName( ) )
-		{
-			tLabel = i->second->GetLabel( );
-			tAch = i->second->GetAch( );
-			tFound = true;
-			break;
-		}
-	}
-	
-	if(!tFound)
-	{
-		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
-		return ;
-	}
-
 
 	// check if the player is an admin or root admin on any connected realm for determining reserved status
 	// we can't just use the spoof checked realm like in EventPlayerBotCommand because the player hasn't spoof checked yet
