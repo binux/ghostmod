@@ -44,10 +44,6 @@ class CCallableBanList;
 class CCallableGamePlayerSummaryCheck;
 class CCallableDotAPlayerSummaryCheck;
 class CDBBan;
-// mod
-class CCallableLabelCheck; 
-class CCallableLabelList;
-class CDBLabel;
 
 typedef pair<string,CCallableAdminCount *> PairedAdminCount;
 typedef pair<string,CCallableAdminAdd *> PairedAdminAdd;
@@ -57,8 +53,6 @@ typedef pair<string,CCallableBanAdd *> PairedBanAdd;
 typedef pair<string,CCallableBanRemove *> PairedBanRemove;
 typedef pair<string,CCallableGamePlayerSummaryCheck *> PairedGPSCheck;
 typedef pair<string,CCallableDotAPlayerSummaryCheck *> PairedDPSCheck;
-//mod
-typedef pair<string,CCallableLabelCheck *> PairedLabelCheck;
 
 class CBNET
 {
@@ -126,12 +120,6 @@ private:
 	bool m_HoldClan;								// whether to auto hold clan members when creating a game or not
 	bool m_PublicCommands;							// whether to allow public commands or not
 
-	//mod
-	vector<PairedLabelCheck> m_PairedLabelChecks;	// vector of paired threaded datebase label checks in progress
-	CCallableLabelList *m_CallableLabelList;			// threaded database label list in progress
-	vector<PairedLabelDB> m_Labels;					// vector of cached labels
-	uint32_t m_LastLabelRefreshTime;					// GetTime when the label list was last refreshed from the database
-
 public:
 	CBNET( CGHost *nGHost, string nServer, string nServerAlias, string nBNLSServer, uint16_t nBNLSPort, uint32_t nBNLSWardenCookie, string nCDKeyROC, string nCDKeyTFT, string nCountryAbbrev, string nCountry, uint32_t nLocaleID, string nUserName, string nUserPassword, string nFirstChannel, string nRootAdmin, char nCommandTrigger, bool nHoldFriends, bool nHoldClan, bool nPublicCommands, unsigned char nWar3Version, BYTEARRAY nEXEVersion, BYTEARRAY nEXEVersionHash, string nPasswordHashType, string nPVPGNRealmName, uint32_t nMaxMessageLength, uint32_t nHostCounterID );
 	~CBNET( );
@@ -196,8 +184,6 @@ public:
 	void RemoveBan( string name );
 	void HoldFriends( CBaseGame *game );
 	void HoldClan( CBaseGame *game );
-	// mod
-	string GetLabel( string name );
 };
 
 #endif

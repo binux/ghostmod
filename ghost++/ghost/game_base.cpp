@@ -432,6 +432,7 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 
 	for( vector<CCallableLabelCheck *> :: iterator i = m_LabelChecks.begin( ); i != m_LabelChecks.end( ); )
 	{
+		DEBUG_Print(" update CCallavleLabelCheck ");
 		if( (*i)->GetReady( ) )
 		{
 			CDBLabel* Label = (*i)->GetResult( );
@@ -1729,6 +1730,7 @@ void CBaseGame :: EventPlayerDisconnectConnectionClosed( CGamePlayer *player )
 
 void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinPlayer *joinPlayer )
 {
+
 	// check if the new player's name is empty or too long
 
 	if( joinPlayer->GetName( ).empty( ) || joinPlayer->GetName( ).size( ) > 15 )
@@ -1758,6 +1760,28 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 		potential->Send( m_Protocol->SEND_W3GS_REJECTJOIN( REJECTJOIN_FULL ) );
 		potential->SetDeleteMe( true );
 		return;
+	}
+
+	// mod
+	// try to get label for player
+
+	bool tFound = false;
+	string tLabel, tAch;
+	for( vector<PairedLabelDB> :: iterator i = m_GHost->m_Labels.begin( ); i != m_GHost->m_Labels.end( ); i++ )
+	{
+		if( i->second->GetName( ) == joinPlayer->GetName( ) )
+		{
+			tLabel = i->second->GetLabel( );
+			tAch = i->second->GetAch( );
+			tFound = true;
+			break;
+		}
+	}
+	
+	if(!tFound)
+	{
+		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
+		return ;
 	}
 
 	// identify their joined realm

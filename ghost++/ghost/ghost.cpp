@@ -1198,7 +1198,7 @@ bool CGHost :: Update( long usecBlock )
 		m_LastAutoHostTime = GetTime( );
 	}
 
-	// label
+	// label Update
 	if( GetTime( ) - m_LastLabelUpdate > 5*60 )
 	{
 		for( vector<PairedLabelDB> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )

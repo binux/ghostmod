@@ -1119,7 +1119,7 @@ CDBLabel* MySQLLabelCheck( void *conn, string *error, uint32_t botid, string nam
 {
 	transform( name.begin( ), name.end( ), name.begin( ), (int(*)(int))tolower );
 	string EscName = MySQLEscapeString( conn, name );
-	CDBLabel* Label=NULL;
+	CDBLabel* Label = NULL;
 	string Query = "SELECT label, achievement FROM labels WHERE name='" + EscName + "'";
 
 	if( mysql_real_query( (MYSQL *)conn, Query.c_str( ), Query.size( ) ) != 0 )
