@@ -1136,16 +1136,15 @@ CDBLabel* MySQLLabelCheck( void *conn, string *error, uint32_t botid, string nam
 			{
 				Label = new CDBLabel( name, Row[0], Row[1] );
 			}
-			else
-			{
-				Label = new CDBLabel( name, "", "" );
-			}
 
 			mysql_free_result( Result );
 		}
 		else
 			*error = mysql_error( (MYSQL *)conn );
 	}
+
+	if (Label == NULL )
+		Label = new CDBLabel( name, "", "" );
 
 	return Label;
 }
