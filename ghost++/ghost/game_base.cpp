@@ -436,14 +436,11 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 		{
 			CDBLabel* Label = (*i)->GetResult( );
 
-			m_GHost->m_Labels.push_back( Label );
-			for( vector<CGamePlayer *> :: iterator j = m_Players.begin( ); j != m_Players.end( ); j++ )
+			m_GHost->m_Labels.push_back( PairedLabelDB( GetTime( ), Label ) );
+			for( vector<CPotentialPlayer *> :: iterator j = m_Potentials.begin( ); j != m_Potentials.end( ); j++ )
 			{
-				if( (*j)->GetName( ) == (*i)->GetName( ) )
-				{
-					(*j)->SetLabel( Label->GetLabel( ) );
-					(*j)->SetAch( Label->GetAch( ) );
-				}
+				if( (*j)->GetJoinPlayer( ) && (*j)->GetJoinPlayer( )->GetName( ) == (*i)->GetName( ) )
+					EventPlayerJoined( *j, (*j)->GetJoinPlayer( ) );
 			}
 
 			m_GHost->m_DB->RecoverCallable( *i );
@@ -1876,6 +1873,29 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 		return;
 	}
 
+	// mod
+	// try to get label for player
+
+	bool tFound = false;
+	string tLabel, tAch;
+	for( vector<PairedLabelDB> :: iterator i = m_GHost->m_Labels.begin( ); i != m_GHost->m_Labels.end( ); i++ )
+	{
+		if( i->second->GetName( ) == joinPlayer->GetName( ) )
+		{
+			tLabel = i->second->GetLabel( );
+			tAch = i->second->GetAch( );
+			tFound = true;
+			break;
+		}
+	}
+	
+	if(!tFound)
+	{
+		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
+		return ;
+	}
+
+
 	// check if the player is an admin or root admin on any connected realm for determining reserved status
 	// we can't just use the spoof checked realm like in EventPlayerBotCommand because the player hasn't spoof checked yet
 
@@ -2050,24 +2070,8 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 	CGamePlayer *Player = new CGamePlayer( potential, m_SaveGame ? EnforcePID : GetNewPID( ), JoinedRealm, joinPlayer->GetName( ), joinPlayer->GetInternalIP( ), Reserved );
 
 	// mod
-	// try to get label for player
-
-	bool tFound = false;
-	for( vector<CDBLabel *> :: iterator i = m_GHost->m_Labels.begin( ); i != m_GHost->m_Labels.end( ); i++ )
-	{
-		if( (*i)->GetName( ) == joinPlayer->GetName( ) )
-		{
-			Player->SetLabel( (*i)->GetLabel( ) );
-			tFound = true;
-			break;
-		}
-	}
-	
-	if(!tFound)
-	{
-		m_LabelChecks.push_back( m_GHost->m_DB->ThreadedLabelCheck( joinPlayer->GetName( ) ) );
-	}
-
+	Player->SetLabel( tLabel );
+	Player->SetAch( tAch );
 
 	// consider LAN players to have already spoof checked since they can't
 	// since so many people have trouble with this feature we now use the JoinedRealm to determine LAN status
@@ -2521,9 +2525,9 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 			if( (*i)->GetSocket( ) )
 			{
 				if( m_GHost->m_HideIPAddresses )
-					(*i)->Send( m_Protocol->SEND_W3GS_PLAYERINFO( Player->GetPID( ), Player->GetName( ), BlankIP, BlankIP ) );
+					(*i)->Send( m_Protocol->SEND_W3GS_PLAYERINFO( Player->GetPID( ), Player->GetNameWithLabel( ), BlankIP, BlankIP ) );
 				else
-					(*i)->Send( m_Protocol->SEND_W3GS_PLAYERINFO( Player->GetPID( ), Player->GetName( ), Player->GetExternalIP( ), Player->GetInternalIP( ) ) );
+					(*i)->Send( m_Protocol->SEND_W3GS_PLAYERINFO( Player->GetPID( ), Player->GetNameWithLabel( ), Player->GetExternalIP( ), Player->GetInternalIP( ) ) );
 			}
 
 			// send info about every other player to the new player
@@ -2972,7 +2976,12 @@ void CBaseGame :: EventPlayerChatToHost( CGamePlayer *player, CIncomingChatPlaye
 			}
 
 			if( Relay )
-				Send( chatPlayer->GetToPIDs( ), m_Protocol->SEND_W3GS_CHAT_FROM_HOST( chatPlayer->GetFromPID( ), chatPlayer->GetToPIDs( ), chatPlayer->GetFlag( ), chatPlayer->GetExtraFlags( ), "|cff0099ff"+player->GetAch( )+"|r"+chatPlayer->GetMessage( ) ) );
+			{
+				if(!player->GetAch( ).empty( ))
+					Send( chatPlayer->GetToPIDs( ), m_Protocol->SEND_W3GS_CHAT_FROM_HOST( chatPlayer->GetFromPID( ), chatPlayer->GetToPIDs( ), chatPlayer->GetFlag( ), chatPlayer->GetExtraFlags( ), "["+player->GetAch( )+"] "+chatPlayer->GetMessage( ) ) );
+				else
+					Send( chatPlayer->GetToPIDs( ), m_Protocol->SEND_W3GS_CHAT_FROM_HOST( chatPlayer->GetFromPID( ), chatPlayer->GetToPIDs( ), chatPlayer->GetFlag( ), chatPlayer->GetExtraFlags( ), chatPlayer->GetMessage( ) ) );
+			}
 		}
 		else if( chatPlayer->GetType( ) == CIncomingChatPlayer :: CTH_TEAMCHANGE && !m_CountDownStarted )
 			EventPlayerChangeTeam( player, chatPlayer->GetByte( ) );

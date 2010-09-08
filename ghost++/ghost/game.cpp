@@ -298,6 +298,13 @@ bool CGame :: Update( void *fd, void *send_fd )
 			i++;
 	}
 
+	if( GetTime( ) - m_StartedBanVoteTime >= 10*60 )
+	{
+		m_DBBanFirst = NULL;
+		m_StartedBanVoteTime = 0;
+		m_BanVotePlayersNeeds = 0;
+	}
+
 	return CBaseGame :: Update( fd, send_fd );
 }
 
@@ -350,7 +357,7 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 		{
 			SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
 
-			if( m_DBBanFirst && m_BanVotePlayersNeeds == 0 )
+			if( m_DBBanFirst && m_BanVotePlayersNeeds == 0 && m_StartedBanVoteTime == 0 )
 			{
 				if( m_GameTicks/1000 < 2*60 )
 				{
@@ -1921,7 +1928,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 			m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
 
 			m_BanVotePlayersNeeds = 0;
-			m_StartedBanVoteTime = 0;
 		}
 		else
 			SendAllChat( "AutoBan need " + UTIL_ToString( m_BanVotePlayersNeeds - Votes ) + " more votes. Type in !autoban to vote through!");

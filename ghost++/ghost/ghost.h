@@ -44,6 +44,8 @@ class CSaveGame;
 class CConfig;
 class CDBLabel;
 
+typedef pair<uint32_t,CDBLabel *> PairedLabelDB;
+
 class CGHost
 {
 public:
@@ -138,7 +140,7 @@ public:
 	bool m_HCLFromGameName;					// custom value: try to fetch hcl command from game name
 	bool m_AutoHostRandomName;				// custom value: add a random num to the end of autohost games
 	bool m_UserCreateGame;					// custom value: allow user create a game or not
-	vector<CDBLabel *> m_Labels;			// cache for labels
+	vector<PairedLabelDB> m_Labels;			// cache for labels
 	uint32_t m_LastLabelUpdate;				// the time of label cache update
 
 	CGHost( CConfig *CFG );

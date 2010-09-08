@@ -1199,10 +1199,18 @@ bool CGHost :: Update( long usecBlock )
 	}
 
 	// label
-	if( GetTime( ) - m_LastLabelUpdate > 1800 )
+	if( GetTime( ) - m_LastLabelUpdate > 5*60 )
 	{
-		for( vector<CDBLabel *> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
-			delete *i;
+		for( vector<PairedLabelDB> :: iterator i = m_Labels.begin( ); i != m_Labels.end( ); i++ )
+		{
+			if( GetTime( ) - i->first > 60*60 )
+			{
+				delete i->second;
+				i = m_Labels.erase( i );
+			}
+			else
+				i++;
+		}
 		m_LastLabelUpdate = GetTime( );
 	}
 

@@ -129,7 +129,7 @@ private:
 	//mod
 	vector<PairedLabelCheck> m_PairedLabelChecks;	// vector of paired threaded datebase label checks in progress
 	CCallableLabelList *m_CallableLabelList;			// threaded database label list in progress
-	vector<CDBLabel *> m_Labels;					// vector of cached labels
+	vector<PairedLabelDB> m_Labels;					// vector of cached labels
 	uint32_t m_LastLabelRefreshTime;					// GetTime when the label list was last refreshed from the database
 
 public:
