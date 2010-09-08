@@ -436,7 +436,11 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 		{
 			DEBUG_Print( "update CCallableLabelCheck" );
 			CDBLabel* Label = (*i)->GetResult( );
-
+			if( Label == NULL )
+			{
+				DEBUG_Print( "Label is null");
+				Label = new CDBLabel( (*i)->GetName( ), "", "" );
+			}
 			m_GHost->m_Labels.push_back( PairedLabelDB( GetTime( ), Label ) );
 			for( vector<CGamePlayer *> :: iterator j = m_Players.begin( ); j != m_Players.end( ); j++ )
 			{
@@ -1733,6 +1737,7 @@ void CBaseGame :: EventPlayerDisconnectConnectionClosed( CGamePlayer *player )
 
 void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinPlayer *joinPlayer )
 {
+	CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game" );
 
 	// check if the new player's name is empty or too long
 
