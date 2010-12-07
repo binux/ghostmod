@@ -933,7 +933,19 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 	string User = chatEvent->GetUser( );
 	string Message = chatEvent->GetMessage( );
 
-	if( Event == CBNETProtocol :: EID_WHISPER || Event == CBNETProtocol :: EID_TALK )
+	if( Event == CBNETProtocol :: EID_SHOWUSER )
+	{
+		m_ChannelUserCount++;
+	}
+	else if( Event == CBNETProtocol :: EID_JOIN )
+	{
+		m_ChannelUserCount++;
+	}
+	else if( Event == CBNETProtocol :: EID_LEAVE )
+	{
+		m_ChannelUserCount--;
+	}
+	else if( Event == CBNETProtocol :: EID_WHISPER || Event == CBNETProtocol :: EID_TALK )
 	{
 		if( Event == CBNETProtocol :: EID_WHISPER )
 		{
@@ -2121,7 +2133,7 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 				// !PUB (host public game)
 				//
 
-				if( Command == "pub" && !Payload.empty( ) )
+				if( m_GHost->m_UserCreateGame && Command == "pub" && !Payload.empty( ) )
 					m_GHost->CreateGame( m_GHost->m_Map, GAME_PUBLIC, false, Payload, User, User, m_Server, Whisper );
 			}
 
@@ -2190,6 +2202,7 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 
 		CONSOLE_Print( "[BNET: " + m_ServerAlias + "] joined channel [" + Message + "]" );
 		m_CurrentChannel = Message;
+		m_ChannelUserCount = 0;
 	}
 	else if( Event == CBNETProtocol :: EID_INFO )
 	{

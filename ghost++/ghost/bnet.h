@@ -120,6 +120,9 @@ private:
 	bool m_HoldClan;								// whether to auto hold clan members when creating a game or not
 	bool m_PublicCommands;							// whether to allow public commands or not
 
+	// mod
+	uint32_t m_ChannelUserCount;					// Users in the channel
+
 public:
 	CBNET( CGHost *nGHost, string nServer, string nServerAlias, string nBNLSServer, uint16_t nBNLSPort, uint32_t nBNLSWardenCookie, string nCDKeyROC, string nCDKeyTFT, string nCountryAbbrev, string nCountry, uint32_t nLocaleID, string nUserName, string nUserPassword, string nFirstChannel, string nRootAdmin, char nCommandTrigger, bool nHoldFriends, bool nHoldClan, bool nPublicCommands, unsigned char nWar3Version, BYTEARRAY nEXEVersion, BYTEARRAY nEXEVersionHash, string nPasswordHashType, string nPVPGNRealmName, uint32_t nMaxMessageLength, uint32_t nHostCounterID );
 	~CBNET( );
@@ -147,6 +150,9 @@ public:
 	bool GetPublicCommands( )			{ return m_PublicCommands; }
 	uint32_t GetOutPacketsQueued( )		{ return m_OutPackets.size( ); }
 	BYTEARRAY GetUniqueName( );
+
+	// mod
+	uint32_t GetChannelUserCount( )		{ return m_ChannelUserCount; }
 
 	// processing functions
 

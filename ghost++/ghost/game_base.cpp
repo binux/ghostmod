@@ -157,6 +157,7 @@ CBaseGame :: CBaseGame( CGHost *nGHost, CMap *nMap, CSaveGame *nSaveGame, uint16
 				{
 						CONSOLE_Print( "[GAME: " + m_GameName + "] Found Game Mode [" + (*i).c_str() + "] HCL Command [" + (*i).substr(1) + "]" );
 						m_HCLCommandString = (*i).substr(1);
+						break;
 				}
 			}
 		}
@@ -1440,7 +1441,7 @@ void CBaseGame :: SendWelcomeMessage( CGamePlayer *player )
 		if( !m_HCLCommandString.empty( ) )
 			SendChat( player, "HCL Command String:  " + m_HCLCommandString );
 
-		SendChat( player, "You are using the name:  " + player->GetNameWithLabel( ) );
+		SendChat( player, "You are using the name:  " + player->GetNameWithLabel( ) + ":[" + player->GetAch() + "]" );
 	}
 	else
 	{
@@ -2082,7 +2083,7 @@ void CBaseGame :: EventPlayerJoined( CPotentialPlayer *potential, CIncomingJoinP
 	if( JoinedRealm.empty( ) )
 		Player->SetSpoofed( true );
 
-	Player->SetWhoisShouldBeSent( m_GHost->m_SpoofChecks == 1 || ( m_GHost->m_SpoofChecks == 2 && AnyAdminCheck ) );
+	Player->SetWhoisShouldBeSent( m_GHost->m_SpoofChecks == 1 || ( m_GHost->m_SpoofChecks == 2 && AnyAdminCheck ) || IsOwner( joinPlayer->GetName( ) ) );
 	m_Players.push_back( Player );
 	potential->SetSocket( NULL );
 	potential->SetDeleteMe( true );

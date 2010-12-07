@@ -521,6 +521,7 @@ CGHost :: CGHost( CConfig *CFG )
 	m_HCLFromGameName = CFG->GetInt( "bot_hclfromgamename", 0 ) == 0 ? false : true;
 	m_AutoHostRandomName = CFG->GetInt( "autohost_randomname", 0 ) == 0 ? false : true;
 	m_UserCreateGame = CFG->GetInt( "bot_usercreategame", 0 ) == 0 ? false : true;
+	m_AutoHostMinChannelPlayer = CFG->GetInt( "autohost_minplayer", 0 );
 	m_LastLabelUpdate = GetTime( );
 
 	SetConfigs( CFG );
@@ -1110,67 +1111,90 @@ bool CGHost :: Update( long usecBlock )
 	}
 
 	// autohost
-
 	if( !m_AutoHostGameName.empty( ) && m_AutoHostMaximumGames != 0 && m_AutoHostAutoStartPlayers != 0 && GetTime( ) - m_LastAutoHostTime >= 30 )
 	{
-		// copy all the checks from CGHost :: CreateGame here because we don't want to spam the chat when there's an error
-		// instead we fail silently and try again soon
-
-		if( !m_ExitingNice && m_Enabled && !m_CurrentGame && m_Games.size( ) < m_MaxGames && m_Games.size( ) < m_AutoHostMaximumGames )
+		uint32_t t_ChannelUserCount = 0;
+		if(m_AutoHostMinChannelPlayer>0)
 		{
-			if( m_AutoHostMap->GetValid( ) )
+			for( vector<CBNET *> :: iterator i = m_BNETs.begin( ); i != m_BNETs.end( ); i++ )
 			{
-				string t_HCL;
-				string GameName = m_AutoHostGameName;
-				if( !m_Map->GetGameNameWithMode( ).empty( ) )
+				t_ChannelUserCount+=(*i)->GetChannelUserCount( );
+			}
+		}
+
+		if(t_ChannelUserCount>=m_AutoHostMinChannelPlayer)
+		{
+			// copy all the checks from CGHost :: CreateGame here because we don't want to spam the chat when there's an error
+			// instead we fail silently and try again soon
+
+			if( !m_ExitingNice && m_Enabled && !m_CurrentGame && m_Games.size( ) < m_MaxGames && m_Games.size( ) < m_AutoHostMaximumGames )
+			{
+				if( m_AutoHostMap->GetValid( ) )
 				{
-					static int nMode = 0;
-					GameName = m_Map->GetGameNameWithMode( );
-					vector<string> ValidModes = UTIL_Tokenize( m_Map->GetValidModes( ), ' ' );
-					if( nMode >= ValidModes.size( ) )
-						nMode = 0;
-
-					CONSOLE_Print( "Try to get game name with mode. Found mode [" + t_HCL + "]" );
-					t_HCL = ValidModes[nMode];
-					UTIL_Replace( GameName, "$MODE$", t_HCL );
-					nMode++;
-				}
-
-				GameName = GameName + " #" + UTIL_ToString( m_HostCounter );
-				if( m_AutoHostRandomName )
-					GameName = GameName + "-" + UTIL_ToString( rand( )%1000 );
-
-				if( GameName.size( ) <= 31 )
-				{
-					CreateGame( m_AutoHostMap, GAME_PUBLIC, false, GameName, m_AutoHostOwner, m_AutoHostOwner, m_AutoHostServer, false );
-
-					if( m_CurrentGame )
+					string t_HCL;
+					string GameName = m_AutoHostGameName;
+					if( !m_Map->GetGameNameWithMode( ).empty( ) )
 					{
-						m_CurrentGame->SetAutoStartPlayers( m_AutoHostAutoStartPlayers );
+						static int nMode = 0;
+						GameName = m_Map->GetGameNameWithMode( );
+						vector<string> ValidModes = UTIL_Tokenize( m_Map->GetValidModes( ), ' ' );
+						if( nMode >= ValidModes.size( ) )
+							nMode = 0;
 
-						if( m_AutoHostMatchMaking )
+						CONSOLE_Print( "Try to get game name with mode. Found mode [" + t_HCL + "]" );
+						t_HCL = ValidModes[nMode];
+						UTIL_Replace( GameName, "$MODE$", t_HCL );
+						nMode++;
+					}
+
+					GameName = GameName + " #" + UTIL_ToString( m_HostCounter );
+					if( m_AutoHostRandomName )
+						GameName = GameName + "-" + UTIL_ToString( rand( )%1000 );
+
+					if( GameName.size( ) <= 31 )
+					{
+						CreateGame( m_AutoHostMap, GAME_PUBLIC, false, GameName, m_AutoHostOwner, m_AutoHostOwner, m_AutoHostServer, false );
+
+						if( m_CurrentGame )
 						{
-							if( !m_Map->GetMapMatchMakingCategory( ).empty( ) )
-							{
-								if( !( m_Map->GetMapOptions( ) & MAPOPT_FIXEDPLAYERSETTINGS ) )
-									CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory [" + m_Map->GetMapMatchMakingCategory( ) + "] found but matchmaking can only be used with fixed player settings, matchmaking disabled" );
-								else
-								{
-									CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory [" + m_Map->GetMapMatchMakingCategory( ) + "] found, matchmaking enabled" );
+							m_CurrentGame->SetAutoStartPlayers( m_AutoHostAutoStartPlayers );
 
-									m_CurrentGame->SetMatchMaking( true );
-									m_CurrentGame->SetMinimumScore( m_AutoHostMinimumScore );
-									m_CurrentGame->SetMaximumScore( m_AutoHostMaximumScore );
+							if( m_AutoHostMatchMaking )
+							{
+								if( !m_Map->GetMapMatchMakingCategory( ).empty( ) )
+								{
+									if( !( m_Map->GetMapOptions( ) & MAPOPT_FIXEDPLAYERSETTINGS ) )
+										CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory [" + m_Map->GetMapMatchMakingCategory( ) + "] found but matchmaking can only be used with fixed player settings, matchmaking disabled" );
+									else
+									{
+										CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory [" + m_Map->GetMapMatchMakingCategory( ) + "] found, matchmaking enabled" );
+
+										m_CurrentGame->SetMatchMaking( true );
+										m_CurrentGame->SetMinimumScore( m_AutoHostMinimumScore );
+										m_CurrentGame->SetMaximumScore( m_AutoHostMaximumScore );
+									}
 								}
+								else
+									CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory not found, matchmaking disabled" );
 							}
-							else
-								CONSOLE_Print( "[GHOST] autohostmm - map_matchmakingcategory not found, matchmaking disabled" );
 						}
+					}
+					else
+					{
+						CONSOLE_Print( "[GHOST] stopped auto hosting, next game name [" + GameName + "] is too long (the maximum is 31 characters)" );
+						m_AutoHostGameName.clear( );
+						m_AutoHostOwner.clear( );
+						m_AutoHostServer.clear( );
+						m_AutoHostMaximumGames = 0;
+						m_AutoHostAutoStartPlayers = 0;
+						m_AutoHostMatchMaking = false;
+						m_AutoHostMinimumScore = 0.0;
+						m_AutoHostMaximumScore = 0.0;
 					}
 				}
 				else
 				{
-					CONSOLE_Print( "[GHOST] stopped auto hosting, next game name [" + GameName + "] is too long (the maximum is 31 characters)" );
+					CONSOLE_Print( "[GHOST] stopped auto hosting, map config file [" + m_AutoHostMap->GetCFGFile( ) + "] is invalid" );
 					m_AutoHostGameName.clear( );
 					m_AutoHostOwner.clear( );
 					m_AutoHostServer.clear( );
@@ -1180,18 +1204,6 @@ bool CGHost :: Update( long usecBlock )
 					m_AutoHostMinimumScore = 0.0;
 					m_AutoHostMaximumScore = 0.0;
 				}
-			}
-			else
-			{
-				CONSOLE_Print( "[GHOST] stopped auto hosting, map config file [" + m_AutoHostMap->GetCFGFile( ) + "] is invalid" );
-				m_AutoHostGameName.clear( );
-				m_AutoHostOwner.clear( );
-				m_AutoHostServer.clear( );
-				m_AutoHostMaximumGames = 0;
-				m_AutoHostAutoStartPlayers = 0;
-				m_AutoHostMatchMaking = false;
-				m_AutoHostMinimumScore = 0.0;
-				m_AutoHostMaximumScore = 0.0;
 			}
 		}
 

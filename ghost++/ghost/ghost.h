@@ -142,6 +142,7 @@ public:
 	bool m_UserCreateGame;					// custom value: allow user create a game or not
 	vector<PairedLabelDB> m_Labels;			// cache for labels
 	uint32_t m_LastLabelUpdate;				// the time of label cache update
+	uint32_t m_AutoHostMinChannelPlayer;	// the min players in channel
 
 	CGHost( CConfig *CFG );
 	~CGHost( );
