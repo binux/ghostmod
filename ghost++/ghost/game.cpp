@@ -353,7 +353,7 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 
 		// check if autoban allowed in a dota game
 		
-		if( m_DotaStats )
+		if( m_DotaStats && ( Team == 0 || Team == 1 ) )
 		{
 			SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
 
@@ -444,15 +444,12 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 		}
 	}
 
-	if( ( m_AutoStartPlayers && SID == 0 ) || ( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) ) )
+	if( ( m_AutoStartPlayers && ( SID == 0 || SID == 5 )) || ( player->GetSpoofed( ) && ( AdminCheck || RootAdminCheck || IsOwner( User ) ) ) )
 	{
 		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + User + "] sent command [" + Command + "] with payload [" + Payload + "]" );
 
-		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) || ( m_AutoStartPlayers && SID == 0 ) )
+		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
 		{
-			/***********************
-			 * FIRST SLOT COMMANDS *
-			 **********************/
 
 			//
 			// !OPEN (open slot)
@@ -491,6 +488,66 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 
 				Command.clear( );
 			}
+		}
+		else if( m_AutoStartPlayers && ( SID == 0 || SID == 5 ))
+		{
+
+			/***********************
+			 * FIRST SLOT COMMANDS *
+			 **********************/
+
+			//
+			// !OPEN (open slot)
+			//
+
+			if( Command == "open" && !Payload.empty( ) && !m_GameLoading && !m_GameLoaded )
+			{
+				// open as many slots as specified, e.g. "5 10" opens slots 5 and 10
+
+				stringstream SS;
+				SS << Payload;
+
+				while( !SS.eof( ) )
+				{
+					uint32_t _SID;
+					SS >> _SID;
+
+					if( SS.fail( ) )
+					{
+						CONSOLE_Print( "[GAME: " + m_GameName + "] bad input to open command" );
+						break;
+					}
+					else
+					{
+						if( SID == 0 && 1 <= _SID && _SID <= 5 || SID == 5 && 6 <= _SID && _SID <= 10 )
+							OpenSlot( (unsigned char)( _SID - 1 ), true );
+					}
+				}
+			}
+
+			//
+			// !SP
+			//
+
+			if( SID == 0 && Command == "sp" && !m_CountDownStarted )
+			{
+				SendAllChat( m_GHost->m_Language->ShufflingPlayers( ) );
+				ShuffleSlots( );
+
+				Command.clear( );
+			}
+		}
+		else if ( m_Locked && AdminCheck )
+		{
+			CONSOLE_Print( "[GAME: " + m_GameName + "] admin command ignored, the game is locked" );
+			SendChat( player, m_GHost->m_Language->TheGameIsLocked( ) );
+		}
+
+		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
+		{
+			/***************************
+			* ADMIN AND OWNER COMMANDS *
+			****************************/
 
 			//
 			// !SWAP (swap slots)
@@ -521,18 +578,6 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 					}
 				}
 			}
-		}
-		else if ( m_Locked && AdminCheck )
-		{
-			CONSOLE_Print( "[GAME: " + m_GameName + "] admin command ignored, the game is locked" );
-			SendChat( player, m_GHost->m_Language->TheGameIsLocked( ) );
-		}
-
-		if( ( !m_Locked && AdminCheck ) || RootAdminCheck || IsOwner( User ) )
-		{
-			/***************************
-			* ADMIN AND OWNER COMMANDS *
-			****************************/
 
 			//
 			// !UNHOST

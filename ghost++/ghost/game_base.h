@@ -160,6 +160,7 @@ public:
 	virtual bool GetLagging( )						{ return m_Lagging; }
 	// mod
 	virtual bool GetHCLFromGameName( )				{ return m_HCLFromGameName; }
+	virtual uint32_t GetRealPlayers( );
 
 	virtual void SetEnforceSlots( vector<CGameSlot> nEnforceSlots )		{ m_EnforceSlots = nEnforceSlots; }
 	virtual void SetEnforcePlayers( vector<PIDPlayer> nEnforcePlayers )	{ m_EnforcePlayers = nEnforcePlayers; }

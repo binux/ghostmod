@@ -344,6 +344,19 @@ uint32_t CBaseGame :: GetNumPlayers( )
 	return NumPlayers;
 }
 
+uint32_t CBaseGame :: GetRealPlayers( )
+{
+	uint32_t RealPlayers = 0;
+
+	for( vector<CGameSlot> :: iterator i = m_Slots.begin( ); i != m_Slots.end( ); i++ )
+	{
+		if( (*i).GetTeam( ) < 12 )
+			RealPlayers++;
+	}
+	
+	return RealPlayers;
+}
+
 uint32_t CBaseGame :: GetNumHumanPlayers( )
 {
 	uint32_t NumHumanPlayers = 0;
@@ -2650,7 +2663,7 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 
 	// balance the slots
 
-	if( m_AutoStartPlayers != 0 && GetNumHumanPlayers( ) == m_AutoStartPlayers )
+	if( m_AutoStartPlayers != 0 && GetRealPlayers( ) == m_AutoStartPlayers )
 		BalanceSlots( );
 }
 
@@ -4571,9 +4584,9 @@ void CBaseGame :: StartCountDownAuto( bool requireSpoofChecks )
 	{
 		// check if enough players are present
 
-		if( GetNumHumanPlayers( ) < m_AutoStartPlayers )
+		if( GetRealPlayers( ) < m_AutoStartPlayers )
 		{
-			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetNumHumanPlayers( ) ) ) );
+			SendAllChat( m_GHost->m_Language->WaitingForPlayersBeforeAutoStart( UTIL_ToString( m_AutoStartPlayers ), UTIL_ToString( m_AutoStartPlayers - GetRealPlayers( ) ) ) );
 			return;
 		}
 
