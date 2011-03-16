@@ -350,7 +350,7 @@ uint32_t CBaseGame :: GetRealPlayers( )
 
 	for( vector<CGameSlot> :: iterator i = m_Slots.begin( ); i != m_Slots.end( ); i++ )
 	{
-		if( (*i).GetTeam( ) < 12 )
+		if( (*i).GetSlotStatus( ) == SLOTSTATUS_OCCUPIED && (*i).GetTeam( ) < 12 && (*i).GetComputer( ) == 0 )
 			RealPlayers++;
 	}
 	
