@@ -308,6 +308,62 @@ bool CGame :: Update( void *fd, void *send_fd )
 	return CBaseGame :: Update( fd, send_fd );
 }
 
+void CGame :: EventPlayerDisconnectTimedOut( CGamePlayer *player )
+{
+	CBaseGame :: EventPlayerDisconnectTimedOut( player );
+
+	if ( m_GameLoading )
+	{
+		//m_DBBanFirst->SetAdmin("AUTOBAN");
+		//m_DBBanFirst->SetReason("Left in Loding");
+		m_BanVotePlayersNeeds = 0;
+		m_StartedBanVoteTime = GetTime( );
+		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+	}
+}
+
+void CGame :: EventPlayerDisconnectPlayerError( CGamePlayer *player )
+{
+	CBaseGame :: EventPlayerDisconnectPlayerError( player );
+
+	if ( m_GameLoading )
+	{
+		//m_DBBanFirst->SetAdmin("AUTOBAN");
+		//m_DBBanFirst->SetReason("Left in Loding");
+		m_BanVotePlayersNeeds = 0;
+		m_StartedBanVoteTime = GetTime( );
+		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+	}
+}
+
+void CGame :: EventPlayerDisconnectSocketError( CGamePlayer *player )
+{
+	CBaseGame :: EventPlayerDisconnectSocketError( player );
+
+	if ( m_GameLoading )
+	{
+		//m_DBBanFirst->SetAdmin("AUTOBAN");
+		//m_DBBanFirst->SetReason("Left in Loding");
+		m_BanVotePlayersNeeds = 0;
+		m_StartedBanVoteTime = GetTime( );
+		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+	}
+}
+
+void CGame :: EventPlayerDisconnectConnectionClosed( CGamePlayer *player )
+{
+	CBaseGame :: EventPlayerDisconnectConnectionClosed( player );
+
+	if ( m_GameLoading )
+	{
+		//m_DBBanFirst->SetAdmin("AUTOBAN");
+		//m_DBBanFirst->SetReason("Left in Loding");
+		m_BanVotePlayersNeeds = 0;
+		m_StartedBanVoteTime = GetTime( );
+		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+	}
+}
+
 void CGame :: EventPlayerDeleted( CGamePlayer *player )
 {
 	CBaseGame :: EventPlayerDeleted( player );
@@ -316,9 +372,6 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 	// since we haven't stored the game yet (it's not over yet!) we can't link the gameplayer to the game
 	// see the destructor for where these CDBGamePlayers are stored in the database
 	// we could have inserted an incomplete record on creation and updated it later but this makes for a cleaner interface
-
-	if( m_GameLoading )
-		m_BanVotePlayersNeeds = 10;
 
 	if( m_GameLoading || m_GameLoaded )
 	{
@@ -351,45 +404,56 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 			}
 		}
 
-		// check if autoban allowed in a dota game
-		
-		if( m_DotaStats && ( Team == 0 || Team == 1 ) )
+		if ( m_GameLoading )
 		{
-			SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
-
-			if( m_DBBanFirst && m_BanVotePlayersNeeds == 0 && m_StartedBanVoteTime == 0 )
+			//m_DBBanFirst->SetAdmin("AUTOBAN");
+			//m_DBBanFirst->SetReason("Left in Loding");
+			m_BanVotePlayersNeeds = 0;
+			m_StartedBanVoteTime = GetTime( );
+			//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+		}
+		else if ( m_GameLoaded )
+		{
+			// check if autoban allowed in a dota game
+			
+			if( m_DotaStats && m_DotaStats->GetAutoBan() && ( Team == 0 || Team == 1 ) )
 			{
-				if( m_GameTicks/1000 < 2*60 )
+				SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ) );
+
+				if( m_DBBanFirst && m_BanVotePlayersNeeds == 0 && m_StartedBanVoteTime == 0 )
 				{
-					m_DBBanFirst->SetAdmin("AUTOBAN");
-					m_DBBanFirst->SetReason("Left in 2min");
-					m_BanVotePlayersNeeds = 2;
-					m_StartedBanVoteTime = GetTime( );
-					SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
-				}
-				else if( m_GameTicks/1000 < 7*60 )
-				{
-					m_DBBanFirst->SetAdmin("AUTOBAN");
-					m_DBBanFirst->SetReason("Left in 7min");
-					m_BanVotePlayersNeeds = 4;
-					m_StartedBanVoteTime = GetTime( );
-					SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
-				}
-				else
-				{
-					int scoreDiff = abs(int( m_DotaStats->GetSentinelScore( ) - m_DotaStats->GetScourgeScore( ) ));
-					if( scoreDiff < 15 )
+					if( m_GameTicks/1000 < 2*60 )
 					{
 						m_DBBanFirst->SetAdmin("AUTOBAN");
-						m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
+						m_DBBanFirst->SetReason("Left in 2min");
+						m_BanVotePlayersNeeds = 2;
 						m_StartedBanVoteTime = GetTime( );
-						if( scoreDiff < 5 )
-							m_BanVotePlayersNeeds = 2;
-						else if( scoreDiff < 10 )
-							m_BanVotePlayersNeeds = 3;
-						else
-							m_BanVotePlayersNeeds = 4;
 						SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+					}
+					else if( m_GameTicks/1000 < 7*60 )
+					{
+						m_DBBanFirst->SetAdmin("AUTOBAN");
+						m_DBBanFirst->SetReason("Left in 7min");
+						m_BanVotePlayersNeeds = 4;
+						m_StartedBanVoteTime = GetTime( );
+						SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+					}
+					else
+					{
+						int scoreDiff = abs(int( m_DotaStats->GetSentinelScore( ) - m_DotaStats->GetScourgeScore( ) ));
+						if( scoreDiff < 15 )
+						{
+							m_DBBanFirst->SetAdmin("AUTOBAN");
+							m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
+							m_StartedBanVoteTime = GetTime( );
+							if( scoreDiff < 5 )
+								m_BanVotePlayersNeeds = 2;
+							else if( scoreDiff < 10 )
+								m_BanVotePlayersNeeds = 3;
+							else
+								m_BanVotePlayersNeeds = 4;
+							SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
+						}
 					}
 				}
 			}
@@ -1982,9 +2046,10 @@ bool CGame :: EventPlayerBotCommand( CGamePlayer *player, string command, string
 	// !SCORE
 	//
 
-	if( Command =="score" && m_DotaStats && m_GameLoaded )
+	if( ( Command =="score" || Command == "sellmoe" ) && m_DotaStats && m_GameLoaded )
 	{
-		SendAllChat( m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
+		if ( m_GHost->m_AllowSellMoe )
+			SendAllChat( m_GHost->m_Language->SellMoe( ) );
 	}
 
 	return HideCommand;

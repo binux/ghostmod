@@ -29,6 +29,7 @@
 
 CLanguage :: CLanguage( string nCFGFile )
 {
+	srand(time(NULL));
 	m_CFG = new CConfig( );
 	m_CFG->Read( nCFGFile );
 }
@@ -1549,4 +1550,10 @@ string CLanguage :: DotAAutoBan( string leaver, string reason, string needVotes 
 	UTIL_Replace( Out, "$REASON$", reason );
 	UTIL_Replace( Out, "$NEEDVOTES$", needVotes );
 	return Out;
+}
+
+string CLanguage :: SellMoe( )
+{
+	int total = m_CFG->GetInt( "total_sellmoe", 0 );
+	return m_CFG->GetString( "sellmoe_" + UTIL_ToString( rand()%total ), "" );
 }

@@ -47,6 +47,7 @@ CStatsDOTA :: CStatsDOTA( CBaseGame *nGame ) : CStats( nGame )
 	m_ScoreSentinel = 0;
 
 	m_Finish = false;
+	m_AutoBan = true;
 	m_LeaverKills = 0;
 }
 
@@ -225,6 +226,7 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 							else if( KeyString.size( ) >= 6 && KeyString.substr( 0, 3 ) == "Rax" )
 							{
 								// a rax died
+								m_AutoBan = false;
 
 								if( ( ValueInt >= 1 && ValueInt <= 5 ) || ( ValueInt >= 7 && ValueInt <= 11 ) )
 								{
@@ -296,6 +298,10 @@ bool CStatsDOTA :: ProcessAction( CIncomingAction *Action )
 							else if( KeyString.size( ) >= 2 && KeyString.substr( 0, 2 ) == "CK" )
 							{
 								// a player disconnected
+								if ( m_ScoreSentinel == 0 && m_ScoreScourge == 0 && m_Game->GetRealPlayers() <= 5 )
+								{
+									m_Finish = true;
+								}
 							}
 						}
 						else if( DataString == "Global" )

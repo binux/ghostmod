@@ -743,7 +743,13 @@ bool CBaseGame :: Update( void *fd, void *send_fd )
 			m_CountDownCounter--;
 		}
 		else if( !m_GameLoading && !m_GameLoaded )
+		{
+			// balance the slots
+			if( m_MatchMaking && m_AutoStartPlayers != 0 && !m_Map->GetMapMatchMakingCategory( ).empty( ))
+				BalanceSlots( );
+
 			EventGameStarted( );
+		}
 
 		m_LastCountDownTicks = GetTicks( );
 	}
@@ -2282,7 +2288,7 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 		potential->SetDeleteMe( true );
 		return;
 	}
-	else if( score == -99999.0 && !m_AllowNewPlayer )
+	else if( score <= -99998.9 && !m_AllowNewPlayer )
 	{
 		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game but has a rating [" + UTIL_ToString( score, 2 ) + "] while new player is not allowed" );
 		potential->Send( m_Protocol->SEND_W3GS_REJECTJOIN( REJECTJOIN_FULL ) );
@@ -2587,10 +2593,12 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 		}
 	}
 
+#ifdef ALLOW_SCORE_ANNONCE
 	if( score < -99999.0 )
 		SendAllChat( m_GHost->m_Language->PlayerHasScore( joinPlayer->GetName( ), "N/A" ) );
 	else
 		SendAllChat( m_GHost->m_Language->PlayerHasScore( joinPlayer->GetName( ), UTIL_ToString( score, 2 ) ) );
+#endif
 
 	uint32_t PlayersScored = 0;
 	uint32_t PlayersNotScored = 0;
@@ -2663,8 +2671,8 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 
 	// balance the slots
 
-	if( m_AutoStartPlayers != 0 && GetRealPlayers( ) == m_AutoStartPlayers )
-		BalanceSlots( );
+	// if( m_AutoStartPlayers != 0 && GetRealPlayers( ) == m_AutoStartPlayers )
+	//	BalanceSlots( );
 }
 
 void CBaseGame :: EventPlayerLeft( CGamePlayer *player, uint32_t reason )

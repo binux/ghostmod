@@ -493,9 +493,6 @@ CGHost :: CGHost( CConfig *CFG )
 	m_AutoHostGameName = CFG->GetString( "autohost_gamename", string( ) );
 	m_AutoHostOwner = CFG->GetString( "autohost_owner", string( ) );
 	m_LastAutoHostTime = GetTime( );
-	m_AutoHostMatchMaking = false;
-	m_AutoHostMinimumScore = 0.0;
-	m_AutoHostMaximumScore = 0.0;
 	m_AllGamesFinished = false;
 	m_AllGamesFinishedTime = 0;
 	m_TFT = CFG->GetInt( "bot_tft", 1 ) == 0 ? false : true;
@@ -523,6 +520,10 @@ CGHost :: CGHost( CConfig *CFG )
 	m_UserCreateGame = CFG->GetInt( "bot_usercreategame", 0 ) == 0 ? false : true;
 	m_AutoHostMinChannelPlayer = CFG->GetInt( "autohost_minplayer", 0 );
 	m_LastLabelUpdate = GetTime( );
+	m_AutoHostMatchMaking = CFG->GetInt( "autohost_mm", 0 ) == 1 ? true :false;
+	m_AutoHostMinimumScore = CFG->GetInt( "autohost_minscore", 0 );
+	m_AutoHostMaximumScore = CFG->GetInt( "autohost_maxscore", 0 );
+	m_AllowSellMoe = CFG->GetInt( "bot_allow_sellmoe", 0 ) == 0 ? false : true;
 
 	SetConfigs( CFG );
 

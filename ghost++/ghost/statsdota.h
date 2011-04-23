@@ -38,6 +38,7 @@ private:
 	uint32_t m_ScoreSentinel;
 	uint32_t m_ScoreScourge;
 	uint32_t m_LeaverKills;
+	bool m_AutoBan;
 	bool m_Finish;
 
 public:
@@ -49,6 +50,7 @@ public:
 
 	uint32_t GetSentinelScore( )	{ return m_ScoreSentinel; }
 	uint32_t GetScourgeScore( )		{ return m_ScoreScourge; }
+	bool GetAutoBan( )    { return m_AutoBan; } 
 };
 
 #endif

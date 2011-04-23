@@ -143,6 +143,7 @@ public:
 	vector<PairedLabelDB> m_Labels;			// cache for labels
 	uint32_t m_LastLabelUpdate;				// the time of label cache update
 	uint32_t m_AutoHostMinChannelPlayer;	// the min players in channel
+	bool m_AllowSellMoe;                    // allow mai moe...
 
 	CGHost( CConfig *CFG );
 	~CGHost( );
