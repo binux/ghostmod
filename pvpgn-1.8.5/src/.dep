@@ -1,0 +1,1557 @@
+bnetd/account.o: bnetd/account.c common/setup_before.h config.h \
+  common/version.h compat/strchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/char_bit.h compat/strerror.h compat/pdir.h \
+  common/list.h common/elist.h common/eventlog.h bnetd/prefs.h \
+  common/util.h common/field_sizes.h common/bnethash.h compat/uint.h \
+  common/introtate.h bnetd/account.h bnetd/clan.h common/bn_type.h \
+  bnetd/team.h common/tag.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/xalloc.h common/hashtable.h bnetd/connection.h \
+  bnetd/account_wrap.h bnetd/character.h common/bnettime.h bnetd/ladder.h \
+  bnetd/game.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h bnetd/watch.h bnetd/friends.h bnetd/ladder_calc.h \
+  bnetd/ladder_binary.h bnetd/server.h bnetd/attrlayer.h common/flags.h
+bnetd/account_wrap.o: bnetd/account_wrap.c common/setup_before.h config.h \
+  common/version.h common/list.h common/eventlog.h common/util.h \
+  common/bnettime.h common/bn_type.h compat/uint.h bnetd/ladder.h \
+  bnetd/account.h common/elist.h bnetd/clan.h common/bn_type.h \
+  bnetd/team.h common/tag.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/xalloc.h bnetd/game.h bnetd/ladder_calc.h \
+  bnetd/ladder_binary.h common/hashtable.h bnetd/connection.h \
+  bnetd/account_wrap.h bnetd/character.h compat/uint.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h compat/strcasecmp.h compat/strncasecmp.h \
+  common/bnet_protocol.h bnetd/command.h bnetd/prefs.h bnetd/friends.h \
+  bnetd/anongame_infos.h
+bnetd/adbanner.o: bnetd/adbanner.c common/setup_before.h config.h \
+  common/version.h compat/strrchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strerror.h common/tag.h compat/uint.h common/bn_type.h \
+  common/eventlog.h common/list.h common/util.h common/xalloc.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h \
+  bnetd/account.h common/elist.h bnetd/clan.h bnetd/team.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h bnetd/adbanner.h
+bnetd/alias_command.o: bnetd/alias_command.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h compat/strerror.h \
+  common/field_sizes.h common/util.h common/eventlog.h common/list.h \
+  common/xalloc.h bnetd/message.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h bnetd/game.h bnetd/character.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/fdwatch.h bnetd/alias_command.h
+bnetd/anongame.o: bnetd/anongame.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/eventlog.h common/tag.h bnetd/team.h common/list.h \
+  bnetd/account.h common/elist.h bnetd/clan.h common/bn_type.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  common/hashtable.h bnetd/connection.h bnetd/account_wrap.h \
+  bnetd/character.h common/bnettime.h bnetd/ladder.h bnetd/game.h \
+  common/queue.h bnetd/channel.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/packet.h bnetd/prefs.h bnetd/tournament.h bnetd/ladder_calc.h \
+  bnetd/ladder_binary.h bnetd/server.h bnetd/anongame_maplists.h \
+  common/trans.h
+bnetd/anongame_gameresult.o: bnetd/anongame_gameresult.c common/setup_before.h \
+  config.h common/version.h compat/strrchr.h compat/strerror.h \
+  common/list.h common/eventlog.h common/util.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/tag.h common/bn_type.h common/xalloc.h \
+  bnetd/anongame_gameresult.h common/setup_after.h
+bnetd/anongame_infos.o: bnetd/anongame_infos.c common/setup_before.h config.h \
+  common/version.h compat/strrchr.h compat/strerror.h common/list.h \
+  common/eventlog.h common/util.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/tag.h common/bn_type.h common/xalloc.h \
+  zlib/pvpgn_zlib.h zlib/pvpgn_zconf.h common/setup_before.h \
+  bnetd/tournament.h bnetd/account.h common/elist.h bnetd/clan.h \
+  bnetd/team.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  bnetd/anongame_maplists.h bnetd/anongame_infos.h common/setup_after.h
+bnetd/anongame_maplists.o: bnetd/anongame_maplists.c common/setup_before.h \
+  config.h common/version.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/tag.h common/eventlog.h common/xalloc.h \
+  bnetd/prefs.h bnetd/anongame_maplists.h common/setup_after.h
+bnetd/attrgroup.o: bnetd/attrgroup.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/flags.h common/xalloc.h \
+  compat/strcasecmp.h compat/strncasecmp.h bnetd/attr.h common/elist.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attrlayer.h bnetd/prefs.h \
+  bnetd/server.h common/setup_after.h
+bnetd/attrlayer.o: bnetd/attrlayer.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/flags.h bnetd/attr.h \
+  common/elist.h common/xalloc.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attrlayer.h bnetd/prefs.h common/setup_after.h
+bnetd/autoupdate.o: bnetd/autoupdate.c common/setup_before.h config.h \
+  common/version.h compat/strtoul.h compat/strchr.h compat/strdup.h \
+  compat/strerror.h common/eventlog.h common/list.h common/util.h \
+  common/proginfo.h common/tag.h compat/uint.h common/xalloc.h \
+  bnetd/autoupdate.h common/setup_after.h
+bnetd/channel.o: bnetd/channel.c common/setup_before.h config.h \
+  common/version.h compat/strrchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strerror.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/eventlog.h common/hashtable.h bnetd/account_wrap.h \
+  common/bnettime.h bnetd/ladder.h common/util.h bnetd/prefs.h \
+  common/token.h bnetd/irc.h
+bnetd/channel_conv.o: bnetd/channel_conv.c common/setup_before.h config.h \
+  common/version.h common/bnet_protocol.h common/bn_type.h compat/uint.h \
+  bnetd/channel.h common/bn_type.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h common/hashtable.h \
+  bnetd/connection.h bnetd/message.h bnetd/channel_conv.h \
+  common/setup_after.h
+bnetd/character.o: bnetd/character.c common/setup_before.h config.h \
+  common/version.h compat/memcpy.h compat/strcasecmp.h compat/strdup.h \
+  compat/strerror.h common/eventlog.h common/list.h compat/uint.h \
+  common/bnet_protocol.h common/bn_type.h compat/uint.h bnetd/account.h \
+  common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  common/hashtable.h bnetd/connection.h bnetd/account_wrap.h \
+  bnetd/character.h common/bnettime.h bnetd/ladder.h bnetd/game.h \
+  common/util.h common/setup_after.h
+bnetd/clan.o: bnetd/clan.c common/setup_before.h config.h common/version.h \
+  compat/strrchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/pdir.h compat/strerror.h common/eventlog.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/bnet_protocol.h \
+  common/tag.h common/util.h common/bnettime.h common/list.h \
+  common/proginfo.h common/bn_type.h common/xalloc.h bnetd/connection.h \
+  common/queue.h bnetd/channel.h bnetd/account.h common/elist.h \
+  bnetd/clan.h bnetd/team.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h bnetd/game.h bnetd/character.h bnetd/versioncheck.h \
+  bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h bnetd/prefs.h bnetd/friends.h common/hashtable.h \
+  bnetd/server.h
+bnetd/cmdline.o: bnetd/cmdline.c common/setup_before.h config.h \
+  common/version.h common/xalloc.h compat/strcasecmp.h common/eventlog.h \
+  common/conf.h common/setup_after.h
+bnetd/command.o: bnetd/command.c common/setup_before.h config.h \
+  common/version.h compat/strtoul.h compat/strdup.h compat/strcasecmp.h \
+  compat/snprintf.h compat/vargs.h compat/strerror.h compat/strftime.h \
+  bnetd/message.h bnetd/connection.h common/tag.h compat/uint.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h common/fdwatch.h common/util.h \
+  common/version.h common/hashtable.h bnetd/account_wrap.h \
+  common/bnettime.h bnetd/ladder.h bnetd/server.h bnetd/prefs.h \
+  common/eventlog.h bnetd/ladder_calc.h bnetd/ladder_binary.h \
+  common/lstr.h bnetd/helpfile.h bnetd/mail.h common/bnethash.h \
+  bnetd/runprog.h common/proginfo.h bnetd/alias_command.h bnetd/ipban.h \
+  bnetd/command_groups.h common/packet.h bnetd/command.h bnetd/news.h \
+  common/lstr.h common/trans.h bnetd/topic.h bnetd/friends.h
+bnetd/command_groups.o: bnetd/command_groups.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/list.h compat/strerror.h \
+  bnetd/prefs.h common/util.h common/xalloc.h bnetd/command_groups.h \
+  common/setup_after.h
+bnetd/connection.o: bnetd/connection.c common/setup_before.h config.h \
+  common/version.h compat/strtoul.h compat/strchr.h compat/strrchr.h \
+  compat/strdup.h compat/strcasecmp.h compat/strncasecmp.h \
+  compat/strerror.h compat/difftime.h compat/socket.h compat/psock.h \
+  common/eventlog.h common/addr.h common/list.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h common/bn_type.h \
+  compat/uint.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h common/hashtable.h \
+  bnetd/connection.h bnetd/game.h common/queue.h bnetd/channel.h \
+  bnetd/quota.h bnetd/character.h bnetd/versioncheck.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/rcm.h common/elist.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  bnetd/account_wrap.h common/bnettime.h bnetd/ladder.h bnetd/message.h \
+  common/packet.h bnetd/tick.h common/lstr.h common/version.h \
+  bnetd/prefs.h common/util.h bnetd/watch.h bnetd/timer.h bnetd/irc.h \
+  bnetd/ipban.h bnetd/game_conv.h bnetd/udptest_send.h \
+  common/bnet_protocol.h common/field_sizes.h common/fdwatch.h \
+  bnetd/topic.h bnetd/server.h bnetd/handle_d2cs.h bnetd/command_groups.h \
+  bnetd/attrlayer.h
+bnetd/file.o: bnetd/file.c common/setup_before.h config.h common/version.h \
+  compat/strchr.h compat/strerror.h common/bn_type.h compat/uint.h \
+  common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h bnetd/connection.h common/packet.h \
+  bnetd/channel.h bnetd/account.h common/list.h common/elist.h \
+  bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/lstr.h common/file_protocol.h \
+  common/eventlog.h bnetd/prefs.h common/bnettime.h common/util.h \
+  bnetd/file.h
+bnetd/file_cdb.o: bnetd/file_cdb.c common/setup_before.h config.h \
+  common/version.h compat/strchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/char_bit.h compat/strerror.h compat/pdir.h \
+  common/eventlog.h bnetd/prefs.h common/util.h common/field_sizes.h \
+  common/bnethash.h compat/uint.h common/introtate.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/connection.h \
+  bnetd/storage_file.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h bnetd/watch.h tinycdb/cdb.h
+bnetd/file_plain.o: bnetd/file_plain.c common/setup_before.h config.h \
+  common/version.h compat/strchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/char_bit.h compat/strerror.h compat/pdir.h \
+  common/eventlog.h bnetd/prefs.h common/util.h common/field_sizes.h \
+  common/bnethash.h compat/uint.h common/introtate.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/connection.h \
+  bnetd/storage_file.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h bnetd/watch.h
+bnetd/friends.o: bnetd/friends.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h common/eventlog.h common/list.h \
+  common/xalloc.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h compat/uint.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/hashtable.h \
+  bnetd/connection.h bnetd/prefs.h bnetd/friends.h common/setup_after.h
+bnetd/game.o: bnetd/game.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h compat/strcasecmp.h compat/strerror.h compat/difftime.h \
+  common/eventlog.h bnetd/prefs.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/hashtable.h bnetd/account_wrap.h common/bnettime.h \
+  bnetd/ladder.h bnetd/ladder_calc.h bnetd/ladder_binary.h common/util.h \
+  bnetd/watch.h bnetd/game_conv.h bnetd/server.h compat/rename.h \
+  compat/access.h
+bnetd/game_conv.o: bnetd/game_conv.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h compat/strsep.h common/tag.h \
+  compat/uint.h common/eventlog.h bnetd/game.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/connection.h common/bnet_protocol.h common/bn_type.h \
+  common/util.h bnetd/game_conv.h common/setup_after.h
+bnetd/handle_anongame.o: bnetd/handle_anongame.c common/setup_before.h config.h \
+  common/version.h common/bn_type.h compat/uint.h common/eventlog.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/queue.h common/packet.h common/tag.h common/list.h \
+  common/util.h common/xalloc.h common/bnettime.h bnetd/connection.h \
+  bnetd/channel.h bnetd/account.h common/elist.h bnetd/clan.h \
+  bnetd/team.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/hashtable.h bnetd/account_wrap.h bnetd/ladder.h \
+  bnetd/anongame_infos.h bnetd/anongame_maplists.h \
+  bnetd/handle_anongame.h bnetd/tournament.h bnetd/server.h
+bnetd/handle_bnet.o: bnetd/handle_bnet.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h compat/strncasecmp.h \
+  compat/strchr.h compat/strdup.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/bnet_protocol.h common/tag.h bnetd/message.h \
+  bnetd/connection.h common/eventlog.h bnetd/command.h bnetd/team.h \
+  common/list.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/account_wrap.h \
+  bnetd/character.h common/bnettime.h bnetd/ladder.h bnetd/game.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/queue.h bnetd/channel.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h common/fdwatch.h common/packet.h bnetd/tick.h \
+  bnetd/file.h bnetd/prefs.h common/util.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/field_sizes.h \
+  bnetd/ladder_calc.h bnetd/ladder_binary.h bnetd/adbanner.h \
+  bnetd/game_conv.h bnetd/autoupdate.h bnetd/handle_anongame.h \
+  common/proginfo.h bnetd/handle_bnet.h bnetd/handlers.h \
+  compat/netinet_in.h bnetd/watch.h bnetd/anongame_infos.h bnetd/news.h \
+  common/lstr.h bnetd/friends.h bnetd/server.h common/trans.h
+bnetd/handle_bot.o: bnetd/handle_bot.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/bot_protocol.h common/tag.h bnetd/message.h \
+  bnetd/connection.h common/eventlog.h bnetd/command.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  common/hashtable.h bnetd/account_wrap.h bnetd/character.h \
+  common/bnettime.h bnetd/ladder.h bnetd/game.h common/queue.h \
+  bnetd/channel.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/fdwatch.h common/packet.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/field_sizes.h \
+  bnetd/handle_bot.h
+bnetd/handle_d2cs.o: bnetd/handle_d2cs.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/hashtable.h bnetd/account_wrap.h common/bnettime.h \
+  bnetd/ladder.h d2cs/d2cs_bnetd_protocol.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/eventlog.h \
+  common/packet.h common/lstr.h bnetd/prefs.h common/util.h \
+  common/field_sizes.h bnetd/handle_d2cs.h
+bnetd/handle_file.o: bnetd/handle_file.c common/setup_before.h config.h \
+  common/version.h compat/socket.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/file_protocol.h common/eventlog.h \
+  bnetd/connection.h common/queue.h bnetd/channel.h common/bn_type.h \
+  bnetd/account.h common/list.h common/elist.h bnetd/clan.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h bnetd/game.h bnetd/character.h bnetd/versioncheck.h \
+  bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h common/packet.h bnetd/file.h common/field_sizes.h \
+  bnetd/handle_file.h compat/psock.h
+bnetd/handle_init.o: bnetd/handle_init.c common/setup_before.h config.h \
+  common/version.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/init_protocol.h common/eventlog.h common/queue.h \
+  common/packet.h common/bn_type.h bnetd/connection.h bnetd/channel.h \
+  bnetd/account.h common/list.h common/elist.h bnetd/clan.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h bnetd/game.h bnetd/character.h bnetd/versioncheck.h \
+  bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h bnetd/prefs.h bnetd/handle_init.h bnetd/handle_d2cs.h
+bnetd/handle_irc.o: bnetd/handle_irc.c common/setup_before.h config.h \
+  common/version.h common/util.h compat/strdup.h compat/strcasecmp.h \
+  compat/strerror.h common/irc_protocol.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/eventlog.h bnetd/connection.h bnetd/game.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/quota.h bnetd/character.h bnetd/versioncheck.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/timer.h bnetd/message.h common/fdwatch.h common/field_sizes.h \
+  common/version.h common/packet.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/hashtable.h \
+  bnetd/account_wrap.h common/bnettime.h bnetd/ladder.h bnetd/irc.h \
+  bnetd/prefs.h bnetd/tick.h bnetd/server.h bnetd/command.h \
+  bnetd/handle_irc.h bnetd/topic.h bnetd/command_groups.h
+bnetd/handle_telnet.o: bnetd/handle_telnet.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/tag.h bnetd/message.h bnetd/connection.h \
+  common/eventlog.h bnetd/command.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h common/bn_type.h bnetd/team.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  common/hashtable.h bnetd/account_wrap.h bnetd/character.h \
+  common/bnettime.h bnetd/ladder.h bnetd/game.h common/queue.h \
+  bnetd/channel.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/fdwatch.h common/packet.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/field_sizes.h \
+  bnetd/handle_telnet.h
+bnetd/handle_udp.o: bnetd/handle_udp.c common/setup_before.h config.h \
+  common/version.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/udp_protocol.h common/eventlog.h \
+  bnetd/connection.h common/queue.h bnetd/channel.h common/bn_type.h \
+  bnetd/account.h common/list.h common/elist.h bnetd/clan.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h bnetd/game.h bnetd/character.h bnetd/versioncheck.h \
+  bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h common/packet.h bnetd/udptest_send.h \
+  bnetd/handle_udp.h
+bnetd/helpfile.o: bnetd/helpfile.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h compat/strerror.h bnetd/message.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h common/fdwatch.h common/util.h \
+  common/eventlog.h bnetd/helpfile.h bnetd/account_wrap.h \
+  common/bnettime.h bnetd/ladder.h bnetd/command_groups.h
+bnetd/ipban.o: bnetd/ipban.c common/setup_before.h config.h common/version.h \
+  compat/strchr.h compat/strdup.h compat/strcasecmp.h compat/strsep.h \
+  compat/strerror.h common/eventlog.h common/util.h bnetd/connection.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h \
+  common/bn_type.h bnetd/account.h common/list.h common/elist.h \
+  bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h bnetd/prefs.h bnetd/server.h \
+  bnetd/ipban.h
+bnetd/irc.o: bnetd/irc.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h compat/strerror.h common/irc_protocol.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/eventlog.h bnetd/connection.h common/queue.h \
+  bnetd/channel.h common/bn_type.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/field_sizes.h common/version.h \
+  common/packet.h common/bnethash.h common/bnethashconv.h \
+  common/bnethash.h common/hashtable.h bnetd/account_wrap.h \
+  common/bnettime.h bnetd/ladder.h bnetd/irc.h bnetd/prefs.h \
+  bnetd/server.h bnetd/tick.h bnetd/command_groups.h common/util.h
+bnetd/ladder_binary.o: bnetd/ladder_binary.c common/setup_before.h config.h \
+  common/version.h compat/strerror.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h common/bn_type.h compat/uint.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/connection.h common/eventlog.h \
+  bnetd/ladder_binary.h bnetd/ladder.h bnetd/game.h bnetd/ladder_calc.h \
+  bnetd/prefs.h common/setup_after.h
+bnetd/ladder.o: bnetd/ladder.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h common/field_sizes.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h common/bn_type.h compat/uint.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/connection.h \
+  bnetd/account_wrap.h bnetd/character.h common/bnettime.h bnetd/ladder.h \
+  bnetd/ladder_binary.h bnetd/game.h common/eventlog.h common/util.h \
+  common/bn_type.h bnetd/prefs.h bnetd/ladder_calc.h compat/strcasecmp.h \
+  compat/strncasecmp.h common/bnet_protocol.h common/setup_after.h
+bnetd/ladder_calc.o: bnetd/ladder_calc.c common/setup_before.h config.h \
+  common/version.h bnetd/account.h common/list.h common/elist.h \
+  bnetd/clan.h common/bn_type.h compat/uint.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  common/hashtable.h bnetd/connection.h bnetd/account_wrap.h \
+  bnetd/character.h common/bnettime.h bnetd/ladder.h bnetd/game.h \
+  common/eventlog.h bnetd/ladder_calc.h bnetd/ladder_binary.h \
+  common/setup_after.h
+bnetd/mail.o: bnetd/mail.c common/setup_before.h config.h common/version.h \
+  compat/strcasecmp.h compat/strerror.h compat/statmacros.h \
+  compat/mkdir.h compat/pdir.h bnetd/message.h bnetd/connection.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h \
+  common/bn_type.h bnetd/account.h common/list.h common/elist.h \
+  bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/fdwatch.h common/util.h common/eventlog.h common/hashtable.h \
+  bnetd/prefs.h bnetd/mail.h
+bnetd/main.o: bnetd/main.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h compat/strdup.h compat/strerror.h \
+  compat/stdfileno.h compat/psock.h common/hexdump.h bnetd/channel.h \
+  common/bn_type.h compat/uint.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h common/hashtable.h \
+  bnetd/connection.h bnetd/message.h bnetd/game.h bnetd/server.h \
+  common/eventlog.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/character.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h \
+  common/fdwatch.h common/version.h bnetd/prefs.h bnetd/ladder.h \
+  bnetd/ladder_calc.h bnetd/ladder_binary.h bnetd/adbanner.h \
+  bnetd/ipban.h bnetd/autoupdate.h bnetd/helpfile.h bnetd/watch.h \
+  common/tracker.h common/addr.h common/give_up_root_privileges.h \
+  bnetd/command_groups.h bnetd/output.h bnetd/alias_command.h \
+  bnetd/anongame_infos.h bnetd/anongame_maplists.h bnetd/tournament.h \
+  bnetd/news.h common/lstr.h bnetd/topic.h bnetd/support.h common/trans.h \
+  bnetd/attrlayer.h bnetd/cmdline.h
+bnetd/message.o: bnetd/message.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h compat/gethostname.h compat/strerror.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/packet.h common/lstr.h common/bot_protocol.h \
+  common/bnet_protocol.h common/field_sizes.h common/eventlog.h \
+  common/util.h common/version.h common/hashtable.h bnetd/account_wrap.h \
+  common/bnettime.h bnetd/ladder.h bnetd/channel_conv.h bnetd/command.h \
+  bnetd/irc.h bnetd/mail.h bnetd/prefs.h
+bnetd/news.o: bnetd/news.c common/setup_before.h config.h common/version.h \
+  compat/strtoul.h compat/strchr.h compat/strdup.h compat/strerror.h \
+  common/eventlog.h common/elist.h common/util.h common/proginfo.h \
+  common/xalloc.h bnetd/news.h common/lstr.h common/setup_after.h
+bnetd/output.o: bnetd/output.c common/setup_before.h config.h common/version.h \
+  bnetd/output.h bnetd/prefs.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  bnetd/ladder.h bnetd/ladder_calc.h bnetd/ladder_binary.h bnetd/server.h \
+  common/hashtable.h common/util.h common/bnettime.h common/eventlog.h \
+  common/proginfo.h compat/strerror.h
+bnetd/prefs.o: bnetd/prefs.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h compat/strcasecmp.h compat/strerror.h common/util.h \
+  common/eventlog.h common/xalloc.h common/conf.h bnetd/prefs.h \
+  common/setup_after.h
+bnetd/realm.o: bnetd/realm.c common/setup_before.h config.h common/version.h \
+  compat/strrchr.h compat/strdup.h compat/strcasecmp.h compat/strerror.h \
+  common/eventlog.h common/list.h common/util.h common/addr.h \
+  common/list.h common/xalloc.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h bnetd/game.h bnetd/character.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h
+bnetd/runprog.o: bnetd/runprog.c common/setup_before.h config.h \
+  common/version.h compat/strerror.h compat/stdfileno.h common/eventlog.h \
+  bnetd/runprog.h common/setup_after.h
+bnetd/server.o: bnetd/server.c common/setup_before.h config.h common/version.h \
+  compat/memset.h compat/strerror.h compat/difftime.h compat/signal.h \
+  compat/socket.h compat/netinet_in.h compat/inet_ntoa.h compat/psock.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h bnetd/connection.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  common/hexdump.h common/eventlog.h bnetd/handle_bnet.h \
+  bnetd/handle_bot.h bnetd/handle_telnet.h bnetd/handle_file.h \
+  bnetd/handle_init.h bnetd/handle_d2cs.h bnetd/handle_irc.h \
+  bnetd/handle_udp.h common/network.h common/packet.h bnetd/prefs.h \
+  common/hashtable.h common/tracker.h common/addr.h bnetd/adbanner.h \
+  common/util.h common/rlimit.h bnetd/ipban.h bnetd/helpfile.h \
+  bnetd/autoupdate.h bnetd/server.h bnetd/command_groups.h bnetd/ladder.h \
+  bnetd/ladder_calc.h bnetd/ladder_binary.h bnetd/output.h \
+  bnetd/alias_command.h bnetd/anongame_infos.h bnetd/news.h common/lstr.h \
+  common/trans.h bnetd/tournament.h bnetd/topic.h bnetd/attrlayer.h \
+  bnetd/cmdline.h
+bnetd/sql_common.o: bnetd/sql_common.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/strtoul.h compat/snprintf.h compat/vargs.h \
+  common/eventlog.h bnetd/prefs.h common/util.h bnetd/team.h \
+  common/list.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h compat/uint.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/xalloc.h common/tag.h common/hashtable.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/flags.h bnetd/sql_dbcreator.h \
+  bnetd/sql_common.h bnetd/sql_mysql.h
+bnetd/sql_dbcreator.o: bnetd/sql_dbcreator.c common/setup_before.h config.h \
+  common/version.h bnetd/sql_dbcreator.h common/list.h bnetd/sql_common.h \
+  bnetd/storage.h common/elist.h bnetd/attr.h common/xalloc.h \
+  bnetd/storage_sql.h common/eventlog.h common/util.h compat/strdup.h \
+  common/xstr.h bnetd/prefs.h common/setup_after.h
+bnetd/sql_mysql.o: bnetd/sql_mysql.c common/setup_before.h config.h \
+  common/version.h /usr/include/mysql/mysql.h \
+  /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql_com.h \
+  /usr/include/mysql/mysql_time.h /usr/include/mysql/typelib.h \
+  /usr/include/mysql/my_alloc.h /usr/include/mysql/my_list.h \
+  common/eventlog.h common/xalloc.h bnetd/storage_sql.h bnetd/storage.h \
+  common/elist.h bnetd/attr.h bnetd/sql_mysql.h bnetd/sql_common.h \
+  common/setup_after.h
+bnetd/sql_odbc.o: bnetd/sql_odbc.c
+bnetd/sql_pgsql.o: bnetd/sql_pgsql.c
+bnetd/sql_sqlite3.o: bnetd/sql_sqlite3.c
+bnetd/storage.o: bnetd/storage.c common/setup_before.h config.h \
+  common/version.h compat/strcasecmp.h bnetd/storage.h common/elist.h \
+  bnetd/attr.h common/xalloc.h bnetd/storage_file.h bnetd/storage_sql.h \
+  bnetd/storage_sql2.h compat/strdup.h common/eventlog.h \
+  common/setup_after.h
+bnetd/storage_file.o: bnetd/storage_file.c common/setup_before.h config.h \
+  common/version.h compat/strchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/char_bit.h compat/strerror.h \
+  compat/access.h compat/rename.h compat/access.h compat/pdir.h \
+  common/eventlog.h bnetd/prefs.h common/util.h common/field_sizes.h \
+  common/bnethash.h compat/uint.h common/introtate.h bnetd/team.h \
+  common/list.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/tag.h common/hashtable.h bnetd/connection.h \
+  bnetd/storage_file.h bnetd/file_plain.h bnetd/file_cdb.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h bnetd/game.h bnetd/character.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h bnetd/watch.h
+bnetd/storage_sql2.o: bnetd/storage_sql2.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/strtoul.h compat/snprintf.h compat/vargs.h \
+  common/eventlog.h bnetd/prefs.h common/util.h bnetd/team.h \
+  common/list.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h compat/uint.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/xalloc.h common/tag.h common/hashtable.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/flags.h bnetd/sql_dbcreator.h \
+  bnetd/sql_common.h bnetd/storage_sql2.h
+bnetd/storage_sql.o: bnetd/storage_sql.c common/setup_before.h config.h \
+  common/version.h compat/strdup.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/strtoul.h compat/snprintf.h compat/vargs.h \
+  common/eventlog.h bnetd/prefs.h common/util.h bnetd/team.h \
+  common/list.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h compat/uint.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/xalloc.h common/tag.h common/hashtable.h \
+  bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/queue.h bnetd/channel.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/flags.h bnetd/sql_dbcreator.h \
+  bnetd/sql_common.h bnetd/storage_sql.h
+bnetd/support.o: bnetd/support.c common/setup_before.h config.h \
+  common/version.h compat/access.h compat/strerror.h common/eventlog.h \
+  common/xalloc.h bnetd/support.h bnetd/prefs.h common/util.h \
+  common/setup_after.h
+bnetd/team.o: bnetd/team.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h compat/pdir.h compat/strerror.h common/eventlog.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/tag.h common/util.h \
+  common/xalloc.h common/list.h bnetd/storage.h common/elist.h \
+  bnetd/attr.h bnetd/team.h bnetd/account.h bnetd/clan.h common/bn_type.h \
+  bnetd/attrgroup.h common/hashtable.h bnetd/connection.h \
+  bnetd/account_wrap.h bnetd/character.h common/bnettime.h bnetd/ladder.h \
+  bnetd/game.h bnetd/ladder_calc.h bnetd/ladder_binary.h bnetd/server.h \
+  common/setup_after.h
+bnetd/tick.o: bnetd/tick.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h compat/gettimeofday.h compat/psock.h \
+  common/eventlog.h bnetd/tick.h common/setup_after.h
+bnetd/timer.o: bnetd/timer.c common/setup_before.h config.h common/version.h \
+  common/elist.h bnetd/connection.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/eventlog.h
+bnetd/topic.o: bnetd/topic.c common/setup_before.h config.h common/version.h \
+  compat/strrchr.h compat/strdup.h compat/strcasecmp.h compat/pdir.h \
+  compat/strerror.h common/eventlog.h common/list.h common/field_sizes.h \
+  common/xalloc.h bnetd/prefs.h bnetd/topic.h common/setup_after.h
+bnetd/tournament.o: bnetd/tournament.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/tag.h common/list.h common/util.h common/xalloc.h \
+  compat/strerror.h bnetd/account.h common/elist.h bnetd/clan.h \
+  common/bn_type.h bnetd/team.h bnetd/attrgroup.h bnetd/storage.h \
+  bnetd/attr.h common/hashtable.h bnetd/connection.h \
+  bnetd/anongame_maplists.h bnetd/tournament.h common/setup_after.h
+bnetd/tracker.o: bnetd/tracker.c common/setup_before.h config.h \
+  common/version.h compat/memset.h compat/strerror.h compat/uname.h \
+  compat/socket.h compat/send.h compat/netinet_in.h compat/psock.h \
+  common/eventlog.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h common/bn_type.h bnetd/account.h \
+  common/list.h common/elist.h bnetd/clan.h bnetd/team.h common/tag.h \
+  bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h common/xalloc.h \
+  bnetd/game.h bnetd/character.h bnetd/versioncheck.h bnetd/timer.h \
+  bnetd/anongame.h compat/uint.h bnetd/anongame_gameresult.h \
+  common/setup_after.h bnetd/realm.h common/addr.h common/list.h \
+  common/rcm.h common/elist.h bnetd/message.h common/fdwatch.h \
+  bnetd/prefs.h common/version.h bnetd/server.h common/tracker.h \
+  common/addr.h
+bnetd/udptest_send.o: bnetd/udptest_send.c common/setup_before.h config.h \
+  common/version.h compat/memset.h compat/strerror.h compat/socket.h \
+  compat/netinet_in.h compat/psock.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/bn_type.h common/udp_protocol.h bnetd/connection.h \
+  common/queue.h bnetd/channel.h bnetd/account.h common/list.h \
+  common/elist.h bnetd/clan.h bnetd/team.h common/tag.h bnetd/attrgroup.h \
+  bnetd/storage.h bnetd/attr.h common/xalloc.h bnetd/game.h \
+  bnetd/character.h bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h \
+  compat/uint.h bnetd/anongame_gameresult.h common/setup_after.h \
+  bnetd/realm.h common/addr.h common/list.h common/rcm.h common/elist.h \
+  bnetd/message.h common/fdwatch.h common/hexdump.h common/eventlog.h \
+  bnetd/udptest_send.h
+bnetd/versioncheck.o: bnetd/versioncheck.c common/setup_before.h config.h \
+  common/version.h compat/strtoul.h compat/strchr.h compat/strdup.h \
+  compat/strcasecmp.h compat/strerror.h common/eventlog.h common/list.h \
+  common/util.h common/proginfo.h common/token.h common/field_sizes.h \
+  bnetd/prefs.h bnetd/versioncheck.h common/tag.h compat/uint.h \
+  common/xalloc.h common/setup_after.h
+bnetd/watch.o: bnetd/watch.c common/setup_before.h config.h common/version.h \
+  compat/strcasecmp.h common/field_sizes.h common/list.h bnetd/account.h \
+  common/elist.h bnetd/clan.h common/bn_type.h compat/uint.h bnetd/team.h \
+  common/tag.h bnetd/attrgroup.h bnetd/storage.h bnetd/attr.h \
+  common/xalloc.h common/hashtable.h bnetd/connection.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/queue.h bnetd/channel.h bnetd/game.h bnetd/character.h \
+  bnetd/versioncheck.h bnetd/timer.h bnetd/anongame.h compat/uint.h \
+  bnetd/anongame_gameresult.h common/setup_after.h bnetd/realm.h \
+  common/addr.h common/list.h common/rcm.h common/elist.h bnetd/message.h \
+  common/fdwatch.h common/eventlog.h bnetd/watch.h bnetd/friends.h \
+  bnetd/prefs.h
+bniutils/bni2tga.o: bniutils/bni2tga.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/strerror.h \
+  bniutils/fileio.h compat/uint.h bniutils/bni.h common/version.h \
+  common/setup_after.h
+bniutils/bnibuild.o: bniutils/bnibuild.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/strerror.h \
+  compat/statmacros.h bniutils/fileio.h compat/uint.h bniutils/tga.h \
+  bniutils/bni.h common/version.h common/setup_after.h
+bniutils/bni.o: bniutils/bni.c common/setup_before.h config.h common/version.h \
+  bniutils/fileio.h compat/uint.h bniutils/bni.h common/setup_after.h
+bniutils/bniextract.o: bniutils/bniextract.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/strerror.h \
+  compat/statmacros.h compat/mkdir.h common/version.h bniutils/fileio.h \
+  compat/uint.h bniutils/tga.h bniutils/bni.h common/setup_after.h
+bniutils/bnilist.o: bniutils/bnilist.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/strerror.h bniutils/tga.h \
+  compat/uint.h bniutils/fileio.h common/version.h common/setup_after.h
+bniutils/fileio.o: bniutils/fileio.c common/setup_before.h config.h \
+  common/version.h compat/uint.h bniutils/fileio.h common/setup_after.h
+bniutils/tga.o: bniutils/tga.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h bniutils/fileio.h compat/uint.h bniutils/tga.h \
+  common/setup_after.h
+bniutils/tgainfo.o: bniutils/tgainfo.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/strerror.h bniutils/tga.h \
+  compat/uint.h bniutils/fileio.h common/version.h common/setup_after.h
+bnpass/bnpass.o: bnpass/bnpass.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h common/eventlog.h common/bnethash.h compat/uint.h \
+  common/version.h common/setup_after.h
+bnpcap/bnpcap.o: bnpcap/bnpcap.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h compat/getopt.h common/setup_before.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/udp_protocol.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/eventlog.h \
+  common/hexdump.h common/list.h common/version.h common/util.h \
+  common/setup_after.h
+bnproxy/bnproxy.o: bnproxy/bnproxy.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/stdfileno.h compat/memset.h \
+  compat/memcpy.h compat/strerror.h compat/socket.h compat/recv.h \
+  compat/netinet_in.h compat/inet_ntoa.h compat/psock.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/init_protocol.h common/hexdump.h common/eventlog.h \
+  common/bn_type.h common/queue.h common/packet.h common/network.h \
+  common/list.h common/util.h bnproxy/virtconn.h common/version.h \
+  common/setup_after.h
+bnproxy/virtconn.o: bnproxy/virtconn.c common/setup_before.h config.h \
+  common/version.h compat/socket.h compat/psock.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/list.h common/eventlog.h \
+  bnproxy/virtconn.h common/packet.h common/setup_after.h
+bntrackd/bntrackd.o: bntrackd/bntrackd.c common/setup_before.h config.h \
+  common/version.h compat/exitstatus.h compat/memset.h compat/stdfileno.h \
+  compat/strerror.h compat/socket.h compat/send.h compat/netinet_in.h \
+  compat/inet_ntoa.h compat/psock.h common/list.h common/version.h \
+  common/eventlog.h common/util.h common/tracker.h common/bn_type.h \
+  compat/uint.h common/addr.h common/list.h common/xalloc.h \
+  common/bn_type.h common/setup_after.h
+client/bnbot.o: client/bnbot.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h compat/memset.h compat/memcpy.h compat/strerror.h \
+  compat/termios.h compat/socket.h compat/send.h compat/netinet_in.h \
+  compat/inet_ntoa.h compat/psock.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/init_protocol.h common/bot_protocol.h \
+  common/bn_type.h common/field_sizes.h common/network.h common/packet.h \
+  common/version.h common/util.h common/eventlog.h client/client.h \
+  common/setup_after.h
+client/bnchat.o: client/bnchat.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h compat/strchr.h compat/strdup.h compat/strcasecmp.h \
+  compat/vargs.h compat/strerror.h compat/termios.h compat/signal.h \
+  compat/socket.h compat/netinet_in.h compat/inet_ntoa.h compat/psock.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/init_protocol.h \
+  common/udp_protocol.h common/bnet_protocol.h common/file_protocol.h \
+  common/tag.h common/bn_type.h common/field_sizes.h common/network.h \
+  common/packet.h common/bnethash.h common/bnethashconv.h \
+  common/bnethash.h client/ansi_term.h common/version.h common/util.h \
+  common/xalloc.h common/hexdump.h common/eventlog.h client/client.h \
+  client/udptest.h client/client_connect.h compat/vsnprintf.h \
+  compat/vargs.h common/setup_after.h
+client/bnftp.o: client/bnftp.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h compat/memset.h compat/memcpy.h compat/strerror.h \
+  compat/strftime.h compat/termios.h compat/socket.h compat/send.h \
+  compat/netinet_in.h compat/inet_ntoa.h compat/psock.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/init_protocol.h common/file_protocol.h \
+  common/tag.h common/bn_type.h common/field_sizes.h common/network.h \
+  common/packet.h common/version.h common/util.h common/bnettime.h \
+  common/eventlog.h common/hexdump.h client/client.h common/xalloc.h \
+  common/setup_after.h
+client/bnstat.o: client/bnstat.c common/setup_before.h config.h common/version.h \
+  compat/exitstatus.h compat/memset.h compat/memcpy.h compat/strerror.h \
+  compat/strftime.h compat/termios.h compat/socket.h compat/recv.h \
+  compat/send.h compat/netinet_in.h compat/inet_ntoa.h compat/psock.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/init_protocol.h \
+  common/udp_protocol.h common/bnet_protocol.h common/tag.h \
+  common/bn_type.h common/field_sizes.h common/network.h common/packet.h \
+  common/version.h common/util.h common/eventlog.h common/bnettime.h \
+  client/client.h client/udptest.h client/client_connect.h \
+  common/setup_after.h
+client/client.o: client/client.c common/setup_before.h config.h common/version.h \
+  compat/strrchr.h compat/read.h compat/socket.h compat/psock.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/network.h \
+  common/packet.h client/client.h common/setup_after.h
+client/client_connect.o: client/client_connect.c common/setup_before.h config.h \
+  common/version.h compat/memset.h compat/memcpy.h compat/strerror.h \
+  compat/gethostname.h compat/socket.h compat/netinet_in.h \
+  compat/inet_ntoa.h compat/psock.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/init_protocol.h common/udp_protocol.h \
+  common/bnet_protocol.h common/file_protocol.h common/tag.h \
+  common/bn_type.h common/field_sizes.h common/bnethash.h \
+  common/bnethashconv.h common/bnethash.h common/util.h common/eventlog.h \
+  client/client.h client/udptest.h common/bnettime.h common/proginfo.h \
+  client/client_connect.h common/setup_after.h
+client/udptest.o: client/udptest.c common/setup_before.h config.h \
+  common/version.h compat/memset.h compat/strerror.h compat/socket.h \
+  compat/recv.h compat/send.h compat/netinet_in.h compat/psock.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/init_protocol.h \
+  common/udp_protocol.h common/tag.h common/bn_type.h \
+  common/field_sizes.h common/network.h common/packet.h client/client.h \
+  client/udptest.h common/setup_after.h
+common/addr.o: common/addr.c common/setup_before.h config.h common/version.h \
+  compat/memset.h compat/memcpy.h compat/strrchr.h compat/strdup.h \
+  compat/socket.h compat/netinet_in.h compat/inet_aton.h \
+  compat/inet_ntoa.h compat/psock.h common/eventlog.h common/list.h \
+  common/util.h common/xalloc.h common/addr.h common/list.h \
+  common/setup_after.h
+common/asnprintf.o: common/asnprintf.c common/setup_before.h config.h \
+  common/version.h compat/uint.h common/asnprintf.h compat/vargs.h \
+  common/setup_after.h
+common/bnethash.o: common/bnethash.c common/setup_before.h config.h \
+  common/version.h compat/uint.h common/introtate.h common/eventlog.h \
+  common/bnethash.h compat/uint.h common/setup_after.h
+common/bnethashconv.o: common/bnethashconv.c common/setup_before.h config.h \
+  common/version.h common/bnethash.h compat/uint.h common/bn_type.h \
+  common/eventlog.h common/bnethashconv.h common/bn_type.h \
+  common/bnethash.h common/setup_after.h
+common/bnettime.o: common/bnettime.c common/setup_before.h config.h \
+  common/version.h compat/strerror.h compat/gettimeofday.h compat/psock.h \
+  common/eventlog.h common/bn_type.h compat/uint.h common/bnettime.h \
+  common/bn_type.h common/setup_after.h
+common/bn_type.o: common/bn_type.c common/setup_before.h config.h \
+  common/version.h compat/memcpy.h common/eventlog.h common/bn_type.h \
+  compat/uint.h common/setup_after.h
+common/conf.o: common/conf.c common/setup_before.h config.h common/version.h \
+  common/eventlog.h common/xalloc.h common/util.h common/conf.h \
+  compat/snprintf.h compat/vargs.h common/setup_after.h
+common/d2char_checksum.o: common/d2char_checksum.c common/setup_before.h \
+  config.h common/version.h common/setup_after.h
+common/eventlog.o: common/eventlog.c common/setup_before.h config.h \
+  common/version.h compat/strerror.h compat/strcasecmp.h compat/vargs.h \
+  compat/strftime.h common/eventlog.h common/hexdump.h \
+  common/setup_after.h
+common/fdwatch.o: common/fdwatch.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/fdwatch.h common/elist.h \
+  common/fdwatch_select.h common/fdwatch_poll.h common/fdwatch_epoll.h \
+  common/rlimit.h common/xalloc.h common/setup_after.h
+common/fdwatch_epoll.o: common/fdwatch_epoll.c common/setup_before.h config.h \
+  common/version.h compat/uint.h common/fdwatch.h common/elist.h \
+  common/eventlog.h common/xalloc.h common/setup_after.h
+common/fdwatch_kqueue.o: common/fdwatch_kqueue.c common/setup_before.h config.h \
+  common/version.h common/fdwatch.h common/elist.h common/eventlog.h \
+  common/xalloc.h common/setup_after.h
+common/fdwatch_poll.o: common/fdwatch_poll.c common/setup_before.h config.h \
+  common/version.h common/fdwatch.h common/elist.h common/eventlog.h \
+  common/xalloc.h common/setup_after.h
+common/fdwatch_select.o: common/fdwatch_select.c common/setup_before.h config.h \
+  common/version.h compat/psock.h common/fdwatch.h common/elist.h \
+  common/eventlog.h common/xalloc.h common/setup_after.h
+common/give_up_root_privileges.o: common/give_up_root_privileges.c \
+  common/setup_before.h config.h common/version.h compat/strerror.h \
+  common/eventlog.h common/give_up_root_privileges.h common/setup_after.h
+common/hashtable.o: common/hashtable.c common/setup_before.h config.h \
+  common/version.h common/eventlog.h common/hashtable.h common/xalloc.h \
+  common/setup_after.h
+common/hexdump.o: common/hexdump.c common/setup_before.h config.h \
+  common/version.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/hexdump.h common/eventlog.h common/setup_after.h
+common/list.o: common/list.c common/setup_before.h config.h common/version.h \
+  common/eventlog.h common/xalloc.h common/list.h common/setup_after.h
+common/network.o: common/network.c common/setup_before.h config.h \
+  common/version.h compat/strerror.h compat/socket.h compat/recv.h \
+  compat/send.h compat/netinet_in.h compat/psock.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/eventlog.h common/field_sizes.h common/network.h \
+  common/packet.h common/setup_after.h
+common/packet.o: common/packet.c common/setup_before.h config.h common/version.h \
+  compat/memcpy.h common/eventlog.h common/bn_type.h compat/uint.h \
+  common/field_sizes.h common/xalloc.h common/lstr.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/setup_after.h
+common/proginfo.o: common/proginfo.c common/setup_before.h config.h \
+  common/version.h compat/strtoul.h compat/strchr.h common/proginfo.h \
+  common/setup_after.h
+common/queue.o: common/queue.c common/setup_before.h config.h common/version.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/lstr.h common/eventlog.h \
+  common/xalloc.h common/queue.h common/packet.h common/setup_after.h
+common/rcm.o: common/rcm.c common/setup_before.h config.h common/version.h \
+  common/xalloc.h common/elist.h common/rcm.h common/elist.h \
+  common/setup_after.h
+common/rlimit.o: common/rlimit.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h common/eventlog.h common/bn_type.h compat/uint.h \
+  common/setup_after.h
+common/tag.o: common/tag.c common/setup_before.h config.h common/version.h \
+  compat/strerror.h common/eventlog.h common/tag.h compat/uint.h \
+  common/setup_after.h
+common/token.o: common/token.c common/setup_before.h config.h common/version.h \
+  common/token.h common/eventlog.h common/setup_after.h
+common/trans.o: common/trans.c common/setup_before.h config.h common/version.h \
+  compat/strrchr.h compat/strerror.h common/eventlog.h common/list.h \
+  common/addr.h common/list.h common/util.h common/xalloc.h \
+  common/trans.h common/setup_after.h
+common/util.o: common/util.c common/setup_before.h config.h common/version.h \
+  compat/strtoul.h compat/strcasecmp.h compat/strncasecmp.h \
+  common/xalloc.h common/util.h common/setup_after.h
+common/xalloc.o: common/xalloc.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h common/eventlog.h common/xalloc.h common/setup_after.h
+common/xstr.o: common/xstr.c common/setup_before.h config.h common/version.h \
+  common/xstr.h common/xalloc.h common/setup_after.h
+common/xstring.o: common/xstring.c common/setup_before.h config.h \
+  common/version.h compat/memcpy.h compat/memmove.h compat/strdup.h \
+  common/xalloc.h common/xstring.h common/setup_after.h
+compat/difftime.o: compat/difftime.c common/setup_before.h config.h \
+  common/version.h
+compat/getopt.o: compat/getopt.c common/setup_before.h config.h common/version.h
+compat/gettimeofday.o: compat/gettimeofday.c common/setup_before.h config.h \
+  common/version.h
+compat/inet_aton.o: compat/inet_aton.c common/setup_before.h config.h \
+  common/version.h
+compat/inet_ntoa.o: compat/inet_ntoa.c common/setup_before.h config.h \
+  common/version.h
+compat/memcpy.o: compat/memcpy.c common/setup_before.h config.h common/version.h
+compat/memmove.o: compat/memmove.c common/setup_before.h config.h \
+  common/version.h
+compat/memset.o: compat/memset.c common/setup_before.h config.h common/version.h
+compat/mmap.o: compat/mmap.c common/setup_before.h config.h common/version.h
+compat/pdir.o: compat/pdir.c common/setup_before.h config.h common/version.h \
+  compat/strdup.h compat/strerror.h common/eventlog.h common/xalloc.h \
+  compat/pdir.h common/setup_after.h
+compat/psock.o: compat/psock.c common/setup_before.h config.h common/version.h \
+  compat/psock.h common/setup_after.h
+compat/snprintf.o: compat/snprintf.c common/setup_before.h config.h \
+  common/version.h compat/vargs.h compat/vsnprintf.h compat/vargs.h \
+  common/setup_after.h
+compat/strcasecmp.o: compat/strcasecmp.c common/setup_before.h config.h \
+  common/version.h
+compat/strdup.o: compat/strdup.c common/setup_before.h config.h common/version.h
+compat/strerror.o: compat/strerror.c common/setup_before.h config.h \
+  common/version.h
+compat/strftime.o: compat/strftime.c common/setup_before.h config.h \
+  common/version.h
+compat/strncasecmp.o: compat/strncasecmp.c common/setup_before.h config.h \
+  common/version.h
+compat/strsep.o: compat/strsep.c common/setup_before.h config.h common/version.h
+compat/strtoul.o: compat/strtoul.c common/setup_before.h config.h \
+  common/version.h
+compat/uname.o: compat/uname.c common/setup_before.h config.h common/version.h
+compat/vsnprintf.o: compat/vsnprintf.c common/setup_before.h config.h \
+  common/version.h compat/vargs.h common/setup_after.h
+d2cs/bnetd.o: d2cs/bnetd.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h d2cs/bnetd.h d2cs/s2s.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/hashtable.h common/packet.h \
+  common/lstr.h common/fdwatch.h common/elist.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  common/list.h d2cs/prefs.h d2cs/handle_bnetd.h common/eventlog.h \
+  common/setup_after.h
+d2cs/cmdline.o: d2cs/cmdline.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/memset.h common/conf.h common/xalloc.h \
+  d2cs/version.h d2cs/cmdline.h compat/strcasecmp.h common/eventlog.h \
+  common/setup_after.h
+d2cs/connection.o: d2cs/connection.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/memcpy.h compat/strdup.h \
+  compat/psock.h compat/netinet_in.h compat/char_bit.h \
+  compat/strcasecmp.h d2cs/connection.h common/queue.h common/packet.h \
+  common/field_sizes.h common/init_protocol.h common/bn_type.h \
+  compat/uint.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h common/list.h d2cs/game.h d2cs/d2gs.h \
+  d2cs/prefs.h d2cs/net.h d2cs/s2s.h d2cs/handle_d2gs.h \
+  d2cs/handle_d2cs.h d2cs/handle_init.h d2cs/handle_bnetd.h common/addr.h \
+  common/list.h common/introtate.h common/network.h common/eventlog.h \
+  common/xalloc.h common/setup_after.h
+d2cs/d2charfile.o: d2cs/d2charfile.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/memset.h compat/memcpy.h \
+  compat/strerror.h compat/access.h d2cs/d2charfile.h d2cs/bit.h \
+  d2cs/d2cs_d2gs_character.h common/bn_type.h compat/uint.h d2cs/prefs.h \
+  common/xstring.h common/eventlog.h common/d2char_checksum.h \
+  common/xalloc.h common/setup_after.h
+d2cs/d2charlist.o: d2cs/d2charlist.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/hashtable.h common/packet.h \
+  common/lstr.h common/fdwatch.h common/elist.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  common/list.h d2cs/prefs.h common/eventlog.h compat/strcasecmp.h \
+  compat/strncasecmp.h compat/strdup.h common/xalloc.h common/elist.h \
+  d2cs/d2charlist.h common/setup_after.h
+d2cs/d2gs.o: d2cs/d2gs.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/strsep.h compat/char_bit.h compat/socket.h \
+  compat/netinet_in.h compat/psock.h d2cs/d2gs.h common/list.h \
+  d2cs/connection.h common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h d2cs/game.h d2cs/net.h d2cs/prefs.h \
+  common/introtate.h common/addr.h common/list.h common/eventlog.h \
+  common/xalloc.h common/setup_after.h
+d2cs/d2ladder.o: d2cs/d2ladder.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/strcasecmp.h compat/memset.h \
+  compat/strerror.h d2cs/prefs.h d2cs/d2charfile.h d2cs/bit.h \
+  d2cs/d2cs_d2gs_character.h common/bn_type.h compat/uint.h \
+  d2cs/d2ladder.h d2cs/d2cs_protocol.h d2cs/d2cs_d2dbs_ladder.h \
+  common/tag.h common/eventlog.h common/xalloc.h common/setup_after.h
+d2cs/game.o: d2cs/game.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/strcasecmp.h compat/strdup.h d2cs/bit.h \
+  d2cs/prefs.h d2cs/game.h d2cs/d2gs.h common/list.h d2cs/connection.h \
+  common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h common/eventlog.h common/xalloc.h \
+  common/setup_after.h
+d2cs/gamequeue.o: d2cs/gamequeue.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/strcasecmp.h d2cs/connection.h \
+  common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h common/list.h d2cs/handle_d2cs.h \
+  common/eventlog.h common/xalloc.h common/setup_after.h
+d2cs/handle_bnetd.o: d2cs/handle_bnetd.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/hashtable.h common/packet.h \
+  common/lstr.h common/fdwatch.h common/elist.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  common/list.h d2cs/handle_bnetd.h d2cs/serverqueue.h \
+  d2cs/d2cs_bnetd_protocol.h d2cs/d2cs_protocol.h d2cs/version.h \
+  d2cs/prefs.h d2cs/game.h d2cs/d2gs.h common/init_protocol.h \
+  common/eventlog.h common/setup_after.h
+d2cs/handle_d2cs.o: d2cs/handle_d2cs.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/memcpy.h compat/socket.h \
+  compat/netinet_in.h compat/inet_ntoa.h compat/pdir.h compat/mkdir.h \
+  d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h compat/uint.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/gamequeue.h common/list.h d2cs/game.h d2cs/d2gs.h \
+  d2cs/bnetd.h d2cs/s2s.h d2cs/d2cs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  d2cs/handle_d2cs.h d2cs/d2ladder.h d2cs/d2cs_d2dbs_ladder.h \
+  d2cs/serverqueue.h d2cs/prefs.h common/eventlog.h d2cs/d2charlist.h \
+  common/elist.h common/xalloc.h common/setup_after.h
+d2cs/handle_d2gs.o: d2cs/handle_d2gs.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/socket.h compat/netinet_in.h \
+  compat/psock.h d2cs/d2gs.h common/list.h d2cs/connection.h \
+  common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h d2cs/handle_d2gs.h d2cs/serverqueue.h \
+  d2cs/game.h d2cs/prefs.h d2cs/d2cs_d2gs_protocol.h common/trans.h \
+  common/addr.h common/list.h common/eventlog.h common/xalloc.h \
+  common/setup_after.h
+d2cs/handle_init.o: d2cs/handle_init.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/hashtable.h common/packet.h \
+  common/lstr.h common/fdwatch.h common/elist.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  common/list.h d2cs/handle_init.h d2cs/handle_d2gs.h d2cs/d2gs.h \
+  d2cs/prefs.h common/init_protocol.h common/addr.h common/list.h \
+  common/eventlog.h common/setup_after.h
+d2cs/handle_signal.o: d2cs/handle_signal.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h compat/strdup.h compat/signal.h \
+  d2cs/d2gs.h common/list.h d2cs/connection.h common/queue.h \
+  common/packet.h common/field_sizes.h common/init_protocol.h \
+  common/bn_type.h compat/uint.h common/bnet_protocol.h \
+  common/anongame_protocol.h common/file_protocol.h common/bot_protocol.h \
+  common/udp_protocol.h common/d2game_protocol.h common/bn_type.h \
+  d2cs/d2cs_protocol.h common/bn_type.h d2cs/d2cs_d2gs_protocol.h \
+  d2cs/d2cs_bnetd_protocol.h common/hashtable.h common/packet.h \
+  common/lstr.h common/fdwatch.h common/elist.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  d2cs/game.h d2cs/prefs.h d2cs/d2ladder.h d2cs/d2cs_protocol.h \
+  d2cs/d2cs_d2dbs_ladder.h d2cs/cmdline.h d2cs/handle_signal.h \
+  common/trans.h common/eventlog.h common/xalloc.h common/setup_after.h
+d2cs/main.o: d2cs/main.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/strdup.h compat/strerror.h d2cs/server.h \
+  common/fdwatch.h common/elist.h d2cs/game.h d2cs/d2gs.h common/list.h \
+  d2cs/connection.h common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h d2cs/d2charfile.h \
+  d2cs/bit.h d2cs/d2cs_d2gs_character.h common/bn_type.h d2cs/gamequeue.h \
+  d2cs/serverqueue.h d2cs/prefs.h d2cs/cmdline.h d2cs/d2ladder.h \
+  d2cs/d2cs_protocol.h d2cs/d2cs_d2dbs_ladder.h d2cs/version.h \
+  common/trans.h common/eventlog.h common/xalloc.h common/setup_after.h
+d2cs/net.o: d2cs/net.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/memset.h compat/strerror.h compat/socket.h \
+  compat/netinet_in.h compat/psock.h d2cs/net.h common/eventlog.h \
+  common/setup_after.h
+d2cs/prefs.o: d2cs/prefs.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/memset.h common/conf.h d2cs/prefs.h \
+  common/eventlog.h common/setup_after.h
+d2cs/s2s.o: d2cs/s2s.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/memset.h compat/strdup.h compat/strerror.h \
+  compat/psock.h compat/netinet_in.h compat/strtoul.h d2cs/connection.h \
+  common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h common/list.h d2cs/bnetd.h d2cs/s2s.h \
+  d2cs/net.h d2cs/server.h common/eventlog.h common/xalloc.h \
+  common/setup_after.h
+d2cs/server.o: d2cs/server.c common/setup_before.h config.h common/version.h \
+  d2cs/setup.h compat/memset.h compat/strerror.h compat/psock.h \
+  compat/netinet_in.h compat/inet_ntoa.h d2cs/d2gs.h common/list.h \
+  d2cs/connection.h common/queue.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/hashtable.h common/packet.h common/lstr.h common/fdwatch.h \
+  common/elist.h d2cs/d2charfile.h d2cs/bit.h d2cs/d2cs_d2gs_character.h \
+  common/bn_type.h d2cs/gamequeue.h d2cs/net.h d2cs/s2s.h d2cs/game.h \
+  d2cs/serverqueue.h d2cs/server.h d2cs/prefs.h d2cs/d2ladder.h \
+  d2cs/d2cs_protocol.h d2cs/d2cs_d2dbs_ladder.h d2cs/handle_signal.h \
+  common/addr.h common/list.h common/eventlog.h common/setup_after.h
+d2cs/serverqueue.o: d2cs/serverqueue.c common/setup_before.h config.h \
+  common/version.h d2cs/setup.h d2cs/prefs.h d2cs/serverqueue.h \
+  common/list.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  common/lstr.h common/eventlog.h common/xalloc.h common/setup_after.h
+d2dbs/charlock.o: d2dbs/charlock.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/strcasecmp.h d2dbs/charlock.h \
+  common/introtate.h common/xalloc.h common/setup_after.h
+d2dbs/cmdline.o: d2dbs/cmdline.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/memset.h common/conf.h \
+  common/xalloc.h d2dbs/version.h d2dbs/cmdline.h compat/strcasecmp.h \
+  common/eventlog.h common/setup_after.h
+d2dbs/d2ladder.o: d2dbs/d2ladder.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/rename.h compat/access.h \
+  d2dbs/d2ladder.h common/list.h d2cs/d2cs_d2dbs_ladder.h \
+  common/bn_type.h compat/uint.h d2cs/d2charfile.h d2cs/bit.h \
+  d2dbs/prefs.h common/tag.h common/eventlog.h compat/strncasecmp.h \
+  compat/strerror.h common/xalloc.h common/setup_after.h
+d2dbs/dbsdupecheck.o: d2dbs/dbsdupecheck.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/strcasecmp.h d2dbs/dbsdupecheck.h \
+  common/setup_after.h common/bn_type.h compat/uint.h common/eventlog.h
+d2dbs/dbserver.o: d2dbs/dbserver.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/memset.h compat/strerror.h \
+  compat/socket.h compat/netinet_in.h compat/inet_ntoa.h compat/psock.h \
+  common/network.h common/packet.h common/field_sizes.h \
+  common/init_protocol.h common/bn_type.h compat/uint.h \
+  common/bnet_protocol.h common/anongame_protocol.h \
+  common/file_protocol.h common/bot_protocol.h common/udp_protocol.h \
+  common/d2game_protocol.h common/bn_type.h d2cs/d2cs_protocol.h \
+  common/bn_type.h d2cs/d2cs_d2gs_protocol.h d2cs/d2cs_bnetd_protocol.h \
+  d2dbs/dbserver.h common/list.h d2dbs/charlock.h d2dbs/d2ladder.h \
+  d2cs/d2cs_d2dbs_ladder.h d2cs/d2charfile.h d2cs/bit.h d2dbs/dbspacket.h \
+  common/bn_type.h d2dbs/prefs.h d2dbs/handle_signal.h common/eventlog.h \
+  common/addr.h common/list.h common/xalloc.h common/setup_after.h
+d2dbs/dbspacket.o: d2dbs/dbspacket.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/statmacros.h compat/mkdir.h \
+  compat/memcpy.h compat/memmove.h compat/strdup.h compat/strsep.h \
+  compat/strerror.h compat/socket.h compat/netinet_in.h \
+  compat/inet_ntoa.h compat/psock.h compat/access.h compat/rename.h \
+  compat/access.h d2dbs/dbserver.h common/list.h d2dbs/dbspacket.h \
+  common/bn_type.h compat/uint.h d2dbs/d2ladder.h \
+  d2cs/d2cs_d2dbs_ladder.h common/bn_type.h d2cs/d2charfile.h d2cs/bit.h \
+  d2dbs/charlock.h d2dbs/prefs.h common/d2char_checksum.h \
+  common/xstring.h d2cs/d2cs_d2gs_character.h common/eventlog.h \
+  common/addr.h common/list.h common/xalloc.h common/setup_after.h
+d2dbs/handle_signal.o: d2dbs/handle_signal.c common/setup_before.h config.h \
+  common/version.h d2dbs/setup.h compat/strdup.h compat/signal.h \
+  d2dbs/dbserver.h common/list.h d2dbs/prefs.h d2dbs/d2ladder.h \
+  d2cs/d2cs_d2dbs_ladder.h common/bn_type.h compat/uint.h \
+  d2cs/d2charfile.h d2cs/bit.h d2dbs/cmdline.h d2dbs/handle_signal.h \
+  common/eventlog.h common/xalloc.h common/setup_after.h
+d2dbs/main.o: d2dbs/main.c common/setup_before.h config.h common/version.h \
+  d2dbs/setup.h compat/strdup.h d2dbs/prefs.h d2dbs/cmdline.h \
+  d2dbs/version.h common/eventlog.h d2dbs/handle_signal.h \
+  d2dbs/dbserver.h common/list.h common/xalloc.h compat/strerror.h \
+  common/setup_after.h
+d2dbs/prefs.o: d2dbs/prefs.c common/setup_before.h config.h common/version.h \
+  d2dbs/setup.h compat/memset.h common/conf.h d2dbs/prefs.h \
+  common/eventlog.h common/setup_after.h
+tinycdb/cdb.o: tinycdb/cdb.c common/setup_before.h config.h common/version.h \
+  compat/getopt.h common/setup_before.h compat/strerror.h common/xalloc.h \
+  tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_find.o: tinycdb/cdb_find.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb_int.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_findnext.o: tinycdb/cdb_findnext.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb_int.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_hash.o: tinycdb/cdb_hash.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_init.o: tinycdb/cdb_init.c common/setup_before.h config.h \
+  common/version.h compat/mmap.h tinycdb/cdb_int.h tinycdb/cdb.h \
+  common/setup_after.h
+tinycdb/cdb_make_add.o: tinycdb/cdb_make_add.c common/setup_before.h config.h \
+  common/version.h common/xalloc.h tinycdb/cdb_int.h tinycdb/cdb.h \
+  common/setup_after.h
+tinycdb/cdb_make.o: tinycdb/cdb_make.c common/setup_before.h config.h \
+  common/version.h common/xalloc.h tinycdb/cdb_int.h tinycdb/cdb.h \
+  common/setup_after.h
+tinycdb/cdb_make_find.o: tinycdb/cdb_make_find.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb_int.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_make_put.o: tinycdb/cdb_make_put.c common/setup_before.h config.h \
+  common/version.h common/xalloc.h tinycdb/cdb_int.h tinycdb/cdb.h \
+  common/setup_after.h
+tinycdb/cdb_seek.o: tinycdb/cdb_seek.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb_int.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_seq.o: tinycdb/cdb_seq.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb_int.h tinycdb/cdb.h common/setup_after.h
+tinycdb/cdb_unpack.o: tinycdb/cdb_unpack.c common/setup_before.h config.h \
+  common/version.h tinycdb/cdb.h common/setup_after.h
+zlib/pvpgn_adler32.o: zlib/pvpgn_adler32.c common/setup_before.h config.h \
+  common/version.h zlib/pvpgn_zlib.h zlib/pvpgn_zconf.h \
+  common/setup_before.h
+zlib/pvpgn_deflate.o: zlib/pvpgn_deflate.c common/setup_before.h config.h \
+  common/version.h zlib/pvpgn_deflate.h common/setup_before.h \
+  zlib/pvpgn_zutil.h zlib/pvpgn_zlib.h zlib/pvpgn_zconf.h
+zlib/pvpgn_trees.o: zlib/pvpgn_trees.c common/setup_before.h config.h \
+  common/version.h zlib/pvpgn_deflate.h common/setup_before.h \
+  zlib/pvpgn_zutil.h zlib/pvpgn_zlib.h zlib/pvpgn_zconf.h \
+  zlib/pvpgn_trees.h
+zlib/pvpgn_zutil.o: zlib/pvpgn_zutil.c common/setup_before.h config.h \
+  common/version.h zlib/pvpgn_zutil.h common/setup_before.h \
+  zlib/pvpgn_zlib.h zlib/pvpgn_zconf.h
+win32/d2cs_winmain.o: win32/d2cs_winmain.c
+win32/d2dbs_winmain.o: win32/d2dbs_winmain.c
+win32/service.o: win32/service.c common/setup_before.h config.h \
+  common/version.h
+win32/winmain.o: win32/winmain.c

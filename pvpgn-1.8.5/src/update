@@ -1,0 +1,5 @@
+killall -s QUIT bnetd
+sleep 1
+cp -fr /root/pvpgn-1.8.5/bin/ /usr/local/pvpgn/
+cp -fr /root/pvpgn-1.8.5/sbin/ /usr/local/pvpgn/
+service pvpgn start
