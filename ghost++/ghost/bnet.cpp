@@ -37,6 +37,7 @@
 #include "game_base.h"
 
 #include <boost/filesystem.hpp>
+#include <algorithm>
 
 using namespace boost :: filesystem;
 
@@ -936,14 +937,19 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 	if( Event == CBNETProtocol :: EID_SHOWUSER )
 	{
 		m_ChannelUserCount++;
+        m_InChannelBots.push_back(User);
 	}
 	else if( Event == CBNETProtocol :: EID_JOIN )
 	{
 		m_ChannelUserCount++;
+        m_InChannelBots.push_back(User);
 	}
 	else if( Event == CBNETProtocol :: EID_LEAVE )
 	{
 		m_ChannelUserCount--;
+        if ( find( m_GHost->m_Bots.begin(), m_GHost->m_Bots.end(), User) != m_GHost->m_Bots.end() ) {
+            m_InChannelBots.erase(find( m_InChannelBots.begin(), m_InChannelBots.end(), User));
+        }
 	}
 	else if( Event == CBNETProtocol :: EID_WHISPER || Event == CBNETProtocol :: EID_TALK )
 	{
@@ -2134,7 +2140,16 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 				//
 
 				if( m_GHost->m_UserCreateGame && Command == "pub" && !Payload.empty( ) )
-					m_GHost->CreateGame( m_GHost->m_Map, GAME_PUBLIC, false, Payload, User, User, m_Server, Whisper );
+                    if ( m_GHost->m_Bots.size() ) {
+                        // send pub command to other bots
+                        if ( m_InChannelBots.size() == 0 ) {
+                            QueueChatCommand( "No bot available at the time, please wait...", User, Whisper );
+                        } else {
+                            QueueChatCommand( m_CommandTrigger + "pubby " + User + " " + Payload, m_InChannelBots.front(), true );
+                        }
+                    } else {
+					    m_GHost->CreateGame( m_GHost->m_Map, GAME_PUBLIC, false, Payload, User, User, m_Server, Whisper );
+                    }
 			}
 
 			/*********************
@@ -2203,6 +2218,7 @@ void CBNET :: ProcessChatEvent( CIncomingChatEvent *chatEvent )
 		CONSOLE_Print( "[BNET: " + m_ServerAlias + "] joined channel [" + Message + "]" );
 		m_CurrentChannel = Message;
 		m_ChannelUserCount = 0;
+        m_InChannelBots.clear()
 	}
 	else if( Event == CBNETProtocol :: EID_INFO )
 	{

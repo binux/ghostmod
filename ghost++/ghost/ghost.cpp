@@ -514,17 +514,6 @@ CGHost :: CGHost( CConfig *CFG )
 	m_ReplayWar3Version = CFG->GetInt( "replay_war3version", 24 );
 	m_ReplayBuildNumber = CFG->GetInt( "replay_buildnumber", 6059 );
 
-	// mod
-	m_HCLFromGameName = CFG->GetInt( "bot_hclfromgamename", 0 ) == 0 ? false : true;
-	m_AutoHostRandomName = CFG->GetInt( "autohost_randomname", 0 ) == 0 ? false : true;
-	m_UserCreateGame = CFG->GetInt( "bot_usercreategame", 0 ) == 0 ? false : true;
-	m_AutoHostMinChannelPlayer = CFG->GetInt( "autohost_minplayer", 0 );
-	m_LastLabelUpdate = GetTime( );
-	m_AutoHostMatchMaking = CFG->GetInt( "autohost_mm", 0 ) == 1 ? true :false;
-	m_AutoHostMinimumScore = CFG->GetInt( "autohost_minscore", 0 );
-	m_AutoHostMaximumScore = CFG->GetInt( "autohost_maxscore", 0 );
-	m_AllowSellMoe = CFG->GetInt( "bot_allow_sellmoe", 0 ) == 0 ? false : true;
-
 	SetConfigs( CFG );
 
 	// load the battle.net connections
@@ -1372,6 +1361,12 @@ void CGHost :: ReloadConfigs( )
 	CFG.Read( "default.cfg" );
 	CFG.Read( gCFGFile );
 	SetConfigs( &CFG );
+
+    // mod reload mapcfg
+	CConfig MapCFG;
+	MapCFG.Read( m_MapCFGPath + m_DefaultMap );    
+    m_Map->Load( &MapCFG, m_MapCFGPath + m_DefaultMap );
+    m_AutoHostMap->Load( &MapCFG, m_MapCFGPath + m_DefaultMap );
 }
 
 void CGHost :: SetConfigs( CConfig *CFG )
@@ -1439,6 +1434,19 @@ void CGHost :: SetConfigs( CConfig *CFG )
 	m_LocalAdminMessages = CFG->GetInt( "bot_localadminmessages", 1 ) == 0 ? false : true;
 	m_TCPNoDelay = CFG->GetInt( "tcp_nodelay", 0 ) == 0 ? false : true;
 	m_MatchMakingMethod = CFG->GetInt( "bot_matchmakingmethod", 1 );
+
+	// mod
+	m_HCLFromGameName = CFG->GetInt( "bot_hclfromgamename", 0 ) == 0 ? false : true;
+	m_AutoHostRandomName = CFG->GetInt( "autohost_randomname", 0 ) == 0 ? false : true;
+	m_UserCreateGame = CFG->GetInt( "bot_usercreategame", 0 ) == 0 ? false : true;
+	m_AutoHostMinChannelPlayer = CFG->GetInt( "autohost_minplayer", 0 );
+	m_LastLabelUpdate = GetTime( );
+	m_AutoHostMatchMaking = CFG->GetInt( "autohost_mm", 0 ) == 1 ? true :false;
+	m_AutoHostMinimumScore = CFG->GetInt( "autohost_minscore", 0 );
+	m_AutoHostMaximumScore = CFG->GetInt( "autohost_maxscore", 0 );
+    m_AutoHostAutoScore = CFG->GetInt( "authohost_autoscore" , 0 ) == 0 ? false : true;
+	m_AllowSellMoe = CFG->GetInt( "bot_allow_sellmoe", 0 ) == 0 ? false : true;
+    m_Bots = UTIL_Tokenize( CFG->GetString( "bot_list", string( ) ), ' ' )
 }
 
 void CGHost :: ExtractScripts( )

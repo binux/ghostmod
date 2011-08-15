@@ -80,9 +80,6 @@ public:
 	uint32_t m_AutoHostMaximumGames;		// maximum number of games to auto host
 	uint32_t m_AutoHostAutoStartPlayers;	// when using auto hosting auto start the game when this many players have joined
 	uint32_t m_LastAutoHostTime;			// GetTime when the last auto host was attempted
-	bool m_AutoHostMatchMaking;
-	double m_AutoHostMinimumScore;
-	double m_AutoHostMaximumScore;
 	bool m_AllGamesFinished;				// if all games finished (used when exiting nicely)
 	uint32_t m_AllGamesFinishedTime;		// GetTime when all games finished (used when exiting nicely)
 	string m_LanguageFile;					// config value: language file
@@ -140,10 +137,15 @@ public:
 	bool m_HCLFromGameName;					// custom value: try to fetch hcl command from game name
 	bool m_AutoHostRandomName;				// custom value: add a random num to the end of autohost games
 	bool m_UserCreateGame;					// custom value: allow user create a game or not
+	bool m_AutoHostMatchMaking;
+	double m_AutoHostMinimumScore;
+	double m_AutoHostMaximumScore;
+    bool m_AutoHostAutoScore;
 	vector<PairedLabelDB> m_Labels;			// cache for labels
 	uint32_t m_LastLabelUpdate;				// the time of label cache update
 	uint32_t m_AutoHostMinChannelPlayer;	// the min players in channel
 	bool m_AllowSellMoe;                    // allow mai moe...
+    vector<string> m_Bots;          // a list contancethe username of other bot
 
 	CGHost( CConfig *CFG );
 	~CGHost( );

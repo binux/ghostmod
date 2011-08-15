@@ -2280,8 +2280,12 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 	}
 
 	// check if the new player's score is within the limits
-	double fixed_MinimumScore = m_MinimumScore - (GetTime() - m_CreationTime);
-	double fixed_MaximumScore = m_MaximumScore + (GetTime() - m_CreationTime);
+	double fixed_MinimumScore = m_MinimumScore;
+	double fixed_MaximumScore = m_MaximumScore;
+    if ( m_GHost->m_AutoHostAutoScore ) {
+        fixed_MinimumScore = fixed_MinimumScore - (GetTime() - m_CreationTime);
+        fixed_MaximumScore = fixed_MaximumScore + (GetTime() - m_CreationTime);
+    }
 
 	if( score > -99999.0 && ( score < fixed_MinimumScore || score > fixed_MaximumScore) )
 	{
