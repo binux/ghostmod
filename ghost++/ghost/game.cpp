@@ -314,11 +314,9 @@ void CGame :: EventPlayerDisconnectTimedOut( CGamePlayer *player )
 
 	if ( m_GameLoading )
 	{
-		//m_DBBanFirst->SetAdmin("AUTOBAN");
-		//m_DBBanFirst->SetReason("Left in Loding");
 		m_BanVotePlayersNeeds = 0;
 		m_StartedBanVoteTime = GetTime( );
-		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+		m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_CreatorServer, player->GetName( ), player->GetExternalIPString( ), m_GameName, "AUTOBAN", "Disconnect during gameloding" ) ) );
 	}
 }
 
@@ -328,11 +326,9 @@ void CGame :: EventPlayerDisconnectPlayerError( CGamePlayer *player )
 
 	if ( m_GameLoading )
 	{
-		//m_DBBanFirst->SetAdmin("AUTOBAN");
-		//m_DBBanFirst->SetReason("Left in Loding");
 		m_BanVotePlayersNeeds = 0;
 		m_StartedBanVoteTime = GetTime( );
-		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+		m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_CreatorServer, player->GetName( ), player->GetExternalIPString( ), m_GameName, "AUTOBAN", "Disconnect during gameloding" ) ) );
 	}
 }
 
@@ -342,11 +338,9 @@ void CGame :: EventPlayerDisconnectSocketError( CGamePlayer *player )
 
 	if ( m_GameLoading )
 	{
-		//m_DBBanFirst->SetAdmin("AUTOBAN");
-		//m_DBBanFirst->SetReason("Left in Loding");
 		m_BanVotePlayersNeeds = 0;
 		m_StartedBanVoteTime = GetTime( );
-		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+		m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_CreatorServer, player->GetName( ), player->GetExternalIPString( ), m_GameName, "AUTOBAN", "Disconnect during gameloding" ) ) );
 	}
 }
 
@@ -356,11 +350,9 @@ void CGame :: EventPlayerDisconnectConnectionClosed( CGamePlayer *player )
 
 	if ( m_GameLoading )
 	{
-		//m_DBBanFirst->SetAdmin("AUTOBAN");
-		//m_DBBanFirst->SetReason("Left in Loding");
 		m_BanVotePlayersNeeds = 0;
 		m_StartedBanVoteTime = GetTime( );
-		//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+		m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_CreatorServer, player->GetName( ), player->GetExternalIPString( ), m_GameName, "AUTOBAN", "Disconnect during gameloding" ) ) );
 	}
 }
 
@@ -406,11 +398,9 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 
 		if ( m_GameLoading )
 		{
-			//m_DBBanFirst->SetAdmin("AUTOBAN");
-			//m_DBBanFirst->SetReason("Left in Loding");
 			m_BanVotePlayersNeeds = 0;
 			m_StartedBanVoteTime = GetTime( );
-			//m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_DBBanFirst->GetServer( ), m_DBBanFirst->GetName( ), m_DBBanFirst->GetIP( ), m_GameName, m_DBBanFirst->GetAdmin( ), m_DBBanFirst->GetReason( ) ) ) );
+			m_PairedBanAdds.push_back( PairedBanAdd( "AUTOBAN", m_GHost->m_DB->ThreadedBanAdd( m_CreatorServer, player->GetName( ), player->GetExternalIPString( ), m_GameName, "AUTOBAN", "Disconnect during gameloding" ) ) );
 		}
 		else if ( m_GameLoaded )
 		{
@@ -447,11 +437,11 @@ void CGame :: EventPlayerDeleted( CGamePlayer *player )
 							m_DBBanFirst->SetReason(m_GHost->m_Language->DotAGameShowScore( UTIL_ToString( m_DotaStats->GetSentinelScore( ) ), UTIL_ToString( m_DotaStats->GetScourgeScore( ) ) ));
 							m_StartedBanVoteTime = GetTime( );
 							if( scoreDiff < 5 )
-								m_BanVotePlayersNeeds = 2;
-							else if( scoreDiff < 10 )
 								m_BanVotePlayersNeeds = 3;
-							else
+							else if( scoreDiff < 10 )
 								m_BanVotePlayersNeeds = 4;
+							else
+								m_BanVotePlayersNeeds = 5;
 							SendAllChat( m_GHost->m_Language->DotAAutoBan( m_DBBanFirst->GetName( ), m_DBBanFirst->GetReason( ), UTIL_ToString( m_BanVotePlayersNeeds ) ) );
 						}
 					}

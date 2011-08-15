@@ -2280,10 +2280,12 @@ void CBaseGame :: EventPlayerJoinedWithScore( CPotentialPlayer *potential, CInco
 	}
 
 	// check if the new player's score is within the limits
+	double fixed_MinimumScore = m_MinimumScore - (GetTime() - m_CreationTime);
+	double fixed_MaximumScore = m_MaximumScore + (GetTime() - m_CreationTime);
 
-	if( score > -99999.0 && ( score < m_MinimumScore || score > m_MaximumScore ) )
+	if( score > -99999.0 && ( score < fixed_MinimumScore || score > fixed_MaximumScore) )
 	{
-		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game but has a rating [" + UTIL_ToString( score, 2 ) + "] outside the limits [" + UTIL_ToString( m_MinimumScore, 2 ) + "] to [" + UTIL_ToString( m_MaximumScore, 2 ) + "]" );
+		CONSOLE_Print( "[GAME: " + m_GameName + "] player [" + joinPlayer->GetName( ) + "|" + potential->GetExternalIPString( ) + "] is trying to join the game but has a rating [" + UTIL_ToString( score, 2 ) + "] outside the limits [" + UTIL_ToString( fixed_MinimumScore, 2 ) + "] to [" + UTIL_ToString( fixed_MaximumScore, 2 ) + "]" );
 		potential->Send( m_Protocol->SEND_W3GS_REJECTJOIN( REJECTJOIN_FULL ) );
 		potential->SetDeleteMe( true );
 		return;
